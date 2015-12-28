@@ -85,7 +85,11 @@ def findTripletons():
             row = cursor.fetchone()
             count = row[0]
             if count > MINSUPPORT:
-                print ("found frequent tripleton: ",candidate,count)
+                print ("frequent tripleton found: ",
+                       candidate[0],
+                       candidate[1],
+                       candidate[2],
+                       "[",count,"]")
                 cursor.execute("INSERT INTO fc_project_tag_triples \
                                 (tag1, tag2, tag3, num_projs) \
                                 VALUES (%s,%s,%s,%s)",
@@ -97,7 +101,7 @@ def findTripletons():
                  
     
 # Open local database connection
-db = pymysql.connect(host='grid6.cs.elon.edu',
+db = pymysql.connect(host='localhost',
                      db='test',
                      user='megan',
                      passwd='',
@@ -107,7 +111,7 @@ cursor = db.cursor()
 
 # fc_freq_tags_5pc is a view created to hold each tag and its count of projects
 query = "SELECT DISTINCT tag_name \
-        FROM fc_freq_tags_5pc \
+        FROM fc_freq_tags_5pct \
         ORDER BY num_projs DESC"
 cursor.execute(query)
 singletons = cursor.fetchall()
