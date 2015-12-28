@@ -12,8 +12,7 @@ Notes:
 import itertools
 import pymysql
 
-# set threshold
-# 2325 is a 5% threshold in the Freecode data set
+# set threshold (2325 is a 5% threshold in the Freecode data set)
 MINSUPPORT = 2325
 
 allSingletonTags = []
@@ -97,9 +96,7 @@ def findTripletons():
                                  candidate[1],
                                  candidate[2],
                                  count))
-            
-                 
-    
+
 # Open local database connection
 db = pymysql.connect(host='localhost',
                      db='test',
@@ -109,7 +106,7 @@ db = pymysql.connect(host='localhost',
                      charset='utf8mb4')
 cursor = db.cursor()
 
-# fc_freq_tags_5pc is a view created to hold each tag and its count of projects
+# view created to hold each tag and its count of projects
 query = "SELECT DISTINCT tag_name \
         FROM fc_freq_tags_5pct \
         ORDER BY num_projs DESC"
