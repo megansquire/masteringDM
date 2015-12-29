@@ -41,9 +41,9 @@ def findDoubletons():
         if count > minsupport:
             print ("frequent doubleton found: ",tag1,tag2,"[",count,"]")
             
-            #cursor.execute("INSERT INTO fc_project_tag_pairs \
-            #                (tag1, tag2, num_projs) \
-            #                VALUES (%s,%s,%s)",(tag1, tag2, count))
+            cursor.execute("INSERT INTO fc_project_tag_pairs \
+                            (tag1, tag2, num_projs) \
+                            VALUES (%s,%s,%s)",(tag1, tag2, count))
             
             # save the frequent doubleton to our final list
             doubletonSet.add(candidate)         
@@ -90,13 +90,13 @@ def findTripletons():
                        candidate[1],
                        candidate[2],
                        "[",count,"]")
-                #cursor.execute("INSERT INTO fc_project_tag_triples \
-                #                (tag1, tag2, tag3, num_projs) \
-                #                VALUES (%s,%s,%s,%s)",
-                #                (candidate[0],
-                #                 candidate[1],
-                #                 candidate[2],
-                #                 count))
+                cursor.execute("INSERT INTO fc_project_tag_triples \
+                                (tag1, tag2, tag3, num_projs) \
+                                VALUES (%s,%s,%s,%s)",
+                                (candidate[0],
+                                 candidate[1],
+                                 candidate[2],
+                                 count))
 
 def generateRules():
     # 1. generate list of rules from triples    
