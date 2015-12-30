@@ -109,8 +109,7 @@ def generateRules():
     # 3. print rule with support and confidence
 
     # pull final list of tripletons to make the rules
-    cursor.execute("SELECT tag1, tag2, tag3, num_projs \
-                        FROM fc_project_tag_triples")
+    cursor.execute("SELECT tag1, tag2, tag3, num_projs FROM fc_project_tag_triples")
     triples = cursor.fetchall()
     for(triple) in triples:
         tag1 = triple[0]
@@ -123,25 +122,21 @@ def generateRules():
         # Since we have the numerator already, we just need to caldulate the denominator
         
         # calculate tag1, tag2 -> tag3
-        cursor.execute("SELECT num_projs FROM fc_project_tag_pairs \
-            WHERE (tag1 = %s AND tag2 = %s) or (tag2 = %s AND tag1 = %s)",
-            (tag1, tag2, tag2, tag1))
+        query = "SELECT num_projs FROM fc_project_tag_pairs \
+                WHERE (tag1 = %s AND tag2 = %s) or (tag2 = %s AND tag1 = %s)"
+        cursor.execute(query, (tag1, tag2, tag2, tag1))
         pairSupportA = cursor.fetchone()[0]
         confidenceA = round((ruleSupport / pairSupportA),2)
         print(tag1,",",tag2,"->",tag3, "[support=",ruleSupportPct,", confidence=",confidenceA,"]")
         
         # calculate tag1, tag3 -> tag2
-        cursor.execute("SELECT num_projs FROM fc_project_tag_pairs \
-            WHERE (tag1 = %s AND tag2 = %s) or (tag2 = %s AND tag1 = %s)",
-            (tag1, tag3, tag3, tag1))
+        cursor.execute(query, (tag1, tag3, tag3, tag1))
         pairSupportB = cursor.fetchone()[0]
         confidenceB = round((ruleSupport / pairSupportB),2)
         print(tag1,",",tag3,"->",tag2, "[support=",ruleSupportPct,", confidence=",confidenceB,"]")    
         
         # calculate tag2, tag3 -> tag1
-        cursor.execute("SELECT num_projs FROM fc_project_tag_pairs \
-            WHERE (tag1 = %s AND tag2 = %s) or (tag2 = %s AND tag1 = %s)",
-            (tag2, tag3, tag3, tag2))
+        cursor.execute(query, (tag2, tag3, tag3, tag2))
         pairSupportC = cursor.fetchone()[0]
         confidenceC = round((ruleSupport / pairSupportC),2) 
         print(tag2,",",tag3,"->",tag1, "[support=",ruleSupportPct,", confidence=",confidenceC,"]")
