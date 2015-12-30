@@ -23,6 +23,8 @@ tripletonSet = set()
 
 
 def findDoubletons():
+    print("Frequent doubletons found:")
+    print("======")
     # use the list of allSingletonTags to make the doubleton candidates
     doubletonCandidates = list(itertools.combinations(allSingletonTags, 2))
     for (index, candidate) in enumerate(doubletonCandidates):
@@ -39,7 +41,7 @@ def findDoubletons():
 
         # add frequent doubleton to database                
         if count > minsupport:
-            print ("frequent doubleton found: ",tag1,tag2,"[",count,"]")
+            print (tag1,tag2,"[",count,"]")
             
             cursor.execute("INSERT INTO fc_project_tag_pairs \
                             (tag1, tag2, num_projs) \
@@ -53,6 +55,8 @@ def findDoubletons():
         
   
 def findTripletons():
+    print("Frequent tripletons found:")
+    print("======")
     # use the list of allDoubletonTags to make the tripleton candidates
     tripletonCandidates = list(itertools.combinations(allDoubletonTags,3))
 
@@ -85,9 +89,8 @@ def findTripletons():
                                           candidate[2]))
             count = cursor.fetchone()[0]
             if count > minsupport:
-                print ("frequent tripleton found: ",
-                       candidate[0],
-                       candidate[1],
+                print (candidate[0],",",
+                       candidate[1],",",
                        candidate[2],
                        "[",count,"]")
                 cursor.execute("INSERT INTO fc_project_tag_triples \
@@ -99,6 +102,8 @@ def findTripletons():
                                  count))
 
 def generateRules():
+    print("Association Rules:")
+    print("======")
     # 1. generate list of rules from triples    
     # 2. generate confidence
     # 3. print rule with support and confidence
