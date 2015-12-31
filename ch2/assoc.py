@@ -19,10 +19,9 @@ allSingletonTags = []
 allDoubletonTags = set()
 
 doubletonSet = set()
-tripletonSet = set()
-
 
 def findDoubletons():
+    print("======")
     print("Frequent doubletons found:")
     print("======")
     # use the list of allSingletonTags to make the doubleton candidates
@@ -55,6 +54,7 @@ def findDoubletons():
         
   
 def findTripletons():
+    print("======")
     print("Frequent tripletons found:")
     print("======")
     # use the list of allDoubletonTags to make the tripleton candidates
@@ -102,11 +102,9 @@ def findTripletons():
                                  count))
 
 def generateRules():
+    print("======")    
     print("Association Rules:")
     print("======")
-    # 1. generate list of rules from triples    
-    # 2. generate confidence
-    # 3. print rule with support and confidence
 
     # pull final list of tripletons to make the rules
     cursor.execute("SELECT tag1, tag2, tag3, num_projs FROM fc_project_tag_triples")
@@ -116,32 +114,37 @@ def generateRules():
         tag2 = triple[1]
         tag3 = triple[2]
         ruleSupport = triple[3]
-        ruleSupportPct = round((ruleSupport/baskets),2)
         
-        # confidence(tag1,tag2 -> tag3) = support(tag1,tag2,tag3) / support(tag1,tag2)
-        # Since we have the numerator already, we just need to caldulate the denominator
-        
-        # calculate tag1, tag2 -> tag3
-        query = "SELECT num_projs FROM fc_project_tag_pairs \
-                WHERE (tag1 = %s AND tag2 = %s) or (tag2 = %s AND tag1 = %s)"
-        cursor.execute(query, (tag1, tag2, tag2, tag1))
-        pairSupportA = cursor.fetchone()[0]
-        confidenceA = round((ruleSupport / pairSupportA),2)
-        print(tag1,",",tag2,"->",tag3, "[support=",ruleSupportPct,", confidence=",confidenceA,"]")
-        
-        # calculate tag1, tag3 -> tag2
-        cursor.execute(query, (tag1, tag3, tag3, tag1))
-        pairSupportB = cursor.fetchone()[0]
-        confidenceB = round((ruleSupport / pairSupportB),2)
-        print(tag1,",",tag3,"->",tag2, "[support=",ruleSupportPct,", confidence=",confidenceB,"]")    
-        
-        # calculate tag2, tag3 -> tag1
-        cursor.execute(query, (tag2, tag3, tag3, tag2))
-        pairSupportC = cursor.fetchone()[0]
-        confidenceC = round((ruleSupport / pairSupportC),2) 
-        print(tag2,",",tag3,"->",tag1, "[support=",ruleSupportPct,", confidence=",confidenceC,"]")
-        
+        calcSCAV(tag1, tag2, tag3, ruleSupport)
+        calcSCAV(tag1, tag3, tag2, ruleSupport)
+        calcSCAV(tag2, tag3, tag1, ruleSupport)
+        print("*")
+
+def calcSCAV(tagA, tagB, tagC, ruleSupport):
+    # Support
+    ruleSupportPct = round((ruleSupport/baskets),2)
+
+    # Confidence    
+    query1 = "SELECT num_projs FROM fc_project_tag_pairs \
+            WHERE (tag1 = %s AND tag2 = %s) or (tag2 = %s AND tag1 = %s)"
+    cursor.execute(query1, (tagA, tagB, tagB, tagA))
+    pairSupport = cursor.fetchone()[0]
+    confidence = round((ruleSupport / pairSupport),2)
     
+    # Added Value
+    query2 = "SELECT count(*) FROM fc_project_tags WHERE tag_name= %s"
+    cursor.execute(query2, tagC)
+    supportTagC = cursor.fetchone()[0]
+    supportTagCPct = supportTagC/baskets
+    addedValue = round((confidence - supportTagCPct),2)
+    
+    # Result
+    print(tagA,",",tagB,"->",tagC,
+          "[S=",ruleSupportPct,
+          ", C=",confidence,
+          ", AV=",addedValue,
+          "]")
+          
 # Open local database connection
 db = pymysql.connect(host='localhost',
                      db='test',
@@ -158,7 +161,7 @@ baskets = cursor.fetchone()[0]
 
 # calculate minimum number of baskets based on minimum support threshold
 minsupport = baskets*(MINSUPPORTPCT/100)
-print(minsupport)
+print("Minimum support count:",minsupport,"(",MINSUPPORTPCT,"% of",baskets,")")
 
 # get tags that meet our minimum support threshold
 cursor.execute("SELECT DISTINCT tag_name \
