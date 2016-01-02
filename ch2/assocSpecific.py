@@ -15,9 +15,9 @@ X = 'Internet'
 Y = 'Web'
 
 # Open local database connection
-db = pymysql.connect(host='localhost',
-                     db='test',
-                     user='megan',
+db = pymysql.connect(host='',
+                     db='',
+                     user='',
                      passwd='',
                      port=3306,
                      charset='utf8mb4')
@@ -56,10 +56,10 @@ confidenceYX = pairSupportAsPct/ supportForYAsPct
 AVXY = confidenceXY - supportForYAsPct
 AVYX = confidenceYX - supportForXAsPct
 
-print("Support:", round(pairSupportAsPct, 2))
-print("Conf. X->Y:", round(confidenceXY, 2))
-print("Conf. Y->X:", round(confidenceYX, 2))
-print("AV X->Y:", round(AVXY, 2))
-print("AV Y->X:", round(AVYX, 2))
+print("Support for ",X,"U",Y,":", round(pairSupportAsPct, 2))
+print("Conf.",X,"->",Y,":", round(confidenceXY, 2))
+print("Conf.",Y,"->",X,":", round(confidenceYX, 2))
+print("AV",X,"->",Y,":", round(AVXY, 2))
+print("AV",Y,"->",X,":", round(AVYX, 2))
 
 db.close()
