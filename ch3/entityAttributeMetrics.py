@@ -53,7 +53,6 @@ db = pymysql.connect(host='grid6.cs.elon.edu',
                      charset='utf8mb4')
 cursor = db.cursor()
 cursor1 = db.cursor()
-cursor2 = db.cursor()
 
 # get all projects with matching URLs
 cursor.execute("INSERT INTO book_entity_matches (rf_project_name, \
@@ -82,6 +81,8 @@ cursor.execute("SELECT bem.rf_project_name, \
                 FROM book_entity_matches bem \
                 INNER JOIN book_rg_entities rge \
                   ON bem.rg_project_name = rge.project_name \
+                INNER JOIN book_rf_entities rfe \
+                  ON bem.rf_project_name = rfe.project_name \
                 ORDER BY bem.rf_project_name")
 projectPairs = cursor.fetchall()
 
@@ -115,42 +116,44 @@ for(projectPair) in projectPairs:
     else:
         rf_in_rgurl = 0 
 
-    # is any RF developer name inside the RG developer list?
-    cursor1.execute("SELECT rf.dev_username \
+    # is any dev on the RF candidate in the dev list for the RG candidate?
+    cursor1.execute("SELECT rf.dev_username, rf.dev_realname \
                     FROM book_rf_entity_people rf \
                     WHERE rf.project_name =  %s \
-                    AND rf.dev_username IN ( \
+                    AND (rf.dev_username IN ( \
                         SELECT rg.person_name \
                         FROM book_rg_entity_people rg \
-                        WHERE rg.project_name =  %s \
-                        )",(RFname, RGname))
+                        WHERE rg.project_name =  %s) \
+                        OR \
+                        rf.dev_realname IN ( \
+                        SELECT rg.person_name \
+                        FROM book_rg_entity_people rg \
+                        WHERE rg.project_name = %s))",
+                        (RFname, RGname, RGname))
     result = cursor1.fetchone()
     if result is not None:
         rfdev_in_rgdev = 1
     else:
         rfdev_in_rgdev = 0
     
-    cursor2.execute("UPDATE book_entity_matches \
+    cursor1.execute("UPDATE book_entity_matches \
                         SET rf_name_soundex    = %s,\
                             rg_name_soundex    = %s, \
-                            name_levenshtein   = 0, \
+                            url_levenshtein    = %s, \
+                            name_levenshtein   = %s, \
                             rf_name_in_rg_name = %s, \
                             rf_name_in_rg_url  = %s, \
                             rf_dev_in_rg_dev   = %s \
                         WHERE rf_project_name = %s \
                         AND rg_project_name = %s", 
-                        (rf_name_soundex,
-                         rg_name_soundex,
+                        (soundexRFname,
+                         soundexRGname,
+                         levURLs,
+                         levNames,                         
                          rf_in_rg, 
                          rf_in_rgurl, 
                          rfdev_in_rgdev, 
                          RFname, 
                          RGname))
 
-
-
 db.close()
-
-#pull all rf projects url
-#compare to each rg project url in turn, measure lev distance of urls
-#write distance to db
