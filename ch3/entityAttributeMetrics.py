@@ -45,10 +45,10 @@ def soundex(name, len=4):
 
 
 # Open local database connection
-db = pymysql.connect(host='grid6.cs.elon.edu',
-                     db='test',
-                     user='megan',
-                     passwd=password,
+db = pymysql.connect(host='localhost',
+                     db='rfrg',
+                     user='',
+                     passwd='',
                      port=3306,
                      charset='utf8mb4')
 cursor = db.cursor()
