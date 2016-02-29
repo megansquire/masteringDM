@@ -1,0 +1,124 @@
+24* 
+July 2006
+1519 links returned
+
+SELECT a.dev_loginname, b.dev_loginname, count(a.proj_unixname) as weight
+FROM book_rf_developer_projects a
+INNER JOIN book_rf_developer_projects b ON a.proj_unixname=b.proj_unixname
+WHERE a.datasource_id = 24 AND b.datasource_id = 24
+AND a.dev_loginname != b.dev_loginname
+AND a.dev_loginname < b.dev_loginname
+GROUP BY 1,2
+ORDER BY 3 DESC;
+
+
+64*
+May 2007
+3253 links returned
+
+SELECT a.dev_loginname, b.dev_loginname, count(a.proj_unixname) as weight
+FROM book_rf_developer_projects a
+INNER JOIN book_rf_developer_projects b ON a.proj_unixname=b.proj_unixname
+WHERE a.datasource_id = 64 AND b.datasource_id = 64
+AND a.dev_loginname != b.dev_loginname
+AND a.dev_loginname < b.dev_loginname
+GROUP BY 1,2
+ORDER BY 3 DESC;
+
+
+125*
+May 2008
+6851 links returned
+
+SELECT a.dev_loginname, b.dev_loginname, count(a.proj_unixname) as weight
+FROM book_rf_developer_projects a
+INNER JOIN book_rf_developer_projects b ON a.proj_unixname=b.proj_unixname
+WHERE a.datasource_id = 125 AND b.datasource_id = 125
+AND a.dev_loginname != b.dev_loginname
+AND a.dev_loginname < b.dev_loginname
+GROUP BY 1,2
+ORDER BY 3 DESC;
+
+
+169*
+May 2009
+8139 links returned
+
+SELECT a.dev_loginname, b.dev_loginname, count(a.proj_unixname) as weight
+FROM book_rf_developer_projects a
+INNER JOIN book_rf_developer_projects b ON a.proj_unixname=b.proj_unixname
+WHERE a.datasource_id = 169 AND b.datasource_id = 169
+AND a.dev_loginname != b.dev_loginname
+AND a.dev_loginname < b.dev_loginname
+GROUP BY 1,2
+ORDER BY 3 DESC;
+
+
+219*
+May 2010
+8639 links returned
+
+SELECT a.dev_loginname, b.dev_loginname, count(a.proj_unixname) as weight
+FROM book_rf_developer_projects a
+INNER JOIN book_rf_developer_projects b ON a.proj_unixname=b.proj_unixname
+WHERE a.datasource_id = 219 AND b.datasource_id = 219
+AND a.dev_loginname != b.dev_loginname
+AND a.dev_loginname < b.dev_loginname
+GROUP BY 1,2
+ORDER BY 3 DESC;
+
+
+266*
+May 2011
+8600 links returned
+
+SELECT a.dev_loginname, b.dev_loginname, count(a.proj_unixname) as weight
+FROM book_rf_developer_projects a
+INNER JOIN book_rf_developer_projects b ON a.proj_unixname=b.proj_unixname
+WHERE a.datasource_id = 266 AND b.datasource_id = 266
+AND a.dev_loginname != b.dev_loginname
+AND a.dev_loginname < b.dev_loginname
+GROUP BY 1,2
+ORDER BY 3 DESC;
+
+
+307*
+May 2012
+8649 links returned
+
+SELECT a.dev_loginname, b.dev_loginname, count(a.proj_unixname) as weight
+FROM book_rf_developer_projects a
+INNER JOIN book_rf_developer_projects b ON a.proj_unixname=b.proj_unixname
+WHERE a.datasource_id = 307 AND b.datasource_id = 307
+AND a.dev_loginname != b.dev_loginname
+AND a.dev_loginname < b.dev_loginname
+GROUP BY 1,2
+ORDER BY 3 DESC;
+
+
+382*
+June 2013
+8626 links returned
+
+SELECT a.dev_loginname, b.dev_loginname, count(a.proj_unixname) as weight
+FROM book_rf_developer_projects a
+INNER JOIN book_rf_developer_projects b ON a.proj_unixname=b.proj_unixname
+WHERE a.datasource_id = 382 AND b.datasource_id = 382
+AND a.dev_loginname != b.dev_loginname
+AND a.dev_loginname < b.dev_loginname
+GROUP BY 1,2
+ORDER BY 3 DESC;
+
+
+12987*
+May 2014
+8570 links returned
+
+SELECT a.dev_loginname, b.dev_loginname, count(a.proj_unixname) as weight
+FROM book_rf_developer_projects a
+INNER JOIN book_rf_developer_projects b ON a.proj_unixname=b.proj_unixname
+WHERE a.datasource_id = 12987 AND b.datasource_id = 12987
+AND a.dev_loginname != b.dev_loginname
+AND a.dev_loginname < b.dev_loginname
+GROUP BY 1,2
+ORDER BY 3 DESC;
