@@ -8,7 +8,6 @@ import networkx as nx
 
 g = nx.read_weighted_edgelist('data/edgelist12987.csv')
 
-
 graphs = list(nx.connected_component_subgraphs(g))
 for graph in graphs:
     if graph.has_node('tirsen'):

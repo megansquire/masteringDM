@@ -7,13 +7,13 @@ Created on Sat Mar  5 09:02:47 2016
 
 import networkx as nx
 
-g = nx.read_weighted_edgelist('data/edgelist12987.csv')
+g = nx.read_weighted_edgelist('data/edgelist382.csv')
 
 
 graphs = list(nx.connected_component_subgraphs(g))
 for graph in graphs:
     if graph.has_node('tirsen'):
-        ego = nx.Graph(nx.ego_graph(graph, 'tirsen', radius=2))
+        ego = nx.Graph(nx.ego_graph(graph, 'tirsen', radius=1))
         graphDegree = nx.degree(ego)
 
         pos=nx.spring_layout(ego)
