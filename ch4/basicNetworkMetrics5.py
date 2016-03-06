@@ -7,7 +7,7 @@ Created on Thu Mar  3 13:19:47 2016
 
 import networkx as nx
 
-g = nx.read_weighted_edgelist('data/edgelist12987.csv')
+g = nx.read_weighted_edgelist('data/edgelist64.csv')
 
 graphDegree = nx.degree(g)
 
@@ -19,8 +19,8 @@ nx.draw(g,
         with_labels=False,
         font_size=8)
         
-nx.draw_networkx_nodes(g, pos, nodelist=['tirsen'], node_size=300, node_color='g')
-'''
+#nx.draw_networkx_nodes(g, pos, nodelist=['tirsen'], node_size=300, node_color='g')
+
 nx.draw_networkx_nodes(g,
                        pos,
                        nodelist=['tirsen',
@@ -37,4 +37,3 @@ nx.draw_networkx_nodes(g,
                        'stillflame'],
                        node_size=300,
                        node_color='g')
-'''
