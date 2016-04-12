@@ -1,0 +1,503 @@
+hm
+why hasn't golang-1.6 migrated from -proposed to -updates in trusty yet?
+i thought it would happen after a week
+(and the bug was verification-done)
+http://people.canonical.com/~ubuntu-archive/pending-sru.html -> seems green, but its probably because there's no golang-1.6 in trusty main
+so might need manual push
+w
+ah ok
+It's always manual.
+It needs a human to say "yep, let's do that".
+And we don't tend to release on weekends.
+Though, for a NEW package, it can't hurt.
+Released.
+what is this weekend you speak of
+thanks
+The weekend is the time when a large number of our developers shockingly aren't glued to their keyboards and would prefer not to deal with the flood of bug reports a bad SRU can cause.
+Weird, I know.  Since some of us have brain uplinks.
+it's already monday afternoon though!
+(Well, it's both about developer response time, and about not breaking corporate users with unattended-upgrades and a similar 5-day schedule)
+Not in the correct part of the world!
+'correct'!
+You heard me.
+I see stockholm has its claws into you
+I lived in the future for five years.  It didn't agree with me.
+Granted, not your little bit.
+:)
+woo fun running the go runtime tests can kill the kernel on s390x
+i guess i should report that to someone...
+!
+actually an ibm person mentioned this too
+so /hopefully/ i'm just running an out of date kernel
+good morning
+Good morning
+thanks, I'll look into the udev crash now
+dannf, infinity: adt-run always sets LANG=C.UTF-8 by default; something changed there since the new glibc, can you reproduce this with that command?
+lxd currently seems broken on my xenial, I'll look into that now and file a bug
+good morning
+yay https://launchpad.net/ubuntu/+source/docker.io/1.10.3-0ubuntu4
+hi! ping ping :-)
+pong pong
+red alert :-) Do you think we can get this fixed by 16.04? bug 1564767
+bug 1564767 in webapps-sprint "Wrong size of embedded window" [Critical,In progress] https://launchpad.net/bugs/1564767
+I've attached a patch, generated with quilt on top of the existing debian/patches
+thanks, sure it should be possible. can you submit it to https://launchpadlibrarian.net/251636878/xcb_fix_parent_screen_of_embedded_windows.patch ASAP? we shouldn't carry a patch if it's not approved by upstream.
+sorry, to where?
+hah, https://codereview.qt-project.org/ I was meaning to paste
+maybe look through http://code.qt.io/cgit/qt/qtbase.git/log/src/plugins/platforms/xcb/qxcbwindow.cpp too if there's something to backport instead of your patch
+but are they still interested in Qt 5.5?
+no, they'd be interested in 5.6 though if it's affected by the same bug
+and most likely 5.6 branch is the best place to offer a fix too in, they merge from there to 5.7 and dev.
+I'll now test 5.6, but looking at their code, I believe they've already fixed it
+the problem is, it's not just one patch to backport, but many
+ok, to me it'd look like the line of code in question is still unchanged, just a variable name changed. but maybe it was fixed elsewhere?
+we actually have a lot of XCB fixes already in, in order to try to fix multi-monitor issues that plagued 5.5 still (and maybe even 5.6 still too).
+but at this point I'd tend to agree that if it's yet another multiple patches, it would be better to take your two-liner patch instead
+yes, that function is still there in Qt 5.6, but handleConfigureNotifyEvent() doesn't call that method anymore :-)
+but let's see, I'm installing 5.6 and I'll let you know
+ok!
+Hi Martin, Time to look at the FFe request at bug #1556457 (fontconfig 2.11.1 -> 2.11.94)?
+bug 1556457 in fontconfig (Ubuntu) "[FFe] Demilight (OS/2 weight=350) confuses fontconfig" [High,New] https://launchpad.net/bugs/1556457
+yes, 5.6 works! :-)
+but given how deep are the chanegs in teh XCB plugin between 5.5 and 5.6, I think it's quite risky to try a backport (also because we already have quite a few debian/patches touching XCB)
+ok! :) then you don't need to submit anything to upstream since indeed they've forgotten about 5.5 by now (because 5.6 is LTS). so it may be your patch is simply the best way.
+I agree, unless some of the already backported patches form a baseline on top of which one more could be cherry-picked, but I somehow doubt that too
+it just happened I got my previous qtbase xenial upload done so I'll start preparing the next one but not with what I had on my mind earlier (not so important) but your patch instead
+excellent, thanks a lot!
+thank you for fixing bug 1565436 so quickly. I wasn't expecting that!
+bug 1565436 in ubuntu-drivers-common (Ubuntu Wily) "gpu-manager hangs on boot when syslog is bloated" [High,Triaged] https://launchpad.net/bugs/1565436
+I think I did a while ago. I need to find some time to backport the fix
+Ah, OK
+opinion on https://bugs.launchpad.net/ubuntu/+source/myodbc/+bug/1564856/comments/1 please?
+Launchpad bug 1564856 in myodbc (Ubuntu) "myodbc uses internal libmysqlclient functions no longer exported by 5.7" [Undecided,New]
+Presumably repackaging for cmake shouldn't be insurmountable and we should just do it?
+But the main issue hasn't been fixed upstream
+how hard would it be to fix it and patch it in distro and then send that upstream?
+(in that I'm asking the question - I don't mean that rhetorically)
+The developers are working on a fix, which we would then apply to the newest released version, but I don't know the code, so I don't really know how big a task this is
+followed up; I don't think I have enough information/experience with fontconfig to answer this right away, but I asked some questions there
+Greetings, regarding bug 1530323, I don't know what to do next, and it's affecting Lubuntu, could somebody please take a look at this bug report and my comments and judge whether it's fixed yet or not? I can't really tell...
+bug 1530323 in network-manager-applet (Ubuntu) "The input box for editing a Wired connection static IP address doesn't appear correctly" [High,Confirmed] https://launchpad.net/bugs/1530323
+Added an answer to bug #1556457. If you don't have enough fontconfig experience, who has ;)
+bug 1556457 in fontconfig (Ubuntu) "[FFe] Demilight (OS/2 weight=350) confuses fontconfig" [High,New] https://launchpad.net/bugs/1556457
+Hi Laney, any chance you have some good advice re. the bug #1556457 FFe?
+bug 1556457 in fontconfig (Ubuntu) "[FFe] Demilight (OS/2 weight=350) confuses fontconfig" [High,New] https://launchpad.net/bugs/1556457
+bluez-gstreamer wine1.6 gnome-media need recompile against gstreamer 1.0; they depend on gstreamer 0.10 in Xenial o.o
+not sure if that's fixable at this stage though
+(also bah the Wine team, they didn't get Wine 1.8 in Xenial even though it's been out since before Wily)
+we (Android Tools Debian team) finally got all of our current packages into Debian/testing.  xenial is mostly in sync, but there are two packages with packaging fixes that have not been fixed: android-platfrom-system-core and android-platform-tools-base
+oops, have not been synced
+should I do requestsync?
+yes please
+ok will do
+do you want to try the requestsync, or shall I?
+I'm not familiar with that ...
+ok, I can do it, its basically a webform in launchpad
+i'd be happy to run 'requestsync' for you if you need
+then give you the bug # to make your comments ;)
+this close to final freeze, though, how critical are the package updates :P
+Hmm I would wait for some time
+s/final freeze/final release/
+I think they are essential, and these are new packages that nothing else depends on, so they are low risk changes
+the new packages do depend on each other
+for example, one change is a typoed package name in depends
+Do we have any deadlines?
+yeah, final release is very soon
+final freeze is next week I think
+[14:45]  * teward pulls the Xenial schedule up
+April 14?
+https://wiki.ubuntu.com/XenialXerus/ReleaseSchedule
+Final Freeze on April 14
+and we're way past FeatureFreeze
+these are all bug fixes in the packaging
+so you'll need to follow https://wiki.ubuntu.com/FreezeExceptionProcess to get it reviewable for FFe
+OK, fire at will ;)
+android-platfrom-system-core and android-platform-tools-base ?
+and from Debian Testing?
+the first package is https://packages.debian.org/source/sid/android-platform-system-core
+and from Testing or Unstable?
+hold off on -tools-base
+(where do you want the sync req. to come from)
+unstable and testing should be the same, it just happened, but unstable to be safe
+hmm
+!info android-platform-system-core xenial
+Package android-platform-system-core does not exist in xenial
+hate the bot
+Oh, android-platform-build
+source packages are better ;)
+okay, so...
+teward, _hc: android-platform-system-core package already sync'd
+yep
+i was going to say that
+E:Versions match
+:P
+ah, ok, I guess I should look at the ubuntu tools rather than the debian tools here :)
+though, rmadison shows a delta between sid and xenial/universe
+are we absolutely certain they're in sync?
+sync'd 5 minutes ago
+Thank you!
+ah, nice, so rmadison isn't updated :)
+[14:51]  * teward goes back to figuring out why his boxes are deady
+dead*
+sponsored by LocutusOfBorg for Mapreri
+even better :)
+Mapreri helped a lot during the migration
+what was the other one?
+android-platform-build
+i get the same notice about version match for that too
+^
+the android-platform-tools-base update requires a new package to xenial, so that's probably not feasible
+liblombok-ast-java
+my squid proxy on my net is dead, so... I can't check easily
+as of a couple minutes ago 'cause i broke it :/
+android-platform-build was also sync'd already
+8 minutes ago, it looks like :)
+you can see https://launchpad.net/ubuntu/+source/android-platform-build and https://launchpad.net/ubuntu/+source/android-platform-system-core
+I think we're good then unless seamlik has something to add
+did anyone contact the phone team about these packages (since they maintain their own patched versions of i.e. adb, adbd and fastboot)
+I think we've had some contact.  these packages don't touch the original android-tools source package, which is what Ubuntu uses for adb, adbd, and fastboot
+ok
+Ubuntu already has its own android-tools anyway, for a while now
+we tried to sync it at one point
+well, that's all we need for now :)
+it would be great to move adb and fastboot out of the android-tools package.  We have more up-to-date adb and fastboot building in the Android Tools Team packages, but they only build on amd64 and i386.  So someone would need to port things to all the other archs to fully replace the android-tools source package
+you would have to pull in the patches to the udev rules
+(that are added to support ubuntu devices)
+(beyond that fastboot and adb binaries shoudl be fine to use vanilla ... adbd not though  ... taklk to the guys in #ubuntu-touch)
+bug #1564767 fix is now built at https://requests.ci-train.ubuntu.com/#/ticket/1215 - you can mark it as Lander Signoff Approved when ready, although no hurry since qtbase is and will be blocked in xenial-proposed because of mysql-5.7 transition it seems
+bug 1564767 in qtbase-opensource-src (Ubuntu) "Wrong size of embedded window" [Critical,In progress] https://launchpad.net/bugs/1564767
+What happened to bzr-fastimport? Looks like it disappeared since Wily.
+"(From Debian) RoQA; orphaned, unmaintained upstream, rc-buggy; Debian bug #742416"
+Debian bug 742416 in ftp.debian.org "RM: bzr-fastimport -- ROM; orphaned, unmaintained upstream and rc-buggy" [Normal,Open] http://bugs.debian.org/742416
+configglue (even upstream bzr) is still not python3.5 compatible, thus the ftbfs
+#1504288
+Launchpad bug 1504288 in configglue "Test suite failure with Python 3.4 & 3.5" [Undecided,In progress] https://launchpad.net/bugs/1504288
+i will spend a *little* time looking at an upstream
+around? Please could you comment on https://bugs.launchpad.net/ubuntu/+source/juju-mongodb/+bug/1557830/comments/10 please?
+Launchpad bug 1557830 in juju-mongodb (Ubuntu) "[needs-packaging] juju-mongodb2.6 in xenial, wily, and trusty" [Undecided,New]
+I'm happy to do whatever you and the release team prefer.
+rbasak, and why do you ask me? I'm not a release team =)
+because you have reason to care :)
+also what juju upstream supports should not matter what ubuntu archive compiles.
+Yeah
+rbasak, e.g. it should be totally valid to have a client on 32bit controlling 64bit deployments....
+I think I should change it to "any".
+If it FTBFS on some archs, then the release team can decide whether to let that in or not.
+It doesn't seem right to just turn it off on an arch, since I understand that makes life hard for porters who want a particular arch to work well across the archive.
+stokachu, looking at bignum: please don't use bash as the shebang when plain sh is good enough
+bignum?
+stokachu, you uploaded that to NEW. or can it be removed?
+you talking bout bigdata?
+ahh
+yes
+i can fix the bash string if you want
+stokachu, just for your next upload
+thanks, fixed here https://github.com/Ubuntu-Solutions-Engineering/bigdata-deb/commit/fce9d383a8011e9b31cca01022128dc412afca87 so it'll make it into next upload
+stokachu, debian/copyright is missing 2016, in conjure as well
+stokachu, conjure: why all the pre-built egg files in conjure/dist?
+hmm
+i need to remove those, not sure why they are there
+i fixed it and the copyright, anything else? otherwise i can upload a new package
+stokachu, ok, I'll reject that one. also ubuntui/*.py doesn't have any copyright notices. there might be more of these
+ok ill add those files to copyright
+stokachu, the question is, if these files should contain the copyright, as the other files have it
+yea some are LGPL and AGPL
+stokachu, well, then the debian/copyright is wrong. it only mentions the MIT license
+yep fixing that now
+stgraber, golang-gopkg-inconshreveable-log15.v2-2.11+git20150921.0.b105bd3 debian/copyright is missing the copyright for the term subdir
+thanks, will fix
+stokachu, the update conjure: is it intended that the toplevel files are still covered by the MIT license?
+yea
+aside from those directories i defined
+tjaalton, updated https://bugs.launchpad.net/ubuntu/+source/libset-scalar-perl/+bug/1558820
+Launchpad bug 1558820 in libset-scalar-perl (Ubuntu) "[MIR] libva" [Undecided,Incomplete]
+cool, thanks
+I'm having trouble actually building php-fshl locally
+it keeps throwing errors
+paste?
+http://fpaste.org/349497/45979560/
+any progress with debugging fpc FTBFS on powerpc yet?
+^^ I don't assume you know more already?
+i know nothing!
+:)
+hrm, rebuilt fine here
+oh, in debian, though
+let me check that
+I didn't have time over the weekend to dig deeper.  It's on my "free time" TODO this week.
+ack
+sorry for those late MIRs took forever for those 3 packages to be accepted into xenial (went unreviewed between December and a couple of hours ago...)
+stgraber, lxc team == you?
+hrm, built fine in a sid schroot too
+lxc team is hallyn, mmcc, tych0 and I
+jgrimm is also in the team so he can get the rest of the server team up to speed on bugs if we miss any
+stgraber, was the team accepted as a bug subscriber in the past?
+and the server team is also subscribed to those packages separately (jgrimm was working on it now-ish)
+ahh, ok
+yeah, we are the MIR subscribe team for a dozen packages
+stgraber, doko: should be done already even
+https://bugs.launchpad.net/~ubuntu-lxc/+packagebugs those are all the packages that are in main for which the ubuntu-lxc team is the main contact point
+stgraber, mterry: I just did the NEW review, so I'll propose to promote these. just waiting on your feedback
+mterry's feedback
+cool. I poked mterry because he's been handling all our other go-related MIRs this cycle but I'm not picky as to what MIR team member gives the go ahead :)
+I refreshed the go-lxc one with a new snapshot an hour ago to pick up the bugfixes needed for LXC 2.0, the other two looks to be perfectly functional so no reason to update to new upstream snapshots
+hey, fyi bug #1565963
+bug 1565963 in seahorse (Ubuntu) "seahorse does not see gpg keys after upgrade to gnupg 2.1" [Undecided,New] https://launchpad.net/bugs/1565963
+fyi, ^
+thanks, i'll take a look
+does LP: #1565097 need to be re-uploaded?
+Launchpad bug 1565097 in refdb (Ubuntu) "Update to PHP7.0 dependencies" [Undecided,Fix committed] https://launchpad.net/bugs/1565097
+i don't see it changed yet
+quite possibly! let's see
+i believe i'm down to the last 9 packages that need updating, fyi; a few will be in a broken state (e.g., drupal7 pending drupal8 or drupal7 updates) and i'm still contacting upstreams for a few to see if they have php7 versions we can pull down
+but i think we'll be in a position to remove src:php5 soon, if you want, with minimal breakage to the archive, afaict
+nacc, great!
+my count of remaining affected packages Friday was higher than yours; was your count including or excluding things that were still awaiting sponsorship at the time?
+are any of the php5/php7 changes you've been shepherding in any way capable of removing a user from the sudo group? specifically anything related to libapache2-mod-php5 and/or a2enmod ?
+I'm thinking .postinst mostly
+including those things still awaiting sponsorship. My count was more of what is left to touch list; the official reverse-depends count is 30 right now, but i submitted a bunch today and some are false-positives due to php5 | php
+hrm, in general, i've not changed any fucntionality in the postints, beyond calling the right command (for php5enmod -> phpenmod) or right parameter (a2endmod php5 -> a2endmod php)
+so I'd be surprised if that happened, but I'm not going to make any guaranteed; do you have a specific package in mind?
+or a bug, i guess? :)
+ok.  my count as of Friday was 56, and a couple of those are already on the removals list (php-imap, php-mcrypt) but we should reconcile these counts soonish :)
+maybe you could run your eyes over the following pastebin? A user in #ubuntu+1 reported it and I did some 'live' debugging and we couldn't figure it out, so not even sure it is a bug, and the user re-added themselves so the issue is now dead. http://pastebin.ubuntu.com/15585996/
+yep, let's plan on syncing this afternoon?
++1
+looking; but fwiw, i've not actually touched the src:php5 itself, which is a bit out of sync with debian probably
+it's goign to be removed
+so i'd just suggest to that user they need to migrate asap :)
+and/or reproduce it with php7
+right... I just wanted to do a heads up since we're so close to release... the trigger might have been a2enmod rather than the package install; hard to know but would be awful for that to escape into the wild
+yep, i'll try and reproduce it here in a bit?
+infinity, hi
+well no great pressure, as I said, the user re-added themselves from a recovery boot and I couldn't find any other mentions of similar stuff. It was a fresh clean install of 16.04 about 45 minutes before it happened, though.
+ok, np; but first, lunch! :)
+supper :)
+Hi.
+infinity, because of cups-filters. I do not know whether you know that I have made use of the fact that one could run LSB-compliant packages on Ubuntu.
+infinity, for this there was an "lsb" package. Debian pulled this feature out, very shortly before our FF, not letting me a chance to introduce a new package.
+infinity, so as LSB compatibility was actually only used by us to allow manufacturers to supply printer drivers, I have simply re-introduced the LSB compatibility by taking the stuff which was taken out of the lsb package into cups-filters.
+infinity, only that I forgot the postinst  in the first place and got a bug report because of this and added it today to complete my work.
+Yes, I followed your bug report to see what you were doing.  cups should not, in any way, be responsible for providing ld.so links, however.
+infinity, so does this mean that I should say LSB driver support is skipped on the LTS or forever?
+No, it means you should probably talk to Foundations people before deciding to hack around something like this in a printer driver package. :P
+zend-framework> the prior-version argument to dpkg-maintscript-helper mv_conffile is strongly recommended
+If we decide LSB ld.so links belong anywhere, it should be something reasonably low-level, either a re-introduction of some lsb thing, or in glibc itself.
+(not blocking this upload on it, but you really want that there so that things eventually clean up)
+Surely, you see how your method would immediately go sideways if someone else also decides they need that functionality.
+infinity, so what I could perhaps do then is to recover the lsb-source package to its old state, of before Debian took everything out and sync cups-filters with Debian to remove all LSB stuff from it. OK?
+I don't think reverting lsb is sane either.  But leave it to slangasek and I to sort out the best way to solve this one.  cups-filters definitely shouldn't have an lsb package, though.
+I added some more info to the description of the bugs. the secret keys didn't get migrated
+infinity, slangasek, so please check and tell me what is the best solution for that.
+infinity, slangasek, the solution can be a short-term solution for 16.04 only. On the OpenPrinting Summit I will tell manufacturers that the LSB is dead for printing as one of the two principal distro families left the LSB.
+an LTS in not "short term"; anything deployed here has to be supported on upgrade for 2 years, so needs to be designed carefully. I'm fairly certain the right answer is to put the symlinks in glibc, but I'll leave that to infinity to confirm
+infinity, slangasek, the package in which the symlinks where before was lsb-core, coming from the lsb source package.
+we're aware
+I'm not quite sure, but I think all of these debian package build tools hate me :/
+why does yubikey-ksm call phpenmod in its postinst for a module it does not ship?
+(not a regression, not blocking the upload, but ugh)
+mv_conffile, same thing for wikidiff2
+oh sorry, i rusehd that!
+will post updated shortly
+should unattended updates show install progress on shutdown?
+updated in both
+'tcpdf' - that's the Transmission Control Protocolortable Document Format, right?
+I'm not sure what you mean by "Robie (the uploader of the version (re?)introducing the recommends" in bug 801244 but I think that's moot now?
+bug 801244 in vblade-persist (Ubuntu) "[MIR] vblade-persist" [Undecided,Won't fix] https://launchpad.net/bugs/801244
+AFAICT, I've never uploaded a vblade-persist.
+anyone know what "main::scan_file() called too early to check prototype at /usr/bin/aclocal-1.11 line 644." means?
+https://launchpadlibrarian.net/251176532/buildlog_ubuntu-xenial-amd64.google-perftools_2.4-0ubuntu4_BUILDING.txt.gz
+you sponsored the upload that reintroduced the recommends: on vblade-persist from vblade
+Ah
+is it code for running autoreconf or something?
+ah yes, I remember now. Sorry! Yeah cpaelzer is right. That was to bring vblade closer to sync with Debian so we can stop caring for it in universe next cycle. So no MIR any more so no further action I think.
+(the conffile move needs a delta but that can go > Xenial)
+did vblade get uploaded to drop the MIR?  (I haven't looked at any of this, was just poking the bug via component-mismatches)
+I wasn't aware of the MIR at the time. It was in MoM as needing a merge. We looked, decided we didn't want to maintain a delta, so merged it dropping most of the delta for a graceful removal next cycle.
+ok, you can't just drop the delta.  It's a component-mismatch; packages in main need to not recommend packages in universe
+it was confusing to have an MIR bug still around from before vblade was promoted, but this still needs to be dealt with
+sorry, I missed that.
+my recommendation, given the goal of minimizing delta, is to change that Recommends back to a Suggests in vblade; the alternative is to try to make vblade-persist work without ruinit
+sorry, "runit" ;P
+I think we might be able to drop vblade from server-ship and get it into universe.
+also wfm :)
+but that's a server product decision I guess, --> SEP
+heh, i who knows why they named it that way; it appears to be a fork of fpdf, also their website claims "Started in 2002, TCPDF is now one of the world's most active Open Source projects"
+radioactive? bioactive?
+can you help me check something; if you install php-pecl-http and neable it, do you see a complaint if you just run `php`?
+how do I enable it?
+SEP?
+actually, i think it will be enabled on install
+"somebody else's problem" ;)
+alternatively, phpenmod http?
+ah :)
+I'll take care of it
+is this what you want to see? PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib/php/20151012/http.so' - /usr/lib/php/20151012/http.so: undefined symbol: php_resource_factory_init in Unknown on line 0
+yeah
+it seems like something is not putting in the lib dependency
+that symbol is from raphf
+but `ldd` indicates http.so doesn't load raphf.so, which seems like a mistake
+trying to figure out what's mssing
+see also dlopen()
+raphf.so, implies it's not a library but a plugin of its own; so linking to it is likely wrong
+yeah
+true; but not called in this library, and not linked against libdl
+which means it's a runtime dependency
+http.so probably assumes this symbol is resolvable through the parent
+by raphf.so being loaded first
+so maybe it's an ordering thing
+could be
+istr something about the order of names does matter
+let me see if i can find it
+is it being linked with -Wl,--no-undefined?
+could also be a scoping issue with the options php itself passes to dlopen()
+that would fail at build time if it were
+right
+I've passed to kirkland/jgrimm for an ack. If they say yes, I'll unseed it.
+so.... this just happened? http://fpaste.org/349595/59805700/
+anyone know why usb-modeswitch 2.3.0 isn't available?
+because don't try to dist-upgrade to -proposed
+I've been living on -proposed for over two months because php things :/
+xenial-proposed is not for human consumption
+I guess I'm not human :)
+you should be doing that in a chroot, not on a desktop root
+rbasak, ack from me (and kirkland gave an email ack to that on Feb 4, as well as, for munin)
+eh, it's a VM
+vblade?
+ack, +1 please drop from main.  vblade (aoe) was needed for eucalyptus, many moons ago
+virtual AoE blade emulator
+yep
+jgrimm, kirkland: thanks. Seed changed.
+rbasak, munin too?
+wikidiff2, zend-framework, please provide incremental debdiffs since the previous are already uploaded
+no but done now, thanks.
+rbasak, thanks!
+are packages with build-deps but no runtime deps on php5 on your list?  (e.g. jscribble)
+hrm, I thought I did ?
+and no, not build-deps yet, that is next on my list
+i just checked both bugs and the last attachment in each is an incremental debdiff?
+hurrr ok apparently I didn't read it right :)
+core-dev endorsement: "he writes correct code that I subsequently don't read; give him upload rights"
+heh
+is there an easy way without cgmanager to get myself a shell that is running in its own cgroup?
+I asked hallyn, he suggested I ask you :)
+wrt php-mongo,php-horde-mongo - there are an awful lot of packages depending on php-horde-mongo, all of which will be broken by this; are we ok with that?
+which controllers are you intersted in?
+oh - nope, these are all recommends, ignore me
+right, it should all be recommends
+i should have noted that, but did see that before suggesting its removal
+I want to limit CPU and memory. I'm told that limiting memory will stop my entire cache from being dropped if I do something big in there.
+Ideally I want "run-in-cgroup --memory=X --cpu=X /bin/bash"
+(unprivileged)
+you want cpu not cpuset right?
+I'm not sure.
+anyway memory you can do with no privilege with or without cgm;  cpu you'd need to edit /etc/pam.d/common-session to add ",cpu" to the libpam-cgfs line
+so in the meantime i'd recommend yeah use cgm.  I think we should come up wiht a good systemd based answer and put that into the server guide
+OK, thanks
+[21:58]  * rbasak reads up
+may have found the pecl-http issue, typo -- checking to see if it fixes it
+Who's taking ownership of evaluating the removal of the block-proposed tag from https://bugs.launchpad.net/ubuntu/+source/squid3/+bug/1473691 ?
+Launchpad bug 1473691 in squid3 (Ubuntu) "[FFe] squid: Update to latest upstream release (3.5)" [Critical,Fix committed]
+^^
+Or rharper maybe?
+We're probably approaching a point where we're not going to find any more bugs without inflicting it on users.
+I've seen activity, but I'm not sure who's holding the baton right now.
+last I saw was a 1ubuntu4 upload with some fixes from slangasek on the maint scripts;
+And another from me, yes.
+I can give the proposed package a test; but since it was maint stuff, I don't it to modify the functionality w.r.t universe packages we were testing
+I didn't get any time to test additional rdepends on squid3 from universe yet;
+we did want to maybe see about maas and squid3
+Well, we're running out of time to "see about" anything.
+I don't see any reason to hold back
+better to get the hurt ASAP
+any known issues with what is in -proposed currently?
+That was sort of my thinking.
+Sorry, I haven't really been following along.
+none that I'm aware of
+I'm sure we missed some bugs, but I've fixed the ones *I* run into.
+So, I need other people to find more. :P
+OK, let's drop the tag as I don't hear any objections.
+[22:03]  * rharper nods 
+unless we want to risk keeping squid3 out-of-date for another LTS, we should let 'er rip
+heh
+not after all of this trouble
+And someone might want to merge the new upstream after we let this one through.
+Because more bugs.
+3.5.15 (new stable IIRC)
+yes there may be some knock-on effects, but we need to find them before we can sort them out, and at this point we need it in xenial before we're likely to find them
+yep
+I saw activity on bug 1448149. I think that probably doesn't affect Xenial?
+bug 1448149 in squidguard (Ubuntu) "Squid 3.3.8 incompatible with squidGuard 1.5-4" [High,Triaged] https://launchpad.net/bugs/1448149
+[22:04]  * infinity removes the tag.
+(in fact it would be fixed by Xenial?)
+yes
+fixed
+Lovely. Thanks!
+at least with the trivial test case kick1nz setup
+cool
+nm, didnt' fix it (but is a real bugfix :)
+netmrg is dep-wait on all archs
+looks like an outdated build-dep on libmysqlclient15-dev?
+I have that on my list to fix.
+i believe it's due to the pending migration
+Right
+what's pending that's causing it to dep-wait?
+Is https://launchpad.net/~mysql-ubuntu/+archive/ubuntu/mysql-5.7/+sourcepub/6249018/+listing-archive-extra helpful?
+That's our test build.
+rharper, do you know if maas got any testing done on squid3 proposed?  they said they'd have to make changes in maas.
+$ apt-cache showpkg libmysqlclient15-dev
+Unable to locate package libmysqlclient15-dev
+$
+sorry, i mean the deps need to be updated, but that the sql migration is going to fix it (or needs to)
+s/libmysqlclient15-dev/libmysqlclient-dev/. They're equivalent. We dropped the virtual package from MySQL 5.7 that's in proposed.
+nacc, rbasak: right, so netmgr should get reuploaded with the fixed build-dep and afaics that doesn't need to wait for anything else
+(then once built, will block in -proposed as part of the mysql-5.7 transition - but should get done sooner than late so as to not itself block mysql-5.7?)
+good point; rbasak want me to submit the debdiff?
+roaksoax,  squid3 block-proposed just removed, so it'll migrate assuming no failures.
+No need, I have it local.
+(already done, just not uploaded)
+ok, thanks
+and is lasso on your todo list?
+Already has migrated, in fact.
+it's in my queue of uploads for the transition.
+infinity, ah..
+(netmrg that is)
+I was holding back in case we decided to not do the transition.
+I think we're past the point of turning back.
+I was going to talk to infinity about it.
+Worst case scenario, we drop mysql-proxy and myodbc, and the rest of the world looked okay, right?
+OK. I'll begin tomorrow morning :)
+AFAICT, yes.
+Yeah.  Let's do it, then.
+ah, k
+urgh, that doesn't show up in `reverse-depends` ... how strange
+oh wait, it will
+ack
+I can demote those to -proposed when the rest is looking alright, and we can outright remove them from the archive when we're sure that's the right thing to do.
+rbasak, infinity: oh, er, myodbc is already broken in the archive, if you didn't know
+yes, on my list
+It is?
+yes, it built and then had undefined symbols and I decided I had better things to do with my life
+Awesome.
+https://bugs.launchpad.net/ubuntu/+source/myodbc/+bug/1010044
+Launchpad bug 1010044 in myodbc (Ubuntu) "program crashes saying "undefined symbol: strfill"" [Undecided,Confirmed]
+upstream are working on fixing up myodbc for us. We can land that late I guess, since there's no risk of regression then.
+File a removal in Debian and yank it from Ubuntu and wash your hands of it? :P
+^^ FYI.
+that says it's been broken for 4 years, hth
+well that certainly makes life easier. Thanks :)
+I feel a little less bad about some of my underloved Debian packages now.  At least mine run.
+trade you upstreams
+Though, I suppose yours is quite secure.
+ok.  How about libkolab? Its runtime dep is on phpapi-20131226, not on php5-*
+unbreakably secure
+yes, it shows up due the build-dep
+ok
+i haven't fixed any build-deps on src:php5
+or very few
+fwiw here's my current watchlist: (grep-dctrl -n -sSource:Package -FDepends php5 -o -FDepends phpapi-20131226 /var/lib/apt/lists/archive.ubuntu.com_ubuntu_dists_xenial_*binary-amd64_Packages; grep-dctrl -n -sPackage -FBuild-Depends,Build-Depends-Indep php5 /var/lib/apt/lists/archive.ubuntu.com_ubuntu_dists_xenial_*Sources)   | sort -u
+Huh.  How is it 16:21 already?  I guess I should go find breakfast or lunch or whatever.
+ok, thanks ... that's handy to have
+the day just flies by, doesn't it?
+NB that only looks at release pocket, not -proposed, so season to taste
+right
+wow, watershed demoted!

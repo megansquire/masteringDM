@@ -1,0 +1,1632 @@
+here's one I used recently to snag a file before it was deleted: " inotifywait -e CLOSE_NOWRITE,CLOSE dhclient6-${IF}.conf; cp dhclient6-${IF}.conf /tmp/ "
+how do i run this: node-v4.4.2-linux-x64.tar.xz
+tar what?
+is there a something that can be used in place of network manager
+what do you want to do?
+if you really really really want to do a 3rd party code install, then read the readme/howto on the page you got that from
+tar -ZxfJ I think
+i get these errors NetworkManagererror requesting auth for org.freedesktop.NetworkManager.wifi.share.protected: (3) GDBus.Error:org.freedesktop.DBus.Error.NameHasNoOwner: GDBus.Error:org.freedesktop.DBus.Error.NameHasNoOwner: Could not get UID of name ':1.25': no such name
+k1l, oh so how do i install node...
+which ubuntu release?
+14.0.4
+!info nodejs | django_
+nodejs (source: nodejs): evented I/O for V8 javascript. In component universe, is extra. Version 0.10.25~dfsg2-2ubuntu1 (wily), package size 672 kB, installed size 3094 kB
+I need version 4
+thats not version 4
+give me a moment whilst I look at the 14.04 code
+if you are ok with a slightly messy install, you can just do tar -xf on it, copy it to /opt/, and add the bin folder to your path.
+OK, that looks like the result of a bug in NetworkManager. the "org.freedesktop.NetworkManager.wifi.share.protected" is a PolicyKit name for authorising actions. It looks as if NM is mis-using it as a DBus name, which reports it cannot find it
+is it preventing you from connecting to the WiFi network?
+no its not
+i just want too fix it
+it's classed as a "<warn>" so it's none fatal. As best as I can see it was fixed in later versions of Network Manager
+ok
+clear
+!help
+Please don't ask to ask a question, simply ask the question (all on ONE line and in the channel, so that others can read and follow it easily). If anyone knows the answer they will most likely reply. :-) See also !patience
+!ask
+anyone point me to an example udev rule to have bluray, dvd, and cd all automount in a bluray drive?
+!upgrade
+For upgrading, see the instructions at https://help.ubuntu.com/community/UpgradeNotes - see also http://www.ubuntu.com/desktop/get-ubuntu/upgrade
+enabling automount in X makes blurays automount, but i have to explicity mount dvd's, adding the drive to fstab makes dvds automount but doesn't seem to work for bluray
+I just installed sublime-text using their .deb package, it is installed, I can run it, but it's not listed on ubuntu software center
+how can I remove it?
+sudo rm -rf /opt
+sudo apt remove sublime-text   (or whatever that package name is for sublime)
+any idea why it's not showing on ubuntu software center?
+i dont know. try apt on a terminal
+is mailing list for personal specific case help?
+that removed, thanks
+but it's still weird it's not showing on software center
+you can ask here for ubuntu support
+https://lists.ubuntu.com/mailman/listinfo/ubuntu-users  this is for technical support
+looks like Ubuntu software center is being replaced in 16.04 with gnome software center
+i mean is that for case specific help?
+what do you mean?
+what is the mail list for if you can ask via here and/or forum?
+that would be awesome, really
+think most people (at least I can speak for myself) have just been using apt-get at the terminal like k1l said since it tends to be faster and more obvious if something goes wrong what needs to be done
+ubuntu software center never looked that well
+yeah hopefully is better I actually run gnome but not sure that I've used that version of the software manager yet
+if you want to ask in the irc (in here) you dont need a mailinglist. just ask your technical support question
+i mean what is it for since anyone can ask?
+I see, I knew about the apt-get remove, but I got curious about the behavior of the software center, I didn't expect I wouldn't be able to uninstall it from there
+!guidelines | guest83810 read this
+guest83810 read this: The guidelines for using the Ubuntu channels can be found here: http://wiki.ubuntu.com/IRC/Guidelines
+as in what is point of mail list since anyone can ask here and/or use ubuntu forum(s)?
+different people like different support media
+ok thanks
+is it also for updates to software?
+like kernel mailing list for email updates for kernel? like new versions, patches etc
+see http://community.ubuntu.com/contribute/support/mailinglists/
+Hi! Is there any software on Ubuntu that can replace Itunes for syncing files on the Ipod?
+Amarok on KDE? ... havent used it in 5 years lol
+I prefer something non-KDE since I'm using unity
+maybe rhythmbox or banshee? I don't know if they can do it
+this might help https://help.ubuntu.com/community/PortableDevices/iPod
+When one upgrades from 15.10 to 16.04 are all your necessary kernel modules preserved automatically?
+So hardware support is preserved....
+personally have been using clementine https://www.clementine-player.org/ says it has ipod support but I just use it for streaming podcasts mostly
+ubuntu uses dkms to build kernel modules. so yes, they will work on the new release if that supports the kernel in use
+thanks kindly!
+with dkms it can cause build failures against the new kernel, if the source code of the out-of-tree module uses some facility the new kernel has changed
+I see, TJ - aren't most kernel upgrades backward compatible, though?
+TJ in such a case, would it improve one's chances of compatibility if one just did a fresh install instead of upgrade?
+the issue is that out-of-tree modules often use fragile constructs, but also that the mainline kernel's internal interfaces aren't fixed so a newer kernel could change things and of course the out-of-tree module doesn't keep in step - if the DKMS module comes from the Ubuntu archive you *should* be OK since the new release will be updated, but third-party DKMS modules can break
+I see....
+we had an issue like that with nvidia for the 15.10 release, where a function Nvidia relied upon had its signature changed
+The reason I ask, TJ- is that I have bleeding edge hardware. Everything is working now, but I worry about the coming upgrade....
+I need to report a bug in 16.04 and I don't know the package that it relates to. When I wake 16.04 from suspend, I experience a double log in screen.
+you can always install the Wily kernel .deb files and test them
+I'm on Wily right now. What do you mean?
+hahah I meant Xenial, 16.04
+Had someone yesterday installed the 16.04 kernel packages in 15.10 to fix a missing driver issue
+which deb files do you mean, the linux sources and firmware packages?
+What if they don't work, could I easily downgrade to the old versions?
+Is anyone aware of a way in inhibit screensaver/sleep/suspend/etc when the screen is locked  ...  Modifying the power settings, brightness & lock settings, and even running caffeine all only seem to inhibit these within the user's desktop.  Once the screen is locked (CTRL+ALT-L or Super+L), within about 15 the Unity Greeter is already dimming and going to sleep.
+it's just added into the GRUB menu so you can always boot from an older kernel, and then remove the 16.04 kernel
+something like this to fetch/install: "mkdir /tmp/kernel; pushd /tmp/kernel; wget http://archive.ubuntu.com/ubuntu/pool/main/l/linux/linux-headers-4.4.0-17_4.4.0-17.33_all.deb http://archive.ubuntu.com/ubuntu/pool/main/l/linux/linux-{image,image-extra,headers}-4.4.0-17-generic_4.4.0-17.33_amd64.deb; dpk -Ri . ; popd "
+so this would only be possible through the archives, not the software desktop application?
+right, because you need the 16.04 kernels and you don't want to risk pulling in anything else
+OK, one thing what is that command you wrote dpk - Ri?
+it installs all .deb files in the named directory. By creating a dir and fetching the files into it, it avoids having to pass the filenames to 'dpkg -i'
+So the command is dpkg -Ri? Is that correct?
+no, it is "dpkg -Ri ." there is a 'dot' there, meaning 'this directory'
+the commands as I gave them are 100% accurate
+when running a command line application (scrapy) with a newly pulled version of code, it is still running an old version..why???
+got it. Thank you!
+what do you mean by 'newly pulled'
+just pulled from a repo
+right, and has that over-written the previous version?
+yeah
+so any new executions of the same file will be the new version
+files have been deleted as well,
+for some reason it's running old code / potentially old files too
+this is so ridiculous
+this has nothing to do with replacing files
+this has to do with cache or something
+Are you trying to over-ride an Ubuntu package?
+no
+i know why up time is down time sometimes, cause, some time its up/baz, the other time baz/up, lolo
+its python code
+tried to get qnswers there
+well, if you've replaced an older file with newer, then the old version has gone
+wow thanks
+i know why up time is down time sometimes, cause, some time its up/baz, the other time baz/up, lolo
+what's the betting pianomonk's real issue was trying to use a locally built/installed version in place of the packaged version, and bash still has the Ubuntu version in its hash list
+hey all anyone give me a hand with cpu fan issues
+ubuntu 15.10 .always login loop with the nvidia drivers on
+*meaning sensors shows no cpu fan
+and fan not blowing
+i have to use only intel driver
+cpu getting hot
+I've looked high and low
+can't find a fix
+in software / additional driver it lists and Unknown: Unknown
+this device is not working
+which one do you prefer?
+now i use the 352.63 proprietary
+my sdcard is mounted as /media/username/sdcard. was this always the case or did previous verisons of ubuntu use /media/sdcard
+I think I recall that it may have changed. But now I would expect it to be /media/username/sdcard
+udisks handles it and it goes to /media/$USER/$LABEL-or-$UUID
+older releases - 12.04 I think - manually mounted under /media/ using udev rules I think
+thanks
+I want to add my Windows 10 install to the grub bootloader. I did fdisk -l and confirmed that my windows partition is on sda1. my linux install is on another physical disk. I followed the instructions at http://askubuntu.com/questions/618326/how-do-i-manually-add-windows-7-to-grub-list but when I rebooted and selected Windows it said that it cannot find the disk hd0,msdos1
+how to get client mac address for my security server
+anyone have a sample config for bluray and dvd automounting ?
+you mean you want the Ethernet MAC of the system's interface(s)? "ip link show"
+hey
+no no
+can you guys help me with grub
+sorry, I only cook for people I know :)
+i cant figure out why my windows entry wont boot
+what do you mean then?
+TJ- i know my mac address i want know the mac address of clients for to make a lists of ip-macaddress of my clients if I detect abuss i ban for my server
+is it an UEFI system with mixed boot modes?
+"ip neigh show"
+i think so
+if you've got Windows installed in UEFI boot mode, and GRUB in legacy BIOS mode, you won't be able to use GRUB to boot Windows. If GRUB is installed in UEFI mode then it can do it via calling back into the system's UEFI code
+ip neigh show?
+how do i know
+Does Windows have an entry in the System's UEFI boot menu? if so, then it's UEFI mode.
+i dunno
+I dunno how that stuff works
+can I check that using fdisk?
+if the boot disk has an EFI system partition you can check in that. EFI CP is a FAT file-system, usually the first partition, and usually about 500MB in size
+i know why up time is down time sometimes, cause, some time its up/baz, the other time baz/up, lolo
+damn
+bazhang is a piece of shit who has sit on ubuntu/staff hat for years, not doin a shit contributing to the community
+PIECE OF SHIT, FUCKING COCK SUCKER
+!voting to ban the chinese trash
+I am only a bot, please don't think I'm intelligent :)
+!ops
+Help! Channel emergency! (ONLY use this trigger in emergencies) - Pici, Myrtti, jrib, Amaranth, tonyyarusso, Nalioth, lamont, CarlK, elky, mneptok, PriceChild, Tm_T, jpds, ikonia, Flannel, genii, wgrant, stdin, h00k, IdleOne, nhandler, Jordan_U, popey, Corey, ocean, cprofitt, djones, Madpilot, gnomefreak, lhavelund, k1l, rww, phunyguy, bazhang
+hi
+I want to add my Windows 10 install to the grub bootloader. I did fdisk -l and confirmed that my windows partition is on sda1. my linux install is on another physical disk. I followed the instructions at http://askubuntu.com/questions/618326/how-do-i-manually-add-windows-7-to-grub-list but when I rebooted and selected Windows it said that it cannot find the disk hd0,msdos1
+Is there an Amazon AMI for 16.04?
+!16.04 | thomasj_
+Ubuntu 16.04 (Xenial Xerus) will be the 24th release of Ubuntu. It is due to be released on April 21st. Discussion in #ubuntu+1
+Hello guys , I have a question... So I have at media server running ubuntu 14.04 ... I want to say that this is literally DAY 1 of me ever touching ubuntu... To start with... We have a Mikrotik router, users are all on wifi via accessports.. The APs are ports 2,3,4,5 with port 1 being the WAN(ISP)... port 6 etc are on a different switch on the routerboard. so people on wifi have a local ip of 192.168xxx the media server has 
+I am trying to setup a plex server
+while it is on a different local ip will that cause a problem?
+is there something I will need to do to make that work?
+can setting up unknown repositories be risky?
+Which file system do I want when creating a Veracrypt volume?
+How to choose?
+by definition any third party repository you add, you're on your own
+xangua,  i meant security risks
+I want to add this to install x265 codec ppa:strukturag/libde265
+Hello guys...
+got a technical question and in desperate need of help
+!help |
+: Please don't ask to ask a question, simply ask the question (all on ONE line and in the channel, so that others can read and follow it easily). If anyone knows the answer they will most likely reply. :-) See also !patience
+sorry
+I asked my question earlier but got into my proper client now
+How to tell which file system my disk is formatted as?
+I'll use the same for my Veracrypt archive.
+mount (no idea about the Veracrypt though)
+I am trying to setup a media server, if the port on the router i am connected to with the media server has a 10.XX.XX.XX local ip will devices on the same router but a different ip pool of 192. be able to connect for the purpose of media servers?
+only if you have the correct routing set up. Easier to have everything on 192.168.X.*
+Currently running Fedora23.  Whats the best way to shrink the partition, and install a completely separate Ubuntu partition?  Can I undo this later when I decide which one I want to keep as main OS?
+is there any way to connect skype account to pidgin?
+somsip, I am not really sure how to even get it on the same one.. because of how the ports are configured
+can anyone please tell me how i can make my video card output a signal to display port? i updated drivers and it (again!!!) refuses to talk to my primary monitor. won't recognize it. doesn't see it at all
+Gallomimia, do you have multiple monitors? or is this a laptop?
+2 monitors
+desktop machine
+singular gpu
+i just updated to nvidia-361 with some help from folks in here and a PPA, but this is not the first time i've had the problem
+the other times i "fixed" it i have no idea what happened. i fiddled and fiddled and suddenly it worked
+Any advantages security-wise installing edubuntu over reg Ubuntu in a school environment? (ESL)
+rustuptwist__, more preinstalled software for the kidz I suspect. never used it, but they are not getting updated to 14.04
+I know nothing about edubuntu, but it does look like they're building it on 14.04  https://www.edubuntu.org/news/14.04-release
+ok. I'm just putting on Ubuntu cause the kids have manged to break windows. How or what to do to lock down computers so they can't mess with settings?
+i think i'm challenged when it comes to cron (and maybe everything computers).  trying to run a simple script which works fine until you set it up as a cron job.  i get "/home/ubuntu/.rvm/rubies/ruby-2.1.3/lib/ruby/2.1.0/rubygems/core_ext/kernel_require.rb:55:in `require': cannot load such file -- mysql (LoadError)" when i run it via cron instead of seeing normal script output.  any ideas?
+somsip, I mistyped. I meant, they're not updatign to 16.04. they're staying on 14.04
+probably environment not correctly set, as here http://stackoverflow.com/questions/13462447/cron-job-cant-load-gem
+fair enough
+rustuptwist__, I think you force them to sign on in a non admin account? idk to be sure
+HA!  thank you somsip!  i thought it was environment related but couldn't realy get any further.
+np
+Hi there are somesite I can't open in my country, I'm using ubuntu, anyone pls recommend me any vpn or any other way to open website?
+crontab -e
+lol
+why won't the web sites open?
+i put SHELL=/bin/bash in my /etc/crontab file and restarted the cron service.  but i think it's still using the wrong shell.  when i do puts `echo $SHELL` in my cronjob it spits out /bin/sh
+hello, I just reinstalled my old 14.04 with a brand new 14.04, wireless (ath9k) is now limited at 11Mbps using usual environment. I could track down the problem to one detail, before reinstall kernel was 3.19.*, after clean install(and "apt-get dist-upgrade") the kernel is a 4.*. Configuration is default in both cases. Can someone point me in the right direction please? I heard of a kernel
+bisection, should I do that?
+a bisect lets you compile your own kernel and then you do a binary search through all the changesets by compiling/testing in a loop all the time
+it is unlikely what you want
+hello cpaelzer, actually yes, i suspect some regression
+it is a lot of work to do, and you would need to build the Ubuntu kernel
+are you familiar with compiling custom kernels?
+yes i do
+ah fine
+but i was wondering if there would be some known problem regarding the ath9k (atheros wireless) driver and the 4.* series kernel in ubuntu
+just making a clean install and alternating between the newest 3.* and the earliest 4.* kernels shows the wifi bitrate locks at 11Mbps in b/g/n mode.
+and all on 14.04 - that means you switch between hwe-vivid and hwe-wily (https://wiki.ubuntu.com/Kernel/LTSEnablementStack)
+hum, you are right, both kernels are inapropriate for that release :/
+no both are :-)
+is it supposed to break the wifi though?
+the release gets out with an initial version, but then with every subsequent Ubuntu release the LTS versions get an updated HWE kernel
+so you should be totally in a good environemnt
+it shouldn't be "supposed to" :-), but then I'm not at all an expert in WiFi things - I'll try to look through bugs ....
+i was a bit lost by the choices offered by apt, this indeed seemed like an updated kernel (4.4) thanks for the clarifiaction, now i know they all are useable.
+supposing i have some spare time and ressources available, would a bisecting the kernel be the good approach considering the symptoms?
+if it is really "triggered" just by switching between those two kernels in the boot menu and nothing else AND you have some spare time it is an option
+after seacrhing for open/known issues - just to be sure
+only thing google could dig out was for unstable connexions and fluctuating speeds and boiled down to loading the kernel module with an option to disable hardware encryption offloading
+it didn't fix the thing, and yes just switching kernels on a default install triggers the problem
+never did that after the howto, but the rough outline looks like a good guid https://wiki.ubuntu.com/Kernel/KernelBisection
+since you said you are known to custom kernels I tihnk you can fill in the gaps
+i seems my next few nights will be busy sorting out commits then haha :)
+make sure you look through https://bugs.launchpad.net/ubuntu/+source/linux?field.searchtext=ath9k&search=Search&field.status%3Alist=NEW&field.status%3Alist=INCOMPLETE_WITH_RESPONSE&field.status%3Alist=INCOMPLETE_WITHOUT_RESPONSE&field.status%3Alist=CONFIRMED&field.status%3Alist=TRIAGED&field.status%3Alist=INPROGRESS&field.status%3Alist=FIXCOMMITTED&field.assignee=&field.bug_reporter=&field.omit_dupes=on&field.has_patch=&field.has_
+no_package=
+that was bad, let me make a shortlink
+http://bit.ly/1UOKENj
+that is the list of kenrel bugs with ath9k in it
+otherwise good luck with the bisecting and thanks that you spent effort to make Ubuntu better
+good idea thanks, i'll read those prior to attempting fancy stuff.
+thanks for your help cpaelzer
+going to start right now inside a clean vm, bye :)
+Hey guys... I enabled a virtual host in apache2, (conf file: https://bpaste.net/show/55caf55a46b4) and I can go to localhost:4201/cgi-bin/index.cgi, but it just cats the contents of the script. shouldn't that enable cgi?
+did you chmod +x the file
+dewwii, yes. I forgot to enable mod_cgi
+oh
+:D
+go me
+hey guys
+welcome, how can we help you?
+does anyone know why apt-get update shows ubuntu-device-flash needs to be updated, but it keeps holding it back?
+when i enter apt-get dist-upgrade it just does nothing
+did you add ppa's of any kind? manual installs?
+could that have something to do with the installation of the the ubuntu sdk for developing ubuntu touch apps?
+did you add external ppa's of any kind?
+not that i know of @lotuspsychje
+wich ubuntu version are you on?
+14.04
+!info ubuntu-device-flash trusty
+ubuntu-device-flash (source: goget-ubuntu-touch): Flash supported Nexus devices with Ubuntu. In component universe, is optional. Version 0.2+14.04.20140416.2-0ubuntu1 (trusty), package size 1017 kB, installed size 4587 kB
+hmm
+can you check your /etc/apt/sourcues.list or in software&updates
+*sources
+check if there are external ppa's added there
+do you want me to copy it hhere lotuspsychje? i'll check it now
+if you pastebin sure, we take a look
+jonoomph-openshot-edge-trusty.list jonoomph-openshot-edge-trusty.list.save openshot_developers-ppa-trusty.list openshot_developers-ppa-trusty.list.save private-ppa.launchpad.net_commercial-ppa-uploaders_plexmediaserver_ubuntu.list private-ppa.launchpad.net_commercial-ppa-uploaders_plexmediaserver_ubuntu.list.save ros-latest.list ubuntu-sdk-team-ppa-trusty.list thats all that's in it
+ppapurge all external ppa's off your system, then sudo apt-get update && sudo apt-get upgrade
+!ppapurge | vancha
+To disable a PPA from your sources and revert your packages back to default Ubuntu packages, install ppa-purge and use the command: « sudo ppa-purge ppa:<repository-name>/<subdirectory> » – For more information, see http://www.webupd8.org/2009/12/remove-ppa-repositories-via-command.html
+oh, i'll go and install that then
+not sure if i can delete the ubuntu-sdk though :O
+vancha, you are deleting package sources only, not the package themselves
+thx cfhowlett ;)
+Any idea why I can't play webms in firefox on wily?
+codecs installed? perhaps ubuntu-restricted-extras ?
+no driver plugin, N3X15
+lotuspsychje, thank you, will report back when apt is done stumbling around.
+hmm how do i find the name of the ppa related with the files in sources?
+installed ppa-purge, but i need to figure out what the ppa's are called
+well officially we cant support ppa's mate
+maybe apt-cache show package can show wich?
+or apt-cache policy package
+the problem is i dont know what to type for package :P i don't know what the package is called when i want to remove it
+sources.d shows openshot, but that doesn't seem to be on my system anymore
+this is why i would recommend to purge all external, non official ppa's from system
+!sources | vancha these are official
+vancha these are official: The packages in Ubuntu are divided into several sections. More information at https://help.ubuntu.com/community/Repositories - See https://wiki.ubuntu.com/RecommendedSources for the recommended way to set up your repositories.
+i want to lotuspsychje, but  i don't know the names of the unofficial ppa's :(
+lotuspsychje, nope, installed without errors, still getting "failed to decode".
+Doesn't seem to matter whether VP8 or VP9
+And the same webms open on Windows build of the same version of Firefox without issue.
+N3X15, in your ffox browser         about:config             then search for webm
+All enabled
+specifically?
+cfhowlett, http://i.imgur.com/VuYx214.png
+yep
+for comparison     http://imgur.com/yoaomKO
+And if you check, those are all set to true on mine, as well.
+I just have an additional bunch of settings for flashgot, which is an addon.
+I see you have some custom settings --- I suspect your stream has been redirected to a different plugin.  test: disable those user sets or try a different webm site
+flashgot doesn't redirect those streams, though.  I even disabled it entirely.
+As I was saying before I was rudely interrupted by CenturyLink: flashgot doesn't redirect those streams, though.  I even disabled it entirely.
+Is there a way to hide the administrator log in and have an automatic log-in for a standard account?
+Also can I update eduB 12.04 LTS via the Terminal?
+rustuptwist, yes
+first sudo apt update && sudo apt full-upgrade
+then sudo do-release-upgrade
+BUT your system upgrader must be set to LTS releases only
+I'm looking for just essentials if possible
+no idea what you mean
+I'm in a school environment with slow connection so if there is a way to just update core system as opposed to everything.
+rustuptwist, then torrent the .iso and do an off-line upgrade.  it will take a bit of time so be patient.  in fact, you might wait a few weeks and get 16.04 instead of 14.04
+is it safe to jump over LTS versions? just curious don't know one way or another
+"safe"?
+you cannot sudo do -release-upgrade more than a single LTS at a time
+I just installed 12.04 if there is no security need to update to 14 then I don't have to
+rustuptwist, why you not install 14.04???
+I'm just an Ubuntu enthusiast taking advantage of the fact that windows is fried on the computers so doing a side by side install with Ubuntu.
+yeah just meant can you do an upgrade install from 12 to 16 or do you upgrade to 14 then upgrade to 16
+wafflejock, nope.  incremental upgrade still applies.  12.04 > 14.04 > 16.04             but that may have been invisibly changed.  lots of reports that you could directly upgrade from 12.X to 15.10
+Not able to confirm that last
+hello
+guys I've a query about syslog file permissions
+I'm not in the US, net speed is slow, computers were 100% inoperable, had a edubuntu 12 disc w/my stuff from the states, etc.,
+ah k just curious since that will probably be coming up pretty soon here :) off to bed for now though
+rustuptwist, have one more year of support with 12.04.  14.04 is the latest LTS so you should have gone with that
+makes sense
+syslog can create files in /var/log (files named syslog.gz, syslog.gz1 etc), but only root has got write access on /var folder. How syslog does that..?
+I figured I could use terminal to update to 14. Just need a rapid update if possible cause once I leave the lab, who knows what can and will happen, lol
+rustuptwist, and that is why you should install the latest available LTS
+ok. How do i know if sys updrader is set to LTS releases?
+FYI before i instsalled thrre was no linux/ubuntu running just windows
+settings > system > software updater > settings > updates > Notify me of a new ubuntu version: For LTS versions
+Dont see thst in sys setting (edubuntu 12) i do see an update manager folder on desktop
+tested other browsers then FF?
+lotuspsychje, not yet.
+perhaps try with chromium-browser see what it does?
+!upgrade | rustuptwist
+For upgrading, see the instructions at https://help.ubuntu.com/community/UpgradeNotes - see also http://www.ubuntu.com/desktop/get-ubuntu/upgrade
+i got sudo apt: command not found
+doh!  right.
+rustuptwist, sudo apt-get update && sudo apt-get dist-upgrade
+sorry for misinformation.  apt is slowly rolling out to replace apt-get
+but all things considered, you're still better off doing the torrent > install method rather than a hot upgrade
+ok I have 14 on Usb I just had edubuntu cd and since it is a school after all I thought I'd put eduB on at least 1 unit to try it
+lotuspsychje, works on Chromium
+rustuptwist, install 14.04 then install the edubuntu-desktop.  logout, select edubuntu session, login = edubuntu!
+perhaps flash related then?
+lotuspsychje, Firefox plays webms natively.  From what I can tell via bughunting, this may be an issue caused by gstreamer-0.10-ffmpeg getting removed
+ah
+reinstall then?
+It's gone from the repo
+wich ubuntu version?
+wily.
+!find gstreamer
+gir1.2-gstreamer-0.10, gir1.2-gstreamer-1.0, gstreamer-tools, gstreamer0.10-alsa, gstreamer0.10-doc, gstreamer0.10-gconf, gstreamer0.10-nice, gstreamer0.10-plugins-base, gstreamer0.10-plugins-base-dbg, gstreamer0.10-plugins-base-doc (and 131 others) http://packages.ubuntu.com/search?keywords=gstreamer&searchon=names&suite=wily&section=all
+gstreamer-1.0-libav is supposed to fix it, but firefox isn't compiled against 1.0 in upstream yet
+and I don't feel masochistic enough to set up their horrifying buildsystem tonight
+hmm, apt-cache shows a whole bunch of it, not sure whats the replacement
+Oh well, Chromium it is, for now.
+Thank you, lotuspsychje
+perhaps a firefox purge, and reinstall will do the right dependecies also?
+also sure your up to date to latest?
+lotuspsychje, Yep, just did an apt-get update an hour ago.  I'll try blowing out firefox tomorrow.
+good luck, if you found it solved, plz come tell us
+N3X15, I too am curious.
+cfhowlett, lotuspsychje, still not working after purge and reinstall.
+haven't been able to replicate the problem so can't advise further
+http://www.quirksmode.org/html5/tests/video.html is the page I used, for the record.  the ogg and mp4 play fine.
+plays like a charm here
+Trying with a fresh profile.
+thanks for that link! bookmarked
+Yeah, still failing, even with a fresh ~/.mozilla/firefox
+I'm going to blame firefox's gstreamer support and call it a day.
+can you doublecheck lsb_release -a
+if your on 14.04.4
+wily, lotuspsychje
+oh
+https://bugs.launchpad.net/ubuntu/+source/firefox/+bug/1323822
+Launchpad bug 1323822 in libav "Firefox can not play some WebM videos generated by avconv on Trusty" [High,Fix released]
+lotuspsychje, yeah, it's not with a particular format, it's with all webms.
+avconv!  not ffmpeg
+rkhunter on Ubuntu 12.04.5 LTS has issues.rkhunter --update Checking file i18n versions                                [ Update failed ]
+check apt-cache policy libav-tools to see version?
+!info libav-tools
+Package libav-tools does not exist in wily
+yep, cuz we're going or gone back to ffmpeg
+6:11.2-1 0 lotuspsychje
+Also, firefox plays webms natively.
+did you update your whole system also?
+.
+Hi.
+Has anyone here tried to install the openstack single server?
+Hyllegaard, please do not use "has anyone else" question structure.  waste of time.  post YOUR issues with YOUR information
+Ok :) Sorry about that.
+My problem is that having just installed ubuntu and the openstack single server, I am not able to reach any of the ip's listed in the openstack status.
+Hyllegaard, I suspect the #ubuntu-server channel would know more ...
+cfhowlett, lotuspsychje, #firefox got me to try a nightly mozilla build and it works fine.
+So looks like an issue with ffmpeg, prehaps.
+too weird N3X15.  but yeah there is still significant confusion with ffmpeg/avconv
+bug mentions libav-tools update fixes issues
+Yeah, but the question is when that'll roll down the hill into the stable pool. :P
+i wonder if a fresh install would solve your issue...
+AGOguBLJGN
+fffkkkk
+jafòkadf
+BOOOOM
+popopino, stop that
+oh
+someone
+this is a support channel.  play somewhere else
+sorry
+never got answer
+so sorry
+new to irc, can i ask how does idling work?
+popopino, ask your question, be patient.  if no answer after 20 minutes ask again
+!patience
+Don't feel ignored and repeat your question quickly; if nobody knows your answer, nobody will answer you. While you wait, try searching https://help.ubuntu.com or http://ubuntuforums.org or http://askubuntu.com/
+thanks
+is it possible to remove unity from ubuntu and install Xfce as a default DE??
+yes but not usually advise.
+just install xubuntu-desktop and chose that instead. Tricky to cleanly remove unity AIUI
+*advised.
+why ? what is the problem to remove unity?
+angel96, xubuntu-desktop will grab the whole xubuntu experience.  sounds like you want only the DE.  sudo apt-get install xfce4^
+lots of dependencies. To "cleanly" remove it is fiddly
+angel96, unity is heavily integrated into ubuntu.  breakage is almost guaranteed
+eg, theis is out of date I think: http://www.psychocats.net/ubuntu/purexubuntu
+install xfce4, logout, choose xfce session, login
+very much out of date
+yup - just example though
+if it's paramount to you, install from minimal and then install xfce cleanly on top of that
+ok.. thanks
+Does anyone know what might be happening at a low level when during GRUB if a USB device is plugged in, the computer is effectively frozen but as soon as you unplug the device the computer becomes responsive again and will even respond to buffered keyboard input that was entered during the frozen period?
+nick jsge
+join #nc-irc-challs
+missing /
+hay
+I to get started with ubuntu
+!manual | CLAYTEam
+The Ubuntu Manual will help you become familiar with everyday tasks such as surfing the web, listening to music and scanning documents. With an emphasis on easy to follow instructions, it is suitable for all levels of experience. http://ubuntu-manual.org/
+hello there i am new on ubuntu, can anybody explain me how to install a soft? not passing trough the ubuntu soft center
+sudo apt-get install {package}
+somsip : i have to write the code line in the terminal?
+yes
+ok thanks, and if an old version of the soft is installed do i have to remove it first? it's audacity i want to install because i have a bug with the version i use, it reads the fils for one sec  and the stops
+ubuntu koyoke gak tau update
+english only here please
+okey somsip...
+Does anyone know of a rdp-client for linux (to connect to windows machines) that support having seperate windowsize and resolution? For example windowsize 2560x1440 and resolution 1920x1080
+Apparently, infrequently updated ubuntu?
+what are you looking for?
+Hello,....
+CLAYTEam, pay attention.  he asked what software you are looking for
+New update of ubuntu
+due on 21st April
+CLAYTEam, sudo apt update
+sudo apt full-upgrade
+What Addition of facilities in the next version?
+What Addition of facilities in the next version of ubuntu?
+!16.04 | CLAYTEam
+Ubuntu 16.04 (Xenial Xerus) will be the 24th release of Ubuntu. It is due to be released on April 21st. Discussion in #ubuntu+1
+ Discussion in #ubuntu+1
+read this link, talk about it in #ubuntu+1 http://www.omgubuntu.co.uk/2016/03/ubuntu-16-04-beta-2-released-whats-new
+grats hggdh
+good for ubuntu
+i like ubuntu
+somsip : do have i to put the file anywhere first?
+somsip : is audacity-minscr-2.1.0 a name that seems valide to you
+you put the package name instead of {package}
+!info audacity-minscr
+Package audacity-minscr does not exist in wily
+ok :)
+!find audacity
+audacity, audacity-data, audacity-dbg
+so, no. Did you download a file?
+I want to ask, how to run android apk file in ubuntu? Can it?
+not directly. You need an android emulator
+in where i can found emulator android for ubuntu?
+shalom
+try looking first. Please don't just ask here for people to do it all for you
+Is there a guide about how to get hebrew fonts look good under chrome
+in the latest stable ubuntu
+Oke, I'm Sorry and Thanks for Inform... Enjoy using Ubuntu
+does anything here help? https://help.ubuntu.com/community/HebrewLocalizationHowto
+CLAYTEam,  Genymotion should work
+http://www.2daygeek.com/install-sdk-android-emulator-on-ubuntu-centos-debian-fedora-mint-rhel-opensuse/   CLAYTEam
+Hi, is there a way to install ubuntu on a pendrive and make sure that it never changes a single bit of data while running, neither on the pendrive or the host system?
+I'm seeing a guest log in when the computer boots. How do I remove it
+Guys how is this possible? https://bpaste.net/show/c91aa4cc0271
+It shows the environment variable then complains about it
+http://askubuntu.com/questions/451526/removing-guest-session-at-login-in-ubuntu-14-04   rustuptwist
+Hello. I managed to mess up SMTP on my server by installing/configuring postfix and OpenDKIM. How do I restore everything back to normal now? I tried delete both of these but can still not send mail
+Merdeka!!!
+i know why up time is down time sometimes, cause, some time its up/baz, the other time baz/up, lolo
+if user account has no password but terminal asks for one I put in Admin password but did not accept
+bazhang is a faggot
+[sudo] password for students:
+daytime is bazhang's faggot
+knock it off
+[08:42]  * Yehai laughs
+if you stop attacking me as a staff
+maybe i will consider to knock you off my favor list
+how can I deny ssh access and give a message instead
+you can allow users in sshd_conf "AllowUsers user1 user2"
+or DenyUsers if you want to block only a few
+about displaying a message "Banner /path/to/file"
+doesn't that only show up once logged in though?
+I guess you can have a banner show prior to login, but not in the manner of "You were denied SSH access"?
+cut -d: -f1 /etc/passwd | while read u;do usermod -s /usr/local/bin/hello_there $u;done
+Banner will display a message before the loginprompt, /etc/motd to display a message after login
+what a faggot you are
+that's right, but it looks like he was asking for a message output on access denied, which I suppose isn't available
+saw that now =) No idea about "block message"... =(
+hiii
+myth tv dont work for me
+!details | _jj_
+Please elaborate; your question or issue may not seem clear or detailed enough for people to help you. Please give more detailed information, errors, steps, and possibly configuration files (use the !pastebin to avoid flooding the channel)
+_jj_, get help their channels  https://www.mythtv.org/support
+hello everyone, I have an audio problem on 14.04 (i think). there's no audio at all but in the sound setting menu under output there is two "audio" but with none of them the audio test works
+cannot connect to sql server
+_jj_, myth tv has their own support channel.  use it.
+ok
+i am using ubuntu14.04. When my laptop suspends all op-pend file language is changing. Can any one help me pls?
+alsamixer is ok, everything is at 100% but nothing works, I also restarted alsa. Any idea please?
+but myth read the sql and.... make films???
+_jj_, get help their channels  https://www.mythtv.org/support
+my audio :  0 [PCH            ]: HDA-Intel - HDA Intel PCH
+hi
+hi
+how r u?
+i am fine. I love hexchat.
+first time 4 me
+enjoy irc worl
+@trollixx a1
+new here what everyone is doing
+is there someone that can help me with the audio problem I'm facing?
+Not me, sorry
+shot
+I have found pages on adding a keyboard that is present in log in but not how to remove one
+ok tell us yr audio problems
+is it safe to add clocksource=tsc in grub parameteres to force ts?
+have to go bye
+*tsc
+As i said mario_ I can make it work my audio but the sound card is present on the setting menu and alsamixer looks ok
+Keyboard on the login screen I mean
+Hey folks - how can one figure out if their USB3 ports support fast charging, and if they don't, how can one enable it?
+davesidious, http://askubuntu.com/questions/217676/how-do-i-find-out-whether-my-system-has-usb-3-0-ports
+@search only revolutions
+Thanks, cfhowlett!
+happy2help! davesidious
+hi, how i can remove all packages that i have installed after the ubuntu instal at once ?
+ hi, how i can remove all packages that i have installed after the ubuntu install ?
+asking every minute is a quick trip to /ignore.  be patient
+Don't spam
+!patience
+Don't feel ignored and repeat your question quickly; if nobody knows your answer, nobody will answer you. While you wait, try searching https://help.ubuntu.com or http://ubuntuforums.org or http://askubuntu.com/
+sry
+http://askubuntu.com/questions/548683/how-can-one-remove-all-packages-installed-after-a-certain-date-time
+Does anyone know of a rdp-client for linux (to connect to windows machines) that support having seperate windowsize and resolution? For example windowsize 2560x1440 and resolution 1920x1080
+remmina
+I can't display a braille character on my terminal
+I have utf-8 etc
+⡤
+that looks like a square to me
+You need a font that has those symbols
+It works fine for me with the font Ubuntu Mono.
+Also works with Monospace
+when is 16.04 out?
+sorry for asking
+!isitout
+No, it's not out yet!
+!xenial | n-iCe
+Ubuntu 16.04 (Xenial Xerus) will be the 24th release of Ubuntu. It is due to be released on April 21st. Discussion in #ubuntu+1
+thanks geirha, what would get more support time, 14.04 or 15.10?
+regular releases are supported for 9 months, LTS releases are supported for 5 years
+14.04 is an LTS, 16.04 will be an LTS, 15.10 is not
+is there a list to know the releases time and end of support time of each versions?
+got it
+wikipedia has a decent table: https://en.wikipedia.org/wiki/List_of_Ubuntu_releases#Table_of_versions
+I'm trying to upgrade python to 2.7.11 using the deadsnakes ppa. Here are the commands I've tried:
+sudo add-apt-repository ppa:fkrull/deadsnakes
+sudo apt-get update
+ sudo apt-get -y install python2.7
+t_, first you must add the ppa
+oh, I see
+That should install python 2.7.11. However python is still showing as version 2.7.6?
+what is the output of "lsb_release -d"?
+is it possible to preload a .so for all exe's in a system?
+Ubuntu 14.04.4 LTS
+Hello when I Start ubuntu starts the busybox why
+it doesnt offer 2.7 at all for 14.04: https://launchpad.net/~fkrull/+archive/ubuntu/deadsnakes?field.series_filter=trusty
+so better remove that PPA with ppa-purge again
+t_, python 3 will be standard on 16.04.  why do you muck about with 2.7?
+Is there somewhere else I can get the latest version of 2.7? I'm stuck w/ it for a pre-existing app
+Hello when I Start ubuntu starts the busybox why?
+t_, https://www.python.org/downloads/source/
+Silverdragon, patience
+can you take a screenshot of the screen?
+Yes
+it says it supports ubuntu trusty...isn't that 14.04?
+Hello, im using samba and i want to access with sftp one of the folders there, but when i use my external ip or no-ip domain i get "access was denied" error
+any help to handle this please?
+im using sftp://external.ip
+Eher can i uploas the picture?
+Wher*
+imgur.com
+thanks mallard
+I think it's some locale problems in kubuntu
+although I'm doubting that. the
+braile doesn't show up outside of the terminal either
+xterm was the only thing that showed it correctly
+http://imgur.com/efKd9OZ
+hi, anybody knows will 16.04 support zfs root booting? Especially zfs luks mirror root booting?
+Why starts busybox?
+!xenial | cdidd
+Ubuntu 16.04 (Xenial Xerus) will be the 24th release of Ubuntu. It is due to be released on April 21st. Discussion in #ubuntu+1
+ok
+because something is going wrong
+What?
+a filesystem is in an inconsistent state
+What can i do?
+do you have a live usb? try to run fsck on it
+Silverdragon, as stated, a fsck is required.
+your filesystem on your harddisk is damaged. you need to run a live-ubuntu and check that
+\quit
+\q
+exit
+quit
+OK i try it
+It is not working :(
+And now?
+what isn't working?
+When i Start ubuntu starts the busy box i checked for defects and it wasn't Wirkung
+did you boot a live usb and run fsck?
+Fsck?
+yes
+filesystem check
+How can i run it
+boot a live usb and run sudo fsck /dev/sda1
+Ther is only that http://imgur.com/zua69NK
+choose "ubuntu without installing"
+when the desktop is loaded, run the command EriC^^ just gave you
+The terminal?
+yeah
+And now
+hello
+on clavier Fr-alternate marche plus comme il faut
+Fr (variante)
+!fr | jluc
+Nous sommes desoles mais ce canal est en anglais uniquement. Si vous avez besoin d'aide ou voulez discuter en français, veuillez taper /join #ubuntu-fr ou /join #ubuntu-qc. Merci.
+oups sorry
+And now?
+my fr-alternate keyboard is 'broken'
+please press ctrl+alt+t   then run "sudo parted -l | nc termbin.com 9999"
+that will produce a url, please show that url here
+i wish to use the middle line . that is supposed to be CTRL+SHIFT+.
+but it doesnt appear anymore
+did you run fsck /dev/sda1 ?
+*sudo ..
+on a usb live it could be the usb drive now
+Hi. I have an installed package marked as "broken". Can I somehow manually mark it "not broken"? (missing dependency packages, installed with dpkg --ignore-depends=...)
+true
+how do i ensure the keyboard map layout is the one i wish ?
+type sudo parted -l | nc termbin.com 9999
+i use the top right indicator but it doesnt improve
+http://imgur.com/nVQ1E21
+The problem is, if I try to install / update anything, I get "package broken, do apt-get -f install", which then wants to remove it (after which I of course have to install it again etc.)
+ok, type sudo fsck -f /dev/sda1
+why does it want to install it agaian?
+It doesn't, but I do
+I would rather "not remove it", but apt-get wants to
+why does it want to remove it?
+pastebin the logs
+http://imgur.com/Q6IS0y1
+Does anyone know of a rdp-client for linux (to connect to windows machines) that support having seperate windowsize and resolution? For example windowsize 2560x1440 and resolution 1920x1080
+press y
+http://pastebin.com/3ve9x98J
+basically press y to everything unless it seems drastic i guess
+I have installed asound2:i386, ia32-libs is, of course, no longer installable, unless I use some old repos
+ok, try to install the aforementioned packages it depends on and see what it says
+http://imgur.com/szF74Vf
+On Ubuntu 16.04 btw, but I assume the solution (manually marking package as "not broken" should be probably same for any version)
+maybe there's a different teamviewer ppa? /join #ubuntu+1 for 16.04 support
+y
+Like I said, I have a "generic" problem, that a package is marked "broken". I don't care if ubuntu think it's broken or not, I want to prevent it from being uninstalled every time I do some installation & upgrades
+And I specifically need to use this old version for nwo
+I don't think this is related to ubuntu 16.04 specifically, or teamviewer at all
+your "generic" problem is due to the ppa telling apt that it depends on that package, which isn't a part of ubuntu anymore
+Sure, the "why it's broken" is, but I just want to "bypass" it
+Well, that's one problem, but not the one I'm trying to solve
+http://imgur.com/o7wRT9s
+you mean workaround?
+You could say that too
+that sounds like you are trying to make the most dirty workaround not look dirty
+if you want apt to ignore a dependency you'd have to rebuild the package yourself and remove the "Depends" in the control file
+try to reboot
+What I mean, is there some apt-something / dpkg-something with some --mark-not-broken=<packages> command
+but either there was a big issue with a crash or powershortage, or the hdd is broken
+OK
+Of course the program seems to work ok (although not used too much yet, better try to make it so, it won't be uninstalled at each turn first)
+Its Wirkung THX
+i dont htink there is an ignore switch for broken states
+Jupp3, 1. sudo dpkg --add-architecture i386  2. sudo apt-get update  3. sudo apt-get install gdebi  4. sudo gdebi your_teamviwer_version.deb
+Working *
+Anyway, got it working
+anyone got a script for batch shrinking PDF files?
+This is NOT recommended, but posting this workaround anyway: http://www.sudo-juice.com/ignore-broken-packages-ubuntu-aptitude/
+okay, this is frustrating. I have a laptop with 14.04 and I just recently started using GNOME Classic (3) instead of GNOME Flashback (the old 2.x interface). ever since then I have had the laptop quit responding after blanking the screen *at least* twice
+Just would have expected that if I tell dpkg to ignore dependencies, it would be ignored for good
+and I have zero useful diagnostic information. I have looked everywhere to try to find log entries that hint at the cause and no joy.
+you are messing with your packagesystem. more issues are to be expected
+you're playing with fire and begging to get burned.
+Sure, definitely true, but doing that for a package, that no other should depend on, should be relatively safe
+Sure, but uninstall is no option for me for now
+Of course I'd want to get rid of that for good, but for now, I need it
+Just posted the workaround as reference, with recommendation to NOT do it :)
+I have had to uninstall and reinstall to fix package problems before. (especially in the case of running out of disk space things can go really bad really fast)
+And I agree that doing that for some library would be way more dangerous
+even with a recommendation to not do it, it's still dangerous advice and a bad idea to post
+Well, of course I could have simply removed & reinstalled that each time I need to update / install something, but that would get bothersome after a while, and no guarantee if settings will be preserved etc.
+it's kind of like those leaflets the Mexican government gives to people trying to expatriate to the US. they devote three pages to saying "legal is the best way" and 29 to saying how to do it illegally
+Didn't paste it as "advice"
+if you don't purge your configs will stick around
+what program is it?
+Teamviewer 8
+That's how it SHOULD go. I'd never absolutely trust that to work on a random old closed source program though :)
+what was the workaround?
+this is why I don't pollute my nice free software OS with non-free, binary-only software :-)
+I'd rather do that aswell, but sometimes you just can't avoid id
+hello Im trying to install ubuntu but i think my laptop hard drive is not working anymore
+is there any command to check if it detects it or something?
+what makes you think the hard drive is not working?
+if you choose 'try ubuntu' you can use gnome-disks to see harddisks
+Anyway, for YOUR problem, I think I've seen exactly similar behavior (system getting stuck at black screen after screensaver gets triggered)
+when i click install ubuntu it does not show a disk or something
+Probably not as old as your ubuntu was back then
+this is on 14.04 LTS
+how risky is it to install the last 16.04 LTS prerelease at this point?
+and how easy is it to upgrade to the real 16.04 when it is out?
+open a terminal and run "sudo parted -l | nc termbin.com 9999" show the link here
+The bad news is, I don't 100% remember what was the thing causing it, I think it was some x lockscreen something... If I killed that, the system was usable again
+if you need to ask dont run alpha/beta
+To be honest, I found kubuntu 16.04 way more stable than 15.04 and 15.10 were for me
+But there's always a risk
+in my case, it was a hard lockup. laptop did not suspend on closing the lid. hooking up wired connection got nothing. trying to ssh in on laptop using wifi IP got nothing.
+I'd install "next" version only, if I find some "too serious" issues in current version
+laptop was D-E-A-D dead with only power light and wifi light on
+my goal is to stay on LTS
+Or if I just want to test it, being prepared to reinstall if it breaks
+Ok, different then... For me, the screen stayed black, but I could ssh in
+I could clone my install to an external hard drive and use that
+Don't remember if virtual consoles worked
+hi, how to get size of loop0p1 ? For sda1 it works with cat /sys/block/sda/sda1/size
+in my case I got exactly jack #$%&. Alt-Prtsc-SUB didn't work
+But there is no /sys/block/loop0/loop0p1 entry
+only thing that worked was holding down the big silver button (I'm on an old Toshiba Satellite)
+the last time I had to deal with an issue like this, was on a pair of old Athlon PCs both running Windows 98
+back in about 2000-2001
+ok
+ http://termbin.com/rc3r
+especially I want to detect if a loopXpY device is an extended partition. with an bash script...
+yes, there is only the usb drive. look at "dmesg |nc termbin.com 9999" if there is an output for another disk
+ http://termbin.com/4bi3
+https://bbs.archlinux.org/viewtopic.php?id=129401
+same problem, different distribution
+fixed in his case with a new SATA cable... not sure if that's an option in your case
+^ you have any further insight?
+how do I set up Remmina to remote access from my Ubuntu Desktop to my Ubuntu laptop, or vice versa?
+Hello
+Howdy folks
+If I have a motherboard with onboard video, does it show up in lspci? if so, what should I be looking for?
+Or in /proc for that matter
+yes it does.
+hi...i wanna read my email from terminal...how can do i this?
+look for something like VGA compatible controller:
+it depends on what you really want to do. For instance you could get a browser liek lynx of a mail client like mutt
+<raub> i wanna connect to my email from terminal and chech it
+Don't know how I missed it: 00:02.0 VGA compatible controller: Intel Corporation Xeon E3-1200 v2/3rd Gen Core processor Graphics Controller (rev 09)
+Thanks
+https://help.ubuntu.com/community/mutt
+<raub> hum  very good tnx
+<raub> but i dont want to send mail just i want read my email from terminal
+where are those mails?
+are they on an imap server?
+<k1l> for example my yahoo.mail  .. i wanna check my email from terminal
+then look at mutt
+<k1l> so how h iT? i check my email wit
+<k1l> so how can i check my email with it?
+install mutt, do the config, run it.
+you want it, so invest 10 minutes of reading and set it up :)
+google told me that https://ubuntu-tutorials.com/2007/04/14/learning-the-mutt-mail-client/
+<k1l>hummm my language is week but tnx
+<raub> tnx again my friend
+if you are going to use yahoo, it has a way to give a separate long weird password to be used with clients
+You'll need to look into that on your own
+!mutt | reza_sam
+https://wiki.ubuntu.com/Mutt and https://help.ubuntu.com/community/mutt
+awy
+i see
+stop harassing me
+wtf?
+Bom dia
+clear
+Alguem faklando portugues ai?
+Elitebook bom dia
+!pt | nailsom
+Por favor, use #ubuntu-br para ajuda em português. Para entrar no canal por favor faça "/join #ubuntu-br" sem as aspas. Para a comunidade local portuguêsa, use #ubuntu-pt. Obrigada.
+good morning
+hello
+hello
+hi
+Im searching software to change format freeofice till pdf
+do you know something?
+petermore, did you mean libreoffice
+yes
+petermore, which format exactly , odf or what
+libreoffice till pdf
+xyou can make pdfs from libreoffice directly
+print to pdf petermore
+just open the document in libreoffice and choose "export to pdf" in the menu
+oh shit!
+i search on save for
+ok, sry X) im new on ubuntu
+iirc there is even a "pdf" button in the top of the program
+yes, thanks guys :0)
+hello
+Hi, i'm using 14.04.4 on x86_64 system. When I try to install *steam*. I get a libGL.so.1 missing error. Also I have broken dependency for libgl-mesa-glx:i386
+what should I do. 32bit packages seem to be missing
+I cannot share a screen shot because I 've uninstalled them
+I've manually upgraded to 4.2kernel and latest mesa and xorg
+that might be the issue
+I upgraded from 14.04.1
+k1l, i guess
+yeah
+steam needs 32bit stuff since its 32bit only. but ubuntu is multiarch so that is not an issue.
+Does anyone know of a rdp-client for linux (to connect to windows machines) that support having seperate windowsize and resolution? For example windowsize 2560x1440 and resolution 1920x1080
+try installing packages in the section MULTIARCH DESKTOP here: https://wiki.ubuntu.com/Kernel/LTSEnablementStack
+pesari, i'll do that noow
+*now
+I guess you already have others but the :i386 ones
+pesari, you are right
+helo again
+im using transmission, but run to much slowly
+how install apl in ubuntu
+comes with regular installation
+when i installed ubuntu
+im downloading 43 kB/s
+mean
+APL?
+Hey guys. I have the line "deb [arch=amd64] https://apt.dockerproject.org/repo ubuntu-trusty main" in my docker file in my apt sources directory. It's trying to fetch the url https://apt.dockerproject.org/repo/dists/ubuntu-trusty/Contents-amd64.gz but the correct url is https://apt.dockerproject.org/repo/dists/ubuntu-trusty/main/Contents-amd64.gz
+Can someone tell me what's wrong and how I can fix it, please?
+hmm
+Hi, it's possible to install and run Ubuntu on Zotac NEN Steam Machine like any other desktop pc?
+Yes. SteamOS is just Debian
+hateball perfect . I am going to buy one to use it as a Ubuntu desktop pc. Thank you! :)
+You could most likely get better hardware for less if you built/bought a non-steam machine
+But to each their own
+hateball reviews say that it is very silent. As I want a very silent desktop it looks a good choice
+bye
+If you ask over in ##hardware they may have recommendations for a silent desktop computer that doesnt cost as much as a steam machine
+hateball ok I will do, thank you again :)
+But of course you do as you like. It just seems strange to me is all :)
+waste of money
+hateball ok :))
+how can i ADD my EMAIL to MUTT program?
+!mutt | reza_sam
+mutt is a small but very powerful text-based mail client for Unix operating systems. For more Informations on how to setup see https://help.ubuntu.com/community/mutt and https://wiki.ubuntu.com/Mutt
+hey. i've got a sytem set up with windows 10 and arch with grub already installed. i want to install ubuntu as a third thing. can i figure out what ubuntu would put in grub's config and add it to /boot/grub in the arch partition?
+you need to invest some minutes to get to know how to setup mutt. if you have specific issues then ask specific questions.
+best case is you run "sudo update-grub" on the OS that you want to handle the grub and that will see all other OS installed and put that into the grub autmatically
+how do i tell ubuntu's installer to not touch the boot sector or efivars?
+k1l> just i have problem for adding email...just it...if  u say to me is very good
+if you want an easy way to use your email: use thunderbird or another GUI program that got assistants for setting it up.
+but you want a cli email program. they dont have assistants for settings that up. so you need to read the documentation and then make the settings yourself.
+so if you dont want to read about it and just want an easy email program: use thunderbird.
+GUys, i've installation proccess seems stuck. i can't use apt-get install cuz of it..
+is there anyway to know what's the proccess id ?
+to kill it
+<k1l>So i think i need to red some document :)
+the bot gave you the links already
+RegulationD yeah tnx
+what's stuck? press ctrl+c
+I'm installing it via Ubuntu Software Center. andit said some other libs required. and stuck there
+Like i see the icon is active. but can't open window
+even in "Software center" => "proccess" i can't cancle them by clicking on 'X'
+Oh cancelled :D
+cool
+So, I tried installing the latest (15.10) ubuntu this morning, and I've had wireless problems with Debian in the past but was always able to resolve them with the iwlwifi-6000 firmware, it seems that ubuntu as the latest version(6) of this preinstalled, but I still cannot connect to my network....
+Has anyone successfully connected with an intel ultimate n 6300 here before, on  15.10?
+I've installed the 16.04 beta2 as an upgrade from 14.04. I run Ubuntu with i3wm (tiling window manager). Can anyone please tell me why now when I run unity-control-center most icons from there are gone?
+I'm running unity-settings-daemon via i3 startup btw
+hello, i have a problems with flash player in chromium, I`m using ubuntu 16.04.maybe someone can help me?
+??
+#ubuntu+1 fo 16.04 as long as its not released
+~_~
+hey, i know this has nothing to do with ubuntu, but is there anyone thats good with portforwarding that can pm me?
+hi guys short question / im searching a performance toolbar or something like that for ubuntu
+you mean a system monitor in the panel?
+hi
+im trying to install wine but the install button on the software centre is blanked out
+hello?
+open a terminal "sudo apt install wine"
+ok
+Hey, I'm running Xubuntu 15.10 and I'm considering upgrading to 16.04. I don't mind a few bugs here and there I just want my system to still work (although I do have a backup). With all these things in mind, how stable is the current status of the final beta?
+its still unstable. if you need to ask dont use alpha/betas. :)
+ok, i tried that but it just comes up with a load of erors
+errors
+Fair enough, when it's finally released will their be performance improvements?
+paste them to paste.ubuntu.com and show the link
+ok
+depends :)  but it will ship a new kernel and new version of packages. so it might be better
+Hey, Does anyone know if it is safe, to have mount and edit data on a disk, lets say /dev/sdb, that is exported as iscsi device and is mounted on another host? I mean does iscsi support a protocol for coherency (like NFS)?
+bonjour
+hello
+Ummh hello people, I'm looking for PDF editor. and good one. does anyone suggest?
+spmething
+ I use Okular for highlighting and commenting pdfs
+no, it isn't safe. iSCSI is a SAN protocol, which is block, not file level
+katerina, highlighting?  what do u mean?
+I've found Master PDF Editor quite useful. It was originally a paid-for application in the Ubuntu App Store but has been free for a while now (if I recall correctly)
+TJ-, Do u have any link for it. to read about it
+katerina, seems PDF reader. not editor.
+viewer  *
+Yes you cannot edit text if that is what you want.
+see https://code-industry.net/masterpdfeditor/
+Hey, i disabled icmp with ufw (ufw default allow outgoing), can this cause my ipv6 routes to be lost after the ttl expires ?
+TJ-, Thanks )) seems good one
+ehhh * ufw default deny outgoing
+Yes; if you disabled icmp6 since it is used for Neighbour Discovery protocol
+ So if I want to have access to a disk concurrently by two hosts, I use either NFS or clustered filesystem togother with a way to export it, right?
+ehhh * ufw default deny outgoing
+how can i enable icmp6 with ufw ?
+Yes, you need some file-system that can cope with concurrency
+I don't know; I never use it, I work directly with the low-level tools
+ Thanks, makes sense.
+does anyone kno why wget and aptget dont use multiple simulatanious connections to speed up downloads?
+or if its possible
+it depends if the remote server supports chunked ranges or not
+nathan_, it's almost simultaneous, but they have to be listed in sequence so it only appears sequential
+is there an irc channel for ufw ?
+!info aria2 | nathan_ if you want multiple connections there is
+nathan_ if you want multiple connections there is: aria2 (source: aria2): High speed download utility. In component universe, is optional. Version 1.19.0-1 (wily), package size 1222 kB, installed size 4798 kB
+thankyou
+i just thought it might be handy for wget and apt-get!
+i use fdm on windows and its possible to use multiple http mirrors for the one download, wouldnt it be cool if we could select say the 5 closest mirrors and use 1 connection to each for apt-get
+well, for apt, if you were to use apt-cacher-ng as a local caching proxy, *and* configure apt-cacher-ng to use the jigdo-lite backend, it'd fetch (from compatible hosts) rather like a torrent
+apt-cache-ng can also be configured to 'know' that multiple remotes are mirrors of each other, although I think that only aids in not duplicating local cached packages rather than enabling multiple simultaneous remote connections
+interesting
+i remeber reading about debtorrent which used torrents for apt-get
+i just dont know who uploaded the torrent
+for wget and multiple files (not a single file) from the same site, you can simply start multiple instances of wget with the "-nc" (no clobber) option so if one of those processes has already started fetching a file the other processes will skip over it and pick another file
+thanks
+Hi guys, who was helping me with my hard drive?
+The thing is, it was disconnected, just needed to plug it back and worked.
+is tab completion possible via adb push/pull?
+r00trunner, https://askubuntu.com/questions/617262/terminal-auto-complete-doesnot-work-in-adb-command
+Hey lads, just slapped 15.10 on my laptop, oddly enough cpufrequtils is behaving rather weirdly. If I try to set the cpu governor to "-g performance" it does so without problems, same with "-g powersaver", but when I try "-g ondemand" I get the "Error setting new values. Common errors:"-message. Any ideas?
+Thx, but that's not what I ment. Probably my question was not specific enough. I ment to tab complete the directory structure of the phone from within my Linux system. E.g. adb pull /mnt/sdcard/<TAB> should show me available files/folders to choose from.
+does it?
+My question was if it would be possible.
+no, not possible, unless adb itself implemented it
+ive got problems accessing the web in a vm
+with ubunti
+evilchaos, why are you trying to do it through a VM?
+hello! I have a weird problem with my new install (ubuntu 14.04 LTS), whenever I launch any given program the mouse isn't directly recognized. I can't use it on the new launched program. I've found a workaround by clicking on the toolbar so that I have access to it, but then I can* only click on the new program
+it's like my mouse is captured virtualbox-style with every single program I use
+because im testing something out
+can you guys help me or point me towards a solution? Thanks!
+can't make my video card output signal to display port. is there any reconfigure command i can give to force it to scan that port?
+when you say 'web' do you mean just HTTP(s) servers, or do you mean basic connectivity? if the latter, is it when accesing by hostnames (DNs problem), or also when accessing using IP addresses (routing problem) ?
+basic conectivity
+hi my friends
+is it both ways? Can the host reach the guest? Can the guest reach the host? (use tcpdump on both sides to check). Check the hypervisor's network configuration in the host, and how the guest is connected to the host (bridge, routed, NAT, etc.)
+i cant get google to work
+☺
+ hehellk
+hihi
+some would argue that's a positive :)
+you need to check your network setup with ping and tcpdump. commandline stuff
+is there a way to figure out the passphrase of an ssh key?
+the ssh key being my main ubuntu ssh key
+daedeloth, nope, if you lost the passphrase you need to generate a new key
+no. that is the idea behind the key and passphrase
+wjlafrance, but I never entered a passphrase
+I'm guessing gnome-keyring generated the passprhase for me?
+it's automatically being added to ssh-agent when I boot
+so it must be somewhere :)
+in which case it'll likely be the password the user account had when the key was originally added
+hm tried that already
+it still works fine in ubuntu
+are you able to use the key manually on the command-line, or is this just via gnome-keyring ?
+I copied the key to windows to connect to a vpn, and there I had to enter the keyphrase
+Hey lads, just slapped 15.10 on my laptop, oddly enough cpufrequtils is behaving rather weirdly. If I try to set the cpu governor to "-g performance" it does so without problems, same with "-g powersaver", but when I try "-g ondemand" I get the "Error setting new values. Common errors:"-message. Any ideas?
+TJ-, I don't really know, I just do ssh server and it works :) I don't really know what magic is going on in the back
+sirriffsalot  install indicator-cpufreq, an interactive applet
+I'm not sure how the GUI tool does it, but it may be generating a wrapper passphrase that is unlocked by your user account password
+yea that's what I was thinking as well
+it's not in a gui tool, it's in any console
+ok maybe it's in gnome console, can't try in a different terminal
+using the ssh key from "ssh -i ~/.ssh/id_rsa ..." requires you to enter the passphrase? that suggests you did set one, somehow
+TJ-, yea, that works fine, no passphrase to enter
+I'm guessing it works together with gnome keyring
+no passphrase set... unrecommended. if anyone were to get that file from you, they'd have unrestricted access to any systems you do
+but... sounds like it's stored somewhere
+maybe you can look thru the keyring to see if its in there?
+Gallomimia, well, that's what I'm trying to do and apparently that doesn't work :D
+right, so in the gnome-keyring you need to *add* your user password authentication so it can unlock the keyring!
+but it's not gnome-keyring, it's the ubuntu equivalent I need :)
+I thought that might be it... there's an option to add the password, and I recall seeing a Wiki/AskUbuntu explanation of it a few months ago
+well... whatever the darn thing is called, the keyring app
+!find keyring
+gir1.2-gnomekeyring-1.0, gnome-keyring, libgnome-keyring-common, libgnome-keyring-dev, libgnome-keyring0, libgnome-keyring0-dbg, libp11-kit-gnome-keyring, libpam-gnome-keyring, python-gnomekeyring, python-keyring (and 19 others) http://packages.ubuntu.com/search?keywords=keyring&searchon=names&suite=wily&section=all
+it *needs* to have your user account password associated with it to allow it to unlock the keyring
+yea, but it probably generates a passphrase instead of using your user password
+TJ- what?
+de-facto, wrong mention I'm guessing :)
+sorry, tab miscomplete :)
+2nd answer here is what I'm trying to describe: http://askubuntu.com/questions/65281/how-to-recover-reset-forgotten-gnome-keyring-password
+TJ- np
+oh I found out that seahorse has a GUI :D
+seahorse is the GUI :)
+Grrrr sorry!
+: seahorse is the GUI :)
+alright :D cool, ok I'm resetting the passphrase and trying again
+i can't get an nvidia .run driver to install on 14.04LTS. i need 361.42 for some stuff. it complains that nouveau is still installed but no nouveau packages are. i've blacklisted it i think. i also tried xorg-edgers ppa but it doesn't have the driver i want for trusty
+the best place now is the graphics-drivers PPA
+see https://launchpad.net/~graphics-drivers/+archive/ubuntu/ppa?field.series_filter=trusty
+what is its url for apt-add-repository?
+its not windows u must install driver via apt-get
+with a ppa
+see the PPA page
+ah yeah i found it
+sudo add-apt-repository ppa:graphics-drivers/ppa
+sudo apt-get update
+sudo apt-get install nvidia-364
+cool that looks like it's working
+thanks
+i just installed nvidia-361 from that repo. now i can't get my main monitor on display port to turn on or be detected. only the DVI-D monitor is working. gtx 780Ti
+nvidia-settings    in terminal
+yeah that doesn't help
+Wow i love Ubuntu Mate !
+i've fussed with that for hours
+the monitor just says "no signal detected" and goes to sleep
+this is how they make new versions of ubuntu
+they let ubuntu mate
+jroot, why
+did u restart when u installed the nvidia driver ?
+yep. i've done it several times
+Anyone got a good Ubuntu hosting company they would recommend ?
+also this is not the first time i've had grief over getting the monitor to work
+ok i don't know what is happening then maybe try the nvidia-364 driver
+plenty. for what purpose?
+Web Dev Mostly
+digital ocean
+Hmm
+connection issues with that...
+0o
+for you? or to everyone else?
+I just recently had similar issue, but laptop external monitor. I rebooted with screen unplugged and plugged in only after logging in. Helped. Had this issue few times in the past
+oh yeah... interesting
+is there a difference between server and desktop kernel-wise?
+i've had this problem several times, and still no idea how it was fixed
+Kubuntu xenial, mind you
+no.
+no
+ty<3
+check both kern.log and Xorg.0.log for clues
+hmm
+have you used "xrandr -q" to see what the system's view of connected outputs is?
+Will try her on Mate...
+I think putty has some issues
+DP-1 disconnected (normal left inverted right x axis y axis)
+also, is the system using hybrid graphics or multiple GPUs ?
+that's the opposite of what i want to see.
+it's a singular GPU
+no embedded gpu on cpu
+check Xorg.0.log in case there's some output-related problem going on
+other than that I'd suggest a physical connector/cabling issue
+hotkey for changing languages ?
+generally when i do fix it it's from wiggling plugs or something
+i'm going to try what madwizard suggested
+reboot, with unplugged, then plug in
+you're almost confirming the physical issue then
+inspect the connectors, make sure they're not bent, there's no foreign material in them, etc.
+does one seem particularly loose, maybe, and not making a good connection?
+they do wiggle quite a lot. it alarming really
+hi - i have a package installed that i would like to know where it came from .. all teh commands i run indicate it catme from /var/lib/dpkg/status .. help?!
+course it doesn't help that the damn monitor turns itself off really quickly
+if it doesn't detect a signal that is
+so you installed it manually
+or the repo you used is was deleted in the meantime.
+figured .. how do i know where the package was residing? i mean was in /tmp? /var/tmp?
+i dont think there is that information. you could look at "apt-cache show packagename"
+"apt-cache policy <package-name>"
+same
+same
+here's my real confusing thing tho TJ- i didn't touch the connectors at all. the thing that changed which caused the display to stop working was drivers and reboot. it was working just fine before
+what does "same" mean? please be more precise and descriptive
+thats all you get
+HA!!! i just found /var/cache/apt/archives !!!!! :D
+In the past I've found similar issues and tapping the keyboard is enough to provoke them sometimes
+that is where the packages are cached to. but its not where you put them in the first place
+can i reinstall from that archive?
+its not an archive. its just a local cache. but yes you can
+purrr-fect :D
+if apt has the package then "apt-get --reinstall install <package-name>" will do that
+actually i need to install it on a different machien . but thanks
+MonkeyDust, I really prefer cpufrequtils, there should be a solution :)
+make sure you take any dependencies along then
+apt-offline might be of interest to you, depending on your requirement
+I'm trying to install NVIDIA drivers for my GeForce 940M. I've tried the proprietary drivers, downloading and installing the drivers from nvidia.com, using ppa:xorg-edgers, ppa:graphics-drivers, and neither of those worked. I keep getting either black screen, login loop, or low graphics mode. Does anybody know what I should try?
+I have an integrated Intel card, by the way, and I want to use my NVIDIA.
+sounds like a hybrid issue with Prime. Has it ever worked?
+TJ-, I installed Ubuntu 15.10 yesterday and I got it to work eventually. I then found out I had to switch to 14.04, and I couldn't get it to work.
+anyone know why i cant seem to choose google as search in firefox on mint?
+Hi.
+Mint is offtopic here
+!mint | nathan_
+Linux Mint is not a supported derivative of Ubuntu. Please seek support in #linuxmint-help on irc.spotchat.org
+we don't support Mint here
+ok sorry
+thinking of switching to ubuntu
+I am trying to get cgroups to work. Can someone tell we in which package I can find the 'service' for cgred?
+i am getting "unknown" when i check my runlevel, any ideas? (i am trying to run a python script as a service, which doesn't succeed, and led me to check my runlevel), using ubuntu 14.04
+Where would I find instructions on getting java working with chrome under Ubuntu?
+that doesn't surprise me since there'll have been a lot of improvements between 14.04 and 15.10
+!java | wad start here
+wad start here: To just use java you need a "Java Runtime Environment" (JRE) and/or a browser plugin. If that is not sufficient you will need a "Java Development Kit" (JDK) aka "Software  Development Kit" (SDK).  Please see https://help.ubuntu.com/community/Java about how to install one of three current implementations.
+so do you think there might be no way I can make it work with 14.04?
+A *lot* of hybrid/prime bugs have been worked out over the last 2 years
+I can't find any service related to cgroups. Can anyone point me in the right direction?
+I see. I'll see what I can do then. Thanks a lot!
+I am using 15.10
+MonkeyDust, thanks!!
+hello. I use ubuntu 15.10 and any wine app doesn't have sound. What can I do?
+Anyone know how to get wifi working with Intel Centrino Ultimate N 6300?
+15.10 comes with IWLWifi firmware vesrion 6, but it refuses to connect to the AP
+I tried the modprobe workarounds, and they had no efffect
+RFKill lists nothing blocked
+This is becoming more and more strange. After performing acs cgroups|awk '{print $1}'|xargs apt-file list |grep service the only services I get cgmanager/cgproxy non of which I am looking for ( and find esential ).
+Google hasn't given me any help....
+What does iwconfig say?
+usr13, uhm I'd have to log and boot back into ubuntu, give me a minute
+Ok
+hi there
+i got a process which goes down on friday
+where i can find what happen to that one ?
+i am getting gsql running on another terminal
+how can i know how many terminal opened..
+bujji, ps -A in terminal
+bujji, alternatively to make it easier, ps -A |grep terminal
+ps -A |grep terminal nothing it showing
+bujji, do you see anything looking like terminal in the output of 'w'?
+yes it showing uptime and the user logged info it showing only one user.
+bujji, if you are looking for your x terminal sessions type 'xprop' and when the cursor changes click on the terminal and check 'class'
+xprop|grep CLASS bujji
+usr13, http://pastebin.com/aU3iRJRM
+what it gives
+bujji, then name of your terminal emulator
+bujji, when you will get it ( the first thing in "" ) you can grep for it in ps
+bujji, ps -ef |grep "thingfromclss"
+bujji, in my output you can see that there is one virtual terminal started : me        1733  1584  0 mar30 ?        00:00:08 /usr/bin/python /usr/bin/terminator
+usr13, ...you still here?
+unable to open display
+do i need to install?
+bujji, do you know are you running X11, grahical interface?
+bujji, maybe I misunderstood you. If you are looking for terminal sessions and not terminal emulators just use 'w|grep pts'.
+it showing pts/3
+bujji, so you have only one session running.
+user pts/3 means?
+bujji, user - name of the user who is connected and pts stands for pseudoterminal session.
+3 ?
+bujji, not sure how the numering works, but the more sessions are open the number increases. I have 2 opend so it looks like:
+bujji, me       pts/3    :0.0             śro22   37:00   0.71s  0.08s /bin/bash
+me       pts/6    :0.0             śro22   39:41   0.08s  0.08s /bin/bash
+how can we close the opened sessions?
+bujji, simpli logout.
+bujji, type exit or ctrl+D
+bujji, got2go
+ok man thank you
+how do I install my drivers for my laptop on ubutnu 14.04.04? is it done auto?
+yes, it's auto
+if everything works fine just leave it ;)
+you can install some prop. drivers if app "additional drivers"
+for example for video and etc (if you need so)
+*in app
+hello, is MacChanger persistent after reboot?
+usr13, have you ever used the bt_coex_active fix?
+ubuntu boot from usb error: panic occured. switching back to text console...dahell?
+<ChunkzZ> I use default video drivers (open source) and they are great. I will even play some games (most of they are basic or older then 2010). But if you want play some modern games 90% you will need to install prop. drivers.
+thanks.
+<ChunkzZ> maybe this will help http://askubuntu.com/questions/471012/ubuntu-14-04-lts-fails-to-start-with-a-kernel-panic
+but I never face this situation :)
+i don't think MacChanger persists after reboot
+So back to my problem :). I have ubuntu 15.10 x64, and wine x32. I haven't sound in C&C, hearthone and etc. I try use ALSA_DEFAULT_PCM="plug:dmix" and some configs but zero result. Any help?
+I added a script to /etc/rc3.d and gave it exec permission but it didn't execute on startup, why it might happend?
+the name i gave it is K01
+at start
+K01script
+oops S01
+S01script
+Does anyone have experience with the intel centrino ultimate-n 6300 on 15.10?
+usr13, was helping, but seems to have disappeared.
+can i fix it?
+when running update-ca-certificates the the terminal gives: http://paste.ubuntu.com/15618441/ ? what does this mean?
+Does esorotica still comes here?
+i am trying to install something using pip and i get an error "The directory '/home/user/.cache/pip/http' or its parent directory is not owned by the current user and the cache has been disabled" what can cause this? i checked the prmissions they seem fine
+nope. Last time they were in my logs was back in 2015. also, I don't see them ever speaking.. just you asking if they were here back in 2014.
+sorry, I was mistaken about that last part.
+how to go java
+did you recently sudo pip install something?
+Pici how to go in java
+Pici, thanks bunch bro!
+the channel? /join ##java , but you need to be registered and idenitified to nickserv to join.
+!register | suvrat
+Information about registering your nickname: https://help.ubuntu.com/community/InternetRelayChat/Registration - Type « /nick <nickname> » to select your nickname. Registration help available by typing /join #freenode
+thank you..:)
+all they are java exper pici?
+i tried now first time on that PC
+##java
+er, that wasn't intended to come across as a suggestion to use sudo.  You should never use sudo pip to install things.
+on my other PC it works without problem, when I try on that pc without sudo i get this error "Command "python setup.py egg_info" failed with error code 1 in /tmp/pip-build-qprwQH/negotiator-host/"
+what are you trying to install?
+negotiator host, i just tried it onother PC no roblem
+when i run update-ca-certificates  terminal gives: http://paste.ubuntu.com/15618764/ in ubuntu 15.10 x64 how do i restore them?
+i dont know any other apps from pip, if u want to give me something else to try i can
+i removed them by mistake i should add...
+i am unable to open java channel :(
+frostie
+suvrat yes?
+frostie i am new to ubuntu
+how do i switch to another channel , i need help in java, frostie
+sorted, i ran "pip install -U setuptools", that sorted it
+thanks
+!register | suvrat
+Information about registering your nickname: https://help.ubuntu.com/community/InternetRelayChat/Registration - Type « /nick <nickname> » to select your nickname. Registration help available by typing /join #freenode
+my nickname is suvrat
+so how do i register
+hello
+suvrat, some channels like #java need a registered nick in order to join, read the instructions above
+http://paste.ubuntu.com/15618764/ <<< is there a way to restore the files or not?
+I saw that launchpad was open source and free
+is there .deb packages for it ?
+<</nick suvrat >>
+like reinstall ca-certificates package for example
+« /nick suvrat »
+its not registering?
+were do i type thi command frostie help me please
+So, I fixed my iwlwifi
+sudo iw reg set US did the trick
+done and it worked,  reinstalled the  ca-certificates package and error message is gone with update-ca-certificates
+anyone irinix, frostie
+suvrat register your nick if its needed and join the channel
+ubottu
+suvrat, what's up?
+suvrat  type it here, in the channel
+how do i reg
+« /nick your_favorite_nickname »
+its not working
+:(
+suvrat  without the quotes
+yes
+it did work
+what do you want? register?
+i have some difficulties in java
+ /msg nickserv register password_of_your_choice your@email.addres
+ /msg suvrat register suvrat111@suvrat12@gmail.com
+nooo
+hi
+I have a .desktop file where in Exec says Exec=idea.sh
+ /msg nickserv register  suvrat113@suvrat12@gmail.com
+i am not able to register
+My question is. how does it know what's the path to idea.sh ?
+j #ubuntu-it
+no
+sorry
+you need to type: /nickserv register blablablapassyouwant blablablaYouremail@gmail.com
+I have a .desktop file where in Exec says Exec=idea.sh . How does it know the path of idea.sh?
+like that : /nickserv register PASSWORDDDD EMAILLLL
+then
+you need to do identify
+to identify you do
+/nickserv identify PASSWORD
+you need to do this everytime you get into this server
+is there a way to get apt or dpkg to give a list of packages installed since a certain time?
+check the apt man page for the list options.
+there are scripts that do that by auto, by i don't know one today...
+how do i switch to
+java now
+you need first to identify , only registered and identified nicks allowed to join there (i think)
+you type : /join #java
+or you can press on the hearth on the toolbar (if you use MIRC)
+invite only
+:(
+ /join #freenode for questions about joining channels.
+this is ubuntu support only.
+the command is  /NETWORK ADD -autosendcmd "/msg NickServ IDENTIFY password;wait 2000" freenode
+maybe he's using ununtu client ;) :P
+siema
+even if he's using ununtu, that's not ubuntu. :P
+hehe , you must answer ha? i'm sure you gave it a thought for a 5 minute what you say
+:P
+*what to say
+hello
+i'm having some troubles wiht my ubuntu
+i just made a fresh install of 15.10 and i'm using a tp-link wm722n wifi usb adapter and at some random interval i'm losing internet connection
+if I have question for shell scripting can I do it here or where would I go?
+in bash? I'd ask #bash
+ok.
+there's a pretty good troubleshoot of that wifi card here: https://askubuntu.com/questions/512727/how-to-install-driver-for-tp-link-tl-wn722n-on-ubuntu-14-04
+lorddoskias1 ^^^
+thank you, i will take a look now
+however, this card (sort of) works out of the box, that link there is if your card is not recognised by ubuntu, rather all the necessary modules are working for me
+is there a minimal image of 14.04.04?
+anyone?
+yes
+you ask, if someone is here, and can help you, he answer
+Hello123321, what?
+anyone in here willing to help be with an openVAS issue ? complains that my redis-server is not runing but it is! u dont know how to troubleshoot this
+!test
+Testing... Testing... 1. 2.. 3...
+hello, I'm trying to update my sysrq config in proc... but it says it says permission denied. here's the command I used: "sudo echo 1 > /proc/sys/kernel/sysrq"
+I want to be able to use all sysrq commands.. but I think this is reset everytime I boot even if I manage to edit it. it's not REALLY a file so I believe the echo command is correct...
+not sudoedit which manages to work until i reboot
+echo 1 | sudo tee /proc/sys/kernel/sysrq
+brb
+you want /etc/sysctl.d/10-magic-sysrq.conf
+thanks, I'll try that.
+hloo
+it works.
+thank you
+i want convert ubuntu to windows xp clone like .... is it possible?
+you like both windows and ubuntu? why not use both?
+although xp is pretty old and outdated
+angel2, there is plenty of XP themes for kde
+http://news.softpedia.com/news/Turn-Lubuntu-in-Windows-XP-with-a-Theme-and-No-One-Will-Notice-436255.shtml
+aw they left
+[19:22]  * BluesKaj wonders if kde for windows is still being dev'd
+server irc.criten.net/ELITEWAREZ
+hmm
+so... client wants to dual boot win10 and ubuntu on the same drive.  both with encryption.
+is there even a reasonable way to do this?
+hello
+#ubuntu+1
+help
+i'm going to pitch the idea to us bitlocker for win10 and just run linux in wmware workstation
+linux has encrypted partitions too
+can anyone help me with configuring the alps touchpad. it just randomly quit working. but the buttons still work. i'm on a dell inspiron 1525.
+i once had a bootable usb with "liberte linux" that was completely encrypted. but idk how they do it
+does it have an Fn key on/off switch
+I believe during install it actually asks you if you want to encrypt the home partition or if you want to encrypt the entire partition
+says "LUKS"
+yeah, what would the problem be?
+trevor_s, if your machine has tpm i think it will hard..
+can anyone help me with fixing my touch pad?
+Mathisen, you can disable tpm
+it's enabled. i can tap when in a url and when i the buttons work. it just randomly stopped working
+i'm just not finding any good documentation dual booting win10 and linux both with encryption
+without using truecrypt
+which isn't an option
+you want to use the same encryption scheme for both? or don't mind separate schemes?
+TJ-, i dont mind different schemes so long as they play nice with one another and there's an option to boot to both of them
+to each of them?
+well the only one that is cross-platform is going to be Truecrypt
+it would be way too easy to just use bitlocker and run linux in a VM
+native for Linux is LUKS+dm_crypt
+if someone would help me i would really appreciate it. i'm trying to learn how to use linux and i want to learn how to program
+however, there's no reason not to use the native encryption schemes for each. They will only encrypt the partition(s) the OS itself uses, so Windows can use bitlocker and Linux can use LUKS+dm_crypt
+Hi all. I've just installed Ubuntu 14.04 server to run Kodi. All seems good except for the gamepad. Would anyone have advice how to enable it? It was working fine under OpenElec without any additional packages/libraries. Am I missing some?
+would anybody help me out with this touchpad issue?
+Has anyone noticed any strange throttling issues with Ubuntu 15.10 and Skylake CPU's? For example, when the CPU uses turbo boost it drops like 5-700 mhz almost immediately?
+please
+hello
+Hello
+hello, what do you do to resolve a blocked package install, such as `openjdk-7-jre : Depends: openjdk-7-jre-headless (= 7u51-2.4.6-1ubuntu4) but it is not going to be installed` - I run into these from time to time, and I don't ever understand a) how it happens, nor b) how to resolve/prevent. My first inclination was to minimize PPA and thirdparty deb archives, which I have done, but this still seems to snag me
+how can i make a new keyboard shortcut in lubuntu?
+hey folks; trying to enable x11 forwarding on my ubuntu 14.04 laptop.  ive already enabled X11Forwarding; and X11DisplayOffset 10 ; in my sshd_config; and connecting to it via -X option but it doesnt seem to be working still ... ideas?
+nevermind; got it working!
+arooni  glad i could help
+MonkeyDust hahah
+how did you get it working?
+it was a mac os x issue; had to restart xquartz to enable x11 to work
+ciao ho un problema con lo scanner  connesso a un  15.10
+!es | nicolac
+En la mayoría de los canales de Ubuntu, se habla sólo en inglés. Si busca ayuda en español entre al canal #ubuntu-es; escriba " /join #ubuntu-es " (sin comillas) y presione intro.
+Has anyone noticed any strange throttling issues with Ubuntu 15.10 and Skylake CPU's? For example, when the CPU uses turbo boost it drops like 5-700 mhz almost immediately?
+Has anyone ever had a problem with teamviewer on ubunut? I can connect and I can see that I am moving the mouse on my ubunut machine but I cant get a display back to my computer of the ubunut screen???
+hi where is ubuntu it?
+Does anyone know of a rdp-client for linux (to connect to windows machines) that support having seperate windowsize and resolution? For example windowsize 2560x1440 and resolution 1920x1080
+i have a problem with scanner Epson 2480. My opc doesn
+Hi Everyone
+recognize scanner
+!it | nicolac
+Vai su #ubuntu-it se vuoi parlare in italiano, in questo canale usiamo solo l'inglese. Grazie! (per entrare, scrivi « /join #ubuntu-it » senza virgolette)
+ahhh. sorry nicolac. i thought you were spanish
+I have installed skype and it starts when I boot my laptop. Does anyone know how I can turn that off?
+:-
+have you checked the preferences in skype?
+yea, its not turned on
+It was in the bashrc but I have removed it, restarted and its still loading on strtup
+[15:38] *** now talking in #ubuntu
+[15:38] *** topic is Official Ubuntu Support Channel | IRC Guidelines: http://ubottu.com/y/gl | This channel supports: Ubuntu and its official flavors, versions 12.04, 14.04, and 15.10. | Unofficial derivatives: use your distro's support channel, not here. | 16.04: not released yet, use #ubuntu+1 | IRC info: http://ubottu.com/y/irc | Pastes to http://paste.ubuntu.com/ | Download: http://ubottu.com/
+y/dl
+[15:38] *** set by dax!dax@freenode/staff-emeritus/dax on Sat Mar 26 02:08:55 2016
+[15:38] #ubuntu http://www.ubuntu.com
+[15:38] *** channel #ubuntu mode is +CLcntjf 5:10 #ubuntu-unregged
+startup*
+hi
+how can I know if my video card is working?
+xrandr -q
+can give some hints
+me?
+wait no, it doesn't tell much about video card
+glxinfo
+or something like that
+can't remember
+SchrodingersScat, is there anything else I can check?
+andybrine,  Dash ->  Startup
+^ is a possibility
+anyone?
+what brand card?
+squinty I dont have skype in my autostart applications
+its strange :/
+yup. perhaps crontab?
+Gallomimia, I want to know if render is working etc, glxinfo was the command, something like that
+thats why im a little stumped
+do you remember
+can't find it
+no, i can't either
+for me, i look in nvidia settings
+shows me loads of info. but that was installed with the proprietary drivers
+alejandra_,  maybe  glxinfo -B
+glxinfo comes from mesa-utils package
+squinty, SchrodingersScat anymore Ideas on why skype is starting on startup?
+I think it maybe just work removing skype all together
+lol
+Im not a fan of skype anymore :/
+good call, and idk, is it an init.d? or a cronjob?  mine does not start on boot when unchecked in skype thing.  It's freedom-hating software anyway.
+#ubuntu-br
+!sysv-rc-conf | andybrine
+SchrodingersScat where canI check init.d?
+Sadly I chat with people on SKype every day
+  anyhow, check in the repositories for sysv-rc-conf, to stop services running at startup, need to run it as sudo btw
+!find sysv-rc-conf
+sysv-rc-conf
+pfft
+bprompt so I can run that command in terminal?
+ yes
+awesome, thanks
+I can't run synaptic as root on Ubuntu 15.10!  When I try, I get this error message, despite having been able to run synaptic as root for months.  http://pastebin.com/f2tDyKrD  Any tips?
+Skype is not showing there at all :(
+   is probably there, just under some other name I'd think
+!gksudo | BlueProtoman
+If you need to run graphical applications as root, use « gksudo », as it will set up the environment more appropriately. Never just use "sudo"! (See http://psychocats.net/ubuntu/graphicalsudo to know why)
+"Unable to copy the user's Xauthorization file."
+I am only a bot, please don't think I'm intelligent :)
+Err, Jordan_U "Unable to copy the user's Xauthorization file."
+mir as the DE ? .. not sure but what results ' sudo -H synaptic ' as synaptic is a GUI application .
+http://pastebin.com/F6D6NpJh
+bprompt I cant see anything that may relate to it
+   hmm dunno then.... maybe the window manager's autorun section....I don't use Unity myself
+ls -l ~/.Xauthority
+" No such file or directory " The system talking about .Xauthority ? what returns ' ls -al .Xauthority ; ls -al .ICEauthority ' ?
+im not on unity, im using kde at the moment
+really strange, I dont like skype but sortof have to use it
+   then for kde, check under System Settings > Startup and Shutdown > Autostart
+Jordan_U, Bashing-om: http://pastebin.com/Pzm1ekqv
+Please run "gksudo synaptic" one more time and pastebin the complete output.
+"Error copying '/tmp/xauth-1000-_0' to '/tmp/libgksu-kTTX1F': No such file or directory"
+tes
+"Unable to copy the user's Xauthorization file."
+hi
+Please pastebin the output of "mount".
+http://paste.ubuntu.com/15621224/
+buena tarde alguien me podria colaborar con mi internet ya que no me permite el ingreso acabe de instalar ubuntu mate pero no me deja ingresar a internet cuando estoy conectado al wifi
+Solo ingles, por favor
+O usa #ubuntu-es
+ubuntu mate
+Any thoughts, Jordan_U?
+Please pastebin the output of "ls -l /tmp/" and "dmesg".
+hello
+having trouble with 16.04
+#ubuntu+1 for unstable
+hello everyone, how can I get an output of all the terminal commands that I have typed in?
+http://paste.ubuntu.com/15621381/ and http://paste.ubuntu.com/15621387/
+"history"
+     -> history <-
+Notice though that there will likely be many commands missing if you use more than one shell at a time
+Jordan_U, no, that will not be a problem but I couldnt find history in the menu..where would it be?
+    type it in :/
+   as in, the terminal
+bprompt, ah, ok, thank you
+Hi, I’m wondering if when I add ssh keys to a user’s ~/.ssh/authorized_keys does that disable the ability for that user’s ability to sign in w/ a password? Or do I need to take additional steps to disable the ability to log in over ssh w/ a password once I’ve added authorized_keys? As always, thanks for the help!
+IRT BlueProtoman . With 2 /home directories mounted, how does the system know the controlling authority ?
+I don't know, but why would that matter in my scenario?  Up until yesterday I haven't had this issue at all.
+i just answered my own question by sshing into another one of my boxes and then sshing into the 1st box and logging in via password. Also, I think I found how to disable password login over SSH here: 107.170.194.223
+https://help.ubuntu.com/community/SSH/OpenSSH/Configuring#Disable_Password_Authentication
+I am always amazed at what I do not know and I have no experience with mir. But, I do think the .ICEauthority file is required, and we can make one up .
+OK, let's do it.
+Worth a shot : From the F1 console logged in as the user profile with the problem run ' touch .ICEauthority ; chown <username>:<username> .ICEauthority ; chmod 600 .ICEauthority ' Where you are you in "your" /home directory so admin privileges are not required and if used may really mess things up .
+ /whois cuB3D
+OK, now what?
+Hey all, is there a good way to make ubuntu ask to confirm a shutdown if you have programs running (especially in a different workspace)?
+' ls -al /home ' is the proper username listed ? also check ' ls -al /home/<username> ' . If all is good .. reboot for a whole new reset .
+Yes, I'm still jesse
+:) reboot the box, let's see what happens .
+ /lastlog Jordan_U
+I see only one /home/, within which there is another mount to jessie/Common.
+Yeah, that should be the case, right?  I'm the only user on this machine, and /jesse/Common is a common partition I use to share data between my Windows and Linux partitions (music, homework, code, etc.)
+I need a little bit of help understanding memory usage and swap space.  My server seems to keep putting things in swap space and leaving them there, even though there is plenty of memory free. when it does this it noticble effects performance.  All pages load substantially slower, until i forceably remove things from swap (sudo swapoff -a && sudo swapon -a) http://i.imgur.com/eKcJ1sr.png
+right now, its using about 6 GB of 16GB of ram, but still putting things in swapspace!
+have you tried changing your swappiness value?
+nope
+its at 60 now
+what would be a better value?
+Not sure if there's an optimal amount, but reducing it will definitely make your box swap less
+you can try tinkering with sysctl to do it temporarily then put it /etc/sysctl.conf once you find a good amount
+https://help.ubuntu.com/community/SwapFaq#What_is_swappiness_and_how_do_I_change_it.3F
+good call
+thanks for the advice
+no problem, hope it helps!
+I've got an odd issue. All of my jump drives are reporting as read-only, but I do not have them set to read only. Any ideas?
+Also, the file browser is not letting me change the permissions for the jump drive.
+What would be the best method to combine the free space of 4 servers into once filesystem over a network? all three have different drive sizes but in total it would be 15TB and would like to be able to add new servers in at any time, no redundancy needed since its bulk data that can be easly replaced
+JRWR, suggest you ask #ubuntu-serer
+*server*
+Thanks
+Is it possible for me to install the ubuntu 15.10 version of libpthread-workqueue on ubuntu 14.04?
+So...I've got networking again.   But now if I try to change from our 2.4ghz channel to our 5ghz network manager crashes, and loses the networks.
+=/
+So I've got a quick question, I'm booted to on a flash drive and I have another flash drive plugged in
+I'm wanting to install xubuntu on the other flash drive, how do I do this?
+Rarien,  same as if it was any other hard drive
+start the installer and choose the other usb as destination to install in
+Okay , I think I tried that, lemme give it another try.
+how do I set up VPN connection for my ubuntu server
+Rarien,  BUT  I highly advise unpluging any other HDDs  to avoid issues
+So I choose the "something else" option and choose the other SD and it tell me
+Rarien,  as in total loss of data on your drives
+"No root file system is defined"
+I don't mind that Rave1, thank you though.
+Rarien,  just making it clear is all
+I have an HDD that is corrupted so I intend on running xubuntu on this computer solely off of the USB. (Which is a micro SD)
+"something else" means "manual partioning". so you need to do the setup your own
+Oh, hmm
+Well if I choose "Erase disk and install xubuntu", it'll default to the HDD, right?
+it will name the destination there. i dont have the installer in front of me
+Oh, that was simple enough.
+I didn't want to hit "next" just incase it was just going to start it.
+Thank you. :D
+Rarien,  make note of what your USB (sdcard) is named
+Yeah it's pretty easy to remember, smartcardreader or something.
+or sdc
+Yeah, I'm going to have to remember that, thank you, Lol
+how do I set up VPN connection for my ubuntu server
+This IRC is so helpful compared to the others that I've been on.
+hi
+Is there a preferred file system that I should format the USB as?
+ext4
+I read somewhere that it was ext4 for HDDs and ext2 or 3 for flash drives, etc.
+But that was for puppy linux.
+every so often, my cpu hits about 3500% load, and the hardrive goes nuts, basically the entire laptop locks up and i have to hard shutdown. what loag do you guys need to see?
+So you sure?
+*logs
+hello everyone, can you please help me with this postgresql problem; http://paste.ubuntu.com/15622389/ ?
+Rarien,  and there was a time that it was advised not to use a swap on flash drive installs. not sure of the current feeling on that
+uname --all is Linux Ben-laptop 4.2.0-16-generic #19-Ubuntu SMP Thu Oct 8 15:35:06 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux
+That's how I had it setup on puppy linux (which doesn't support much new hardware hence me moving to ubuntu)
+and it was running fine.
+running ubuntu mate 15.10
+I'ma just try ext4 and see how it goes
+Rarien,  i always use ext4 on Sd card installs now days
+Oh okay, cool then.  Thank you for all the help. o:
+Hmm, I used gparted to format the flash drive as ext4 and nothing else, I go to "Install Now" and it's telling me "Some of the partitions you created are too small."?
+It's an 8gb card.
+As far as I know I only have one partition on the whole flash drive.
+Rarien,  8gb is marginal to install xubuntu
+So what does that mean?
+means you may need to use a diffenrt distro
+Lame
+I have a new totaly fresh just installed debian mate  4.97 gb  and it would have much less software than default xubuntu
+What about lubuntu?
+not sure you would need to check installed size
+You should be able to install Xubuntu on a 8GB partition
+How?
+I also wouldn't mind lubuntu, they both have great hardware support.
+IDK, but the documentation states you need 6.1GB of free space
+Hmm
+what setup did you make?
+What do you mean?
+I haven't installed anything yet.
+you said you made partitions
+Oh, I did ext4?
+and how much partitions? how big?
+1 partition, 7.4gb
+(keep in mind we dont know or see what you do there)
+please put the full error you get there onto paste.ubuntu.com and show it here
+@K1l_ http://i.imgur.com/vGkShXP.png
+ubuntu.  enjoy.
+how many partitions wants the installer to create?
+How would I figure that out?
+it says so under tha warning
+are you doing manual partitioning or one of the automated options
+The automated option
+and please run in a terminal "sudo parted -l | nc termbin.com 9999" so we can have a look at partitions and disks
+@k1l_ http://i.imgur.com/LE85a6O.png
+Okay, one second
+http://termbin.com/x4ui
+how much RAM is in this box?
+6gb
+hmm, could be that its trying to make 2 or 3 partiions. which then will be too small.
+[23:45]  * tgm4883 wonders if partman is doing something weird with swap
+so i guess you should go for advanced partitioning tool and just use the one ext4 partition as "/" in the installer
+yes, i think its trying to create more partitions like a swap with the size of ram. (because the installer is made for installing onto hdd/sdd which are way larger)
+yep
+Is there an ubuntu version for smaller drives?
+how can i reload udev rules?
+just use manual partioning like i described
+6GB RAM and a 8GB hard drive is not exactly common
+goddard, sudo udevadm control --reload
+another problem I'm having with GNOME Classic that never used to happen with GNOME Flashback: enter password, and unlock screen just sits there like it is waiting on something else
