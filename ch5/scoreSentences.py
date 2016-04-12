@@ -4,7 +4,6 @@ Created on Fri Apr  8 13:26:48 2016
 
 @author: megan
 """
-
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
 with open('data/ubuntu2016-04-04/ubuntu.txt', encoding='utf-8') as ubuntu:
