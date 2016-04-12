@@ -8,13 +8,12 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
 with open('data/ubuntu2016-04-04/ubuntu.txt', encoding='utf-8') as ubuntu:
     ubuntuLines = [line.strip() for line in ubuntu.readlines()]
-    
+ubuntu.close()
+''' 
 with open('data/ubuntu2016-04-04/ubuntu-devel.txt', encoding='utf-8') as ubuntuDevel:
     ubuntuDevelLines = [line.strip() for line in ubuntuDevel.readlines()]
-
-ubuntu.close()
 ubuntuDevel.close()
-
+'''
 sid = SentimentIntensityAnalyzer()
 finalScore = 0
 for line in ubuntuLines[0:20]:

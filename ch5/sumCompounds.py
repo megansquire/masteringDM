@@ -9,11 +9,10 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
 with open('data/ubuntu2016-04-04/ubuntu.txt', encoding='utf-8') as ubuntu:
     ubuntuLines = [line.strip() for line in ubuntu.readlines()]
-    
+ubuntu.close()
+
 with open('data/ubuntu2016-04-04/ubuntu-devel.txt', encoding='utf-8') as ubuntuDevel:
     ubuntuDevelLines = [line.strip() for line in ubuntuDevel.readlines()]
-
-ubuntu.close()
 ubuntuDevel.close()
 
 listOfChannels = [ubuntuLines,ubuntuDevelLines]
@@ -24,5 +23,5 @@ for channel in listOfChannels:
         ss = sid.polarity_scores(line)    
         score = ss['compound']
         finalScore = finalScore + score
-
-    print("Score", finalScore/len(channel))
+        roundedScore = round(finalScore/len(channel),4)
+    print("Score", roundedScore)
