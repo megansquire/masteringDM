@@ -34,19 +34,27 @@ for email in emails:
     url = email[0]
     body = email[1]
     
-    print("===")
-    sid = SentimentIntensityAnalyzer()    
+    # variables to hold the overall average compound score for message
     finalScore = 0
+    roundedFinalScore = 0
+    
+    # variables to hold the highest positive score in the message
+    # and highest negative score in the message
     maxPosScore = 0
     maxNegScore = 0
     
+    print("===")
+    sid = SentimentIntensityAnalyzer()
     emailLines = tokenize.sent_tokenize(body)
     for line in emailLines:
+        ss = sid.polarity_scores(line)
+        # uncomment these lines if you want to print out sentences & scores
+        '''
         line = line.replace('\n', ' ').replace('\r', '')
-        #print(line)
-        ss = sid.polarity_scores(line) 
-        #for k in sorted(ss):
-        #    print(' {0}: {1}\n'.format(k,ss[k]), end='')
+        print(line)
+        for k in sorted(ss):
+            print(' {0}: {1}\n'.format(k,ss[k]), end='')
+        '''
         lineCompoundScore = ss['compound']
         finalScore += lineCompoundScore
         
@@ -55,14 +63,15 @@ for email in emails:
         elif ss['neg'] > maxNegScore:
             maxNegScore = ss['neg']
             
-    roundedScore = round(finalScore/len(emailLines),4)
-    print("***Final Email Score", roundedScore)
+    # roundedFinalScore is the average compound score for the entire message
+    roundedFinalScore = round(finalScore/len(emailLines),4)
+    print("***Final Email Score", roundedFinalScore)
     print("Most Positive Sentence Score:", maxPosScore)
     print("Most Negative Sentence Score:", maxNegScore)
     
-    #Use scores to update table
+    # update table with calculated fields
     try:
-        updateCursor.execute(updateScoreQuery,(roundedScore, maxPosScore, maxNegScore, url))
+        updateCursor.execute(updateScoreQuery,(roundedFinalScore, maxPosScore, maxNegScore, url))
         db.commit()
     except:
         db.rollback()
