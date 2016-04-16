@@ -24,5 +24,5 @@ for channel in listOfChannels:
         score = ss['compound']
         finalScore = finalScore + score
     
-    roundedScore = round(finalScore/len(channel),4)
-    print("Score", roundedScore)
+    roundedFinalScore = round(finalScore/len(channel),4)
+    print("Score", roundedFinalScore)
