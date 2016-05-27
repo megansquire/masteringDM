@@ -1,0 +1,677 @@
+ i have to enable 100 people to upload massive amounts of pictures within the next 24 hours. a lot of these pictures are 2mb+... should I.... a.) enable them to upload via ftp b.) create some kind of backend url that accepts data and some kind of bulk upload form ....
+ m1chael: 100 * 2mb doesn't really sound like much, how much traffic do you expect?.
+ i'm expecting about 100,000 photos.
+ i'm not sure the best way to assist them all in uploading.
+ multiple files?.
+ per use , I mean.
+ yes.
+ django filebrowser has a nice queueing system.
+ but I'm guessing they won't have admin access.
+ you're right, no admin access for them.
+ IME multiple-files-in-one-upload leads to timeouts and frustration.
+ i have some html5 upload code, but it's terrible and has no que.
+ i have it used in a production project and it's amazing they don't have any issues.
+ sounds like maybe ftp is the way to go ;/.
+ I'd say FTP is the worst possible option..
+ haha, ok.. scratching that.
+ a lot of very large photo agencies still use ftp.
+ There are plenty of file storage services that have APIs you can leverage..
+ maybe my host softlayer has an answer.
+ For example, I have an interface in one of my tools that lets users dump stuff into Dropbox, then I pull it out and process it..
+ In Django ModelForm with BooleanField, if the default value is True, form.has_changed() is always True, and the BooleanField is in the form.changed_data. This doesn't (as shouldn't) happen if the default BooleanField value is False. Why?.
+ form.has_changed() is always True, that is before passing the POST data to it..
+ You could set up the generally S3 async form and have the photos upload straight to S3. It's javascript, and goes straight to S3, so it would be very fast..
+ and wouldn't require jack diddly squat in the way of resources..
+ also, you'd have the luxury of not having to share every user into the dropbox -- just give them the link to the upload form.
+ Hello, I'm trying to get the admin site in spanish language but all the models are on english, anyone has some tip to do it?.
+ tuxskar: set their verbose_name / verbost_name_plural in their Meta to use gettext_lazy.
+ I have tried to use the verbose tags, and meta verbose_name for every model, but after have made all the translations using ugettext_lazy I don't know how to select the language.
+ FunkyBob: I have all the models and even the inner fields using ugettext_lazy.
+ FunkyBob: what should I do to get the app in english or spanish? do I have to make a select using html or just with the browser configuration should works and translates the admin site depending on the locale browser configuration?.
+ tuxskar: sorry, that's beyond my experience :/.
+ thanks :D anyway.
+ but I just have started using translation, and I can get it works on a simple view, but not in the admin site.
+ Sorry, I forgot compile the languages :D, now it works correctly.
+ sure it's not covered in the admin docs?.
+ haha.
+ win!.
+ thank you FunkyBob anyway.
+ am i right in thinking decimal field is generally better to use over float field?.
+ HowardwLo: If you care about precision, yes..
+ is it better to use an app like django-registration for user signups, or to just use django's built in auth functions?.
+ iirc, django doesn't have a registration view..
+ contrib.auth doesn't have the same functionality, like email verification..
+ I've been using allauth, and it really makes it easy.,.
+ Though if you don't need all the functionality, it might not be worth it.
+ interesting. so you're saying you get more functionality from a pre built app?.
+ Yeah. My auth system is especially complex, and allauth still supports it with just a few form mods..
+ cool i'll check allauth out.
+ it looks like django-registration is the most popular though.
+ Haven't used it, though it might be just as good..
+ Allauth also has social auth, which is what first got me interested in it..
+ though for my current project I'm just using the accounts portion..
+ oh interesting.
+ do you find that a lot of your users use social media to log in?.
+ On my last projectr I found about 50% of users opted to signin with twitter..
+ I pushed for it a bit, so that number might be a bit inflated..
+ wow that's more than i would have expected.
+ oh i see haha.
+ The regular account signin option was definitely not as prominent..
+ hmm.
+ is allauth easy to set up?.
+ It has some quirks that make it a bit of a pain sometimes..
+ i'm getting started on my first post-learning-phase project, and i want to get started with an auth system.
+ If you don't need the extra complexity, something simpler might suffice..
+ If you don't need social auth, though, allauth becomes a lot simpler..
+ i see.
+ My complex setup mainly came from my somewhat abnormal use case. I had to override a lot of allauth behavior, because I don't have multiple username pools..
+ Er....
+ I do have multiple username pools.
+ yeah you probably wind up using the pre built apps as more of a framework to build upon as your project evolves, right?.
+ Definitely..
+ cool. so how is the chat in here normally? i am new to these parts.
+ Django chat tends to be a little quiet, but if you're patient you can usually get answers to whatever you need help with..
+ Sometimes I find I inadvertently use #Django for rubber duck debugging..
+ really depends on your active time zone :).
+ hah US eastern here.
+ is there any other time zone.
+ Haha I like to pretend not..
+ Also, pretty sure FunkyBob literally saved my evening one time, so thanks for that..
+ most american's do, zone.
+ That became a problem once for one of my websites..
+ I'm Australian eastern -- UTC+10.
+ We helped someone schedule something, and didn't know they were pacific..
+ How does it feel to have 200ms ping all the time?.
+ that's what it feels like to use comcast internet.
+ tbh comcast has never ripped me off too much except in the price department..
+ getting 30ms to  .
+ comcast is the worst. they were the first to ever allegedly start hoarding data and selling it to the highest bidding government agencies.
+ Zonedabone: I don't....
+ But... how?.
+ because not everything worth looking at is in the US :P.
+ what is rubber duck? .
+ Basically, #Django forces me to expalin my code until I find my problem on my own.
+ hah i see.
+ Ehh, I guess if you don't care about US news sites, (Most of them are completely worthless) you wouldn't have to deal with the 100ms base ping.
+ that's good though... python code is so clear you can always read what's going on.
+ i come from PHP.
+ which was a mess.
+ I tried PHP for a while, it gave me a headachje.
+ it was my first scripting language. it also gave me a headachje.
+ =P.
+ so.
+ gunicorn is saying that my SECRET_KEY is empty.
+ which.. it's not..
+ any tips?.
+ did your secret key get changed recently?.
+ no, i'm just getting my deploy worked out..
+ or... does gunicorn know to look to your settings file?.
+ Hi, I am just about to reading Class basech views and first thing in my mind is what it that better when I use it?.
+ I'm using Mezzanine's fabfile and modified it to work with my non-Mezzanine project..
+ you lost me.
+ I'm pretty sure it knows, but how do I double check?.
+ yeah figured.
+ inheritence is only thing I have found ;).
+ how do i point gunicorn to my settings?.
+ i don't know.
+ i'm just throwing out ideas.
+ ah gotcha.
+ tjsimmons: you don't ... you point it to your wsgi file.
+ but your DJANGO_SETTINGS_MODULE env var must be set.
+ either before running it, or in your wsgi.py.
+ also you must make sure your project workspace [the dir that manage.py is in, not the one settings.py is in] is added to the python path.
+ again, either by setting PYTHONPATH before running gunicor, or setting it in wsgi.py.
+ hm. yeah, the fabfile I'm using doesn't use the wsgi script. maybe i should just modify that.
+ oh.
+ oh.
+ hang on.
+ i think it just hit me what's wrong.
+ what?.
+ well, if you're using gunicorn, you need to point it to a wsgi compliant callable for your app.
+ Mezzanine, the app whose fabfile I'm using (and modifying for non-Mezzanine projects), uses the old flattened Django structure still - so settings.py is in the same directory as manage.py, and there's no subdir for the project..
+ i was dropping gunicorn.conf.py into the wrong directory, basically..
+ i think. still testing..
+ nah turns out i was wrong..
+ hate when the exact same fabfile works on a local VM, just not a VPS.
+ VPS, VPN, a big fat hen.
+ that really need to be fixed.
+ that layout was abandoned for very good reasons.
+ yeah, but it doesn't seem to be the issue here..
+ deploying to VM works just fine. gunicorn and all. deploying to VPS, no dice. Guess I need to see if there's any differences in the filesystem at this point.
+ hi.
+ is anyone here good with django integration with nginx.
+ Django doesn't integrate with nginx directly, you need a WSGI server in the middle such as gunicorn or uwsgi..
+ im currently using a .ini file to launch uwsgi,.
+ but after i launch i have issues when using python manage.py collectstatic.
+ my static folder for django adds /root/srv/www.
+ when it needs to be /srv/www/.
+ What's the value of STATIC_ROOT?.
+ you mean STATIC_ROOT ?.
+ What's the best way to set the filename on a FileField when submitting a ModelForm?.
+ give it an upload_to callable?.
+ Will the also accept the name?.
+ What I'll probably end up doing is hashing the file and using that as the name,.
+ Also, will that be called before or after the model saves? Preferably I'd love to use the model's slug as the name..
+ Oops, nvm.
+ Found the docs say it's not saved yet'.
+ If you pass initial data into a formset will the resulting forms be bound?.
+ no.
+ FunkyBob: I'm trying to render a form with fields that will be read-only, no form boxes basically..
+ so I want to display these fields in an unbound form without any sort of form widget.
+ if they're read-only, they're not form fields, are they?.
+ I guess not, but I still need to display them somehow..
+ Templates are good at displaying things..
+ I'm just not sure how to display them in a formset without them being a form field..
+ Loop over the formset's forms in your template, and you can add whatever you want..
+ Well the fields are related to the data in the forms.
+ Seamus: you could wrap your form in a formset set disabled="disabled".
+ see  .
+ Seamus: what is the purpose of these read-only fields?.
+ where do their data com from?.
+ FunkyBob: They're related to the model in a foreign key.
+ .....
+ I just want to show them to give the user more information when filling out the form.
+ one of these days someone's going to come in here and explain their problem BEFORE desciring the issues with their solution :/.
+ Seamus: are you editing existing models? if so, why not just access form.instance ?.
+ FunkyBob: form.instance isn't available for new entries..
+ So yeah basically all I have to work with is initial data.
+ Seamus, have you seen this:  .
+ Seamus: that's what I asked if you're editing existing models.
+  so far you've given us fuck all to go on... so....
+ if you want to give people more information when filling out your form, put it in the help_text in the formfield.
+ FunkyBob: uh, sorry about that.
+ Anyway, I can somehow separate csrf token from my form data?.
+ FunkyBob: The solution I'm looking at now is to force the form to be bound by passing it a QueryDict object :) But was trying to avoid that..
+ because it's... extremely hackish.
+ Seamus: I am no authority on Django like FunkyBob, but if you want to continue with what you started, the best way to do what you asked is to do the following:.
+ Seamus: and you're still explaining yourj soltion, not your problem....
+ in your form : field_read_only= forms.CharField(widget=forms.TextInput(attrs={'disabled':'disabled'})).
+   (read here).
+ theslow1: best to understand what the actual goal is first.
+ FunkyBob: Maybe you are right... I will be silent and learn :D.
+ theslow1: that looks interesting. I need to use a template filter truncatewords though..
+ Seamus: why won't you tell us what you're doing?.
+ every time we ask you to explain something, you give the merest detail.
+ like it's all some big secret.
+ Well what would you like to know? The details of my models?.
+ no.
+ I want to know what you're trying to do.
+ what goal lead you to attempting this solution.
+ Basically I've got a list of orders with items that need to be assigned to an item process for manufacturing scheduling..
+ ok, go on.
+ So you select all the orders, and assign them to a process from a drop down box. This should generate a formset with all the default data from the process.
+ Then you can tweak the Item's process however you want in the formset.
+ but we also need to display the Item name and description so that the user can determine its length.
+ that's the problem I'm facing, how to display the Item name and description without putting them in a form box.
+ so the formset is for things related to the Item?.
+ the formset is for the item process.
+ item process has a foreign key to item.
+ so pass item along in the contxt.
+ Well you've got a formset of item processes each with a different item.
+ I'm getting lost.
+ are you trying to use nested formsets?.
+ nested formsets?.
+ or is the "Item + formset of steps" on a separate page from "Order + formset of Items"?.
+ Well there's an order page, you select each order in the table, every order has a foreign key to Item.
+ then when you select the orders and assign to process it takes the process you selected and the order's item and generates Item Processes.
+ which redirects you to an Item Process Formset.
+ uh, maybe it's kinda complicated, I didn't really wanna explain it lol.
+ So what I could do is create an ItemProcessModelForm and create the Item Process instances before the formset is created, then I'll have access to instance in every case.
+ but then what if a user decides they made a mistake and wants to go back? I don't think it's a good solution. Anyway, thanks for trying at least..
+ Seamus, before you leave, you said Order has a foreignkey to Item? are you sure this is correct?.
+ Is i.
+ oops.
+ This will mean that an item_instance may be part of multiple different orders.
+ theslow1: that's correct.
+ hey guys suppose I have a model: name, city.
+ iwant to sort in the admin page names under city (suppose theres only two).
+ so all names in under city 1 is under one list, and all names under city 2 is in another.
+ is this possible without writing a custom admin page?.
+ zlio: you have a model with 2 fields? name = charfield, city = charfield?.
+ yes.
+ and you want to sort first by name, then by city?.
+ i want to sort all names under a city.
+ order_by('city', 'name').
+ that goes ihmm sec.. lets see.
+ do i define that in the models.py or admin.py?.
+ zlio:  .
+ I think that is what he meant.
+ you can also define ordering in ModelAdmin.ordering.
+ if you define ordering in models I think that will be the default ordering for any queryset on that model.
+ Seamus: Yes that is correct.
+ so if I were to do it via Admin i do this? :  .
+ zlio: No you don't put it in Meta, it's just ModelAdmin.ordering.
+ zlio:  .
+ Hmm.
+ Basically i want to able to check box a city and all venues in that will be checked too.
+ but only for that city.
+ via the admin page.
+ why admin?.
+ that sounds like app-specific work.
+ it should go into your own custm management interface.
+ FunkyBob: what do you mean by my own custom management interface?.
+ the end goal is, i'd like to able to collapse a city, so the names under it are hidden in the admin or any page.
+ I mean the parts of your project that are for the users who manage it.
+ stop treating admin like it's part of your app!.
+ ah yes.
+ is it not possible though?.
+ it's possible, if you write a pile of JS to do it.
+ to dah pls no JS.
+ i just want native django queryset filter things.
+ Maybe he wouldn't have to. Maybe you could just use AdminActions.
+ zlio: who is the functionality for? Yourself, or your users?.
+ the functionality is for the owners, so yes myself.
+ its just so the interface isn't stacked with names.
+ and I can say delete all names in a city, easily.
+ zlio, your model is wrong I think.
+ theslowl, what do you think?.
+ the only way I can think of is to use adminactions to mark something as hidden, then filter out all the hidden with a list_filter.
+ create at least two classes, City(models.Model): and Name(models.Model).
+ zlio: I thin theslow1 means you should normalise City into its own model.
+ in name, provide a foreignkey to city, such that a city can have many 'names'.
+ then what you want to do becomes easy.
+ and no js required.
+ FunkyBob: yea that is correct.
+ hmm....
+ think of it this way.
+ zlio: do this   ?.
+ if you needed to correct the name of a City... do you want to do it once? or once for every record in that city?.
+ FunkyBob, i'd want to do it once.
+ zlio: then you should make city into its own model, and link each Venue to that city, like I did in the example.
+ zlio: that's part of what data normalisation is about.
+ specifying the truth once, and only once.
+ zlio: I made a mistake on line 21 (I hope you'll see it) copy-paste mistake.
+ the sokay this is what Im going to change:  .
+ does this make any sense?   I am trying to return the token in the password field when registering a user through a custom webservice using rest web framework.
+ wait...
+ I think the rest framework is protecting the user and the password is not changed for the object.
+ I get the hashed version.
+ so this is what I should be changing to? :  .
+ but I don't know hot to return the token in that same response.
+ zlio: I have no idea what 'Bumpn_Attributes' was for.....
+ yeah sorry.
+ this is the new one  .
+ but if it doesn't need to be there then yes, change that.
+ so what i've just done is attached a relation to venue_city on its own model.
+ the City(models.Model).
+ zlio: this is even better  .
+ oohh nice.
+ so you just identifeied the hierarchy.
+ cool.
+ yes, each country can have many states, and each state, can have many cities,.
+ and each city, can have many venues.
+ remember to register them all in the admin.
+ but only your foursquare model will a special admin class (so that you can search by city).
+ ok, thanks theokay sweet.
+ thanks, theslow, funkybob, seamus :).
+ frog3r: I have no idea what you are talking about.. could you explain your problem again? Unless you already solved it.
+ theslow1: kinda shifted. I was registering a user with rest web framework and wanted to use the password field in the returned json to return a token I autocreate for every saved user.
+ how can I make a function that takes 4 positive integer fields and averages them?.
+ but I am now adding a custom field to the user profile (that is also included in the response) which is a method that looks for the token and returns it.
+   here's what I tried and I get error 'maximum recursion depth exceeded'.
+ yello.
+ o/.
+ \o.
+ 1211 members in #python and nothing :( is there a .round() but more accurate? aka decimals.
+ HowardwLo: there is decimal :).
+ type.
+ dodobas: doesn't .round on a decimal type still use float? or did i read wrong.
+ HowardwLo: why would you use .round on a decimal type.
+ create a new decimal.
+ Exist? best way for manage images in flatpages/my-articles?.
+ dodobas: i need to present it as an int :D.
+ using a different specification.
+ HowardwLo: an int... why don't you use 'int()' then ?.
+ dodobas: the calculations need to be exact, the result is finally rounded to an int.
+ if i used rounded numbers as initial numbers for the calculations, theres too much error.
+ decimal for calculation ... int for representation.
+ hi guis, i'm struggling with i18n, and how to generate the *.po.
+ manage.py tell me i should create the locale directories, but i feel like i already did.
+ i created a folder named "localisation", and added a line LOCALE_PATHS = ( os.path.join(BASE_DIR, 'localisation'), ) in my settings.py.
+ what else should i do ?.
+ spoutnik16: the folder must be called "locale".
+ spoutnik16: and iirc, you must create locale/$languagecode, e.g. locale/en.
+ moldy: looks so easy when you say it :/ it's working, and i've been on all night long.
+ spoutnik16: i've been through it myself. the docs for i18n could be better..
+ moldy: it's so cool how this works when it works :).
+ btw moldy, another question, if i got a page like the contact page to translate, what's the best idea ?.
+ put it in a flatpage, find a way to translate flatpages ? or put it in a template, and use those blocktrans thingies ?.
+ or make your flatpage template use blocktrans?.
+ taht is also a very good idea.
+ spoutnik16: depends.
+ spoutnik16: if you can use the usual i18n machinery, use that. if you must have the translations in the db, it gets complicated..
+ moldy: i don't see the point in "must have the translation in the db", so i guess i don't ?.
+ spoutnik16: obviously not, no.
+ spoutnik16: some possible reasons would be that you want to edit them through the web, or that you need multi-lingual search, for example.
+ ok.
+ spoutnik16: the people who edit the flatpage content will edit .po files and trigger compilemessages?.
+ python doesn't like raw admin html template editing ?.
+ spoutnik16: i don't understand what you mean by that.
+ moldy: an admin page (in the real django admin, or on the website, accessible only by admin-level user), that open the template page/flatpage in a big <textarea>, and modify it on the hd.
+ spoutnik16: sure, you can do that..
+ spoutnik16: at least, for flatpages. for template pages, i don't recommend it.
+ and another question about GEOdjango.
+ i'm making a website that allow user to registrate event, that i want to show on a map.
+ is geodjango the good idea ? or is geodjango useless for that ?.
+ i haven't used geodjango myself, but it sounds like geodjango might be overkill for that.
+ storing addresses or coordinates and using google maps or something should be enough.
+ it's what was done.
+ EDMP.
+ any core development projects I should talk about in the update?.
+ spoutnik16: Kinda late to the topic, but if the _only_ thing you need is to store a position and show it on a map, you really don't need contrib.gis (geodjango).
+ That's simply a matter of storing lat/long and using one of a dozen JS widgets (optionally with Django helpers) to render it with a Google/Bing/Leaflet map..
+ Even if all you have is an address, you can geocode that with JS and still not involve contrib.gis..
+ FunkyBob: It may be too late since the funding period ended on the 13th, but the PG ORM kickstarter closed out beyond his highest stretch goal..
+ nice.
+ got a link to it, mattmcc ?.
+ :).
+ Although for most PG folks, they'll probably be more interested in custom index types, since dealing with views/materialized views is already relatively painless..
+ Views are just unmanaged models, but custom PG indexes (gin vs gist) can make a big difference in performance, and there isn't an easy way to define them manually with the ORM..
+ How do I convince my manager at work that Google Analytics tracking of all PDF downloads just won't work?.
+ The only way I can think to do it is to put all downloads through Django views which fire off requests at Google Analytics, and that will kill performance..
+ Not necessarily, this is where x-sendfile/x-accel-redirect comes in..
+ Ah, there's my answer..
+ Can't do X-Sendfile because the current server is shitty..
+ Can do after switching..
+ Well, get a real web server..
+ We're in the process of changing machines..
+ To one that isn't ancient and running an age old version of Apache..
+ Then you can have a fairly trivial view fire off the GA event and kick back the sendfile/whatever response..
+ I'll tell my manager, "We cannot do this now, but we can once migration is done.".
+ He'll find that acceptable..
+ Yeah, I'd consider sendfile a pretty basic web server capability these days..
+ I wonder how decent the Python API for GA is..
+ I'm always concerned about opening up HTTP requests to other servers, mid request-response cycle..
+ Would the common wisdom be to just save them and batch them later?.
+ That's what I do for pulling data from other sites, essentially..
+ That's usually where Celery comes in..
+ Say, for Twitter I do an hourly fetch for tweets from a management command, then read from a table of my own..
+ You know, I haven't tried Celery yet..
+ Might be worth getting into it after moving machines, which is happening over this week and next..
+ You're right to worry about opening other connections from within the request-response cycle. This is why we always tell people to make those sorts of procedures asynchronous..
+ Well, I know, especially from experience with a site another dev left behind, that doing naive HTTP requests via say urllib mid cycle screws things up..
+ There are other task managers for Python/Django, but I haven't yet found a reason not to use Celery..
+ There is a site which breaks for two minutes at a time pretty much every day because a Twitter request fails, due to I think hitting the request limit..
+ Yeah, I had a lot of fun a couple years ago with a client project where they wanted to parse and report on the Twitter firehose. Mad Celery task spawning..
+ I have never had the time to fix it..
+ Twitter's APIs make it really easy to deal with rate limiting..
+ They tell you ahead of time when you're about to be cut off, all you've gotta do is pay attention that and throttle back your requests accordingly..
+ Really, after their last round of updates a year or so ago, I don't think I've ever encountered a more carefully designed API than Twitter's streaming APIs..
+ How can I say when it's better to use a signal receiver and when to override a signal with a custom one?.
+ huh?.
+ FunkyBob, in Django, when dealing with database, I can either override signal, eg post_save with my own - or create a custom receiver, right?.
+ I want to cache the number of records with specific attributes in another model, and update on every creation/modification/deletion..
+ Aleksander: you are not overriding the signal... you are 'adding' a method which will 'execute' when the signal triggers.
+ should LANGUAGES contain (('fr-ca', 'French')) or (('fr_CA', 'French')). I'm guessing fr-ca, but it looks like there's quite a few apps that break.
+ Hello! Anyone in here had any experience with :  .
+ elequ: thanks a lot! is there a fix for 1.6?.
+ so I'm getting a strange error here, I have a view that requests an ID and displays it but if it doesnt exist I want it to do something else.
+   the code.
+ it keeps throwing a 'Does not exist'.
+ which is what I want but for some reason it doesnt catch.
+ bo1g: you don't want to put an expression like that in an except clause..
+ bo1g: you just need the class name there..
+ oh I think I was thinking that because it was a list I had to point it to the same ID of the instance in the list.
+ you want "except ShowList.DoesNotExist:".
+ yep that worked.
+ that was literally my first try/except ever.
+ lol.
+ how do I .filter() on "no child records" ?.
+ 1:m episodes:cut_list - this isn episodes.filter(cut_list__set__count=0).
+ (isn't).
+ goog says set__isnull.
+  episodes.filter(cut_list__isnull=True) yay..
+ CarlFK, that works? cut_list is the related_name of a foreignkey or an m2m?.
+ ACTION would have annotated count() and filtered that.
+ iivvoo: class Cut_List(models.Model): ... episode = models.ForeignKey(Episode).
+ iivvoo: what I did there doesn't read well. what would yours be?.
+ carlfk something like Episode.objects.annotate(c=Count("cut_list__set")).filter(c=0).
+ something like that, not entirely sure about the semantics.
+ that does look better, but still kinda cluttered..
+ hmm, it has a default alias <field>__count it seems.
+ so that should have worked.
+ I think this will make it obvious what it is for: if request.REQUEST.get('no_cuts'): episodes = episodes.filter(cut_list__isnull=True).
+ Hi ; I followed the Django official tutorial that made me create a "static" directory inside my app, and not at the root of my project. Yet now I read tutorials about uwsgi and nginx and they indicate to use one static directory per project and redirect /static to it in nginx.
+ how can I use the app-base static dir instea ?.
+ Hey the allowed hosts setting - what exactly is it doing? Just got an email with an error message about it, with a url that isn't any of my domains..
+ Hello, I'm trying to install ssl certificate for an django application but I have some doubts.
+ I'm using apache and django, and I have seen that some people just gets the certificate from somewhere and config the apache file.
+ but I also have seen other people that made it from the entire server, In my case, at my company we are using amazon web services and I have seen something in the console panel to upload a ssl cert.
+ What should I do, install on the application or in the server?.
+ iivvoo: what I did there doesn't read well. what would yours be?.
+ iivvoo: opps.. ignore that..
+ Whats everyones thoughts on using Python 3 with Django now? I'm thinking of switching over.. Is everything with Django itself compatible with 3 yet? I know some libraries like fabric aren't so I'd need to either build my own or use a virtualenv with python 2.7 until they support it..
+ episodes = episodes.annotate(c=Count("cut_list")).filter(c=0) that gets me episodes with no cut_list childs. how do I get c>0 ? (1 or more).
+ Anyone used haystack on windows?.
+ CarlFK, c__gte=1.
+ (or c__gt=0).
+ iivvoo: Cannot resolve keyword 'c_gte' into field. Choices are: active... (episode fields).
+ episodes = episodes.annotate( c=Count("cut_list")).filter(c_gte =1).
+ oh, __.
+ perfect. thanks..
+ tuxskar: very much depends on your security requirements, almost always you're fine just installing the cert in apache unless you know otherwise.
+ tuxskar: or if you're operating behind ELB, install the cert there.
+ benwilber: Thank you for the info, then I'll install it just on the apache.
+ benwilber: also, about the ssl certificate, would you recommend me some web page where to hire one for my company? we are starting and I would like to have a cheap one at the moment.
+ tuxskar: also depends on the level of security you require, you can usually buy one from your domain registrar, otherwise a cheap one from GoDaddy is probably fine.
+  .order_by('foo').order_by('bar') which has prescience? like is that ORDER BY foo,bar OR bar,foo?.
+ CarlFK: btw: "prescience" means being able to know things at a distance. You mean precedence :).
+ I think it's even ORDER BY bar.
+ It overrides it afaik.
+ err, know things in the future..
+ You can print the query by doing "print your_queryset.query".
+ benwilber: thanks, just in order to understand better the SSL certification, If I install this certificate on the django app every one that wants to connect to app will get the necessary information to make the secure connection from my SSL certification provider, isn't it=.
+ Gwildorix: thanks. and yeah, I was wondering about my word choice.
+ tuxskar: if it's a valid certificate signed by a recognized CA then yes. A cert from GoDaddy will be fine.
+ carlfk: order_by(['foo', 'bar']) should also work.
+ Hello, I'm trying to create a custom model field to convert SHA256 hashes to ints and back. This is my code:  .
+ iivvoo: I am using some query params to define the sort, so was thinking about doing one field at a time.
+ benwilber: thank you very much, now I just have to buy the certificate and tomorrow I'll install it, thanks.
+ what is the to_python() method supposed to do? it's seeing the hex string, not the int as I'd expect from the description in the docs.
+ i have a class and I need to change it to inherit from a different class  .
+ how do I use south to properly update the database.
+ tuxskar, yes, the cheapest certificates are fine, and spending more will not make anything safer:  .
+ I use a cacert certificate, because fuck CAs.
+ anyone ever written tic tac toe? need help writing cpu ai.
+ I believe that there are sufficient analyses on tic tac toe on what the best move is after each move that you can easily implement that, with a level of randomness if you want :p.
+ Is there an easy way to overridie django's widgets HTML and have the admin-forms use them by default?.
+ No squared.
+ Damn it..
+ there is.
+ You need to subclass your widget, and override the render method.
+ Do I have to specify it in each of the modeladmins?.
+ And then override the form in the modeladmin, and use your widget in that form.
+ no.
+ Surely there has to be something easier. This hard-codeded stuff does noot seem like Django.
+ use formfield_overrides to provide your custom widgets.
+ 's style*.
+ no need to change the form.
+ Gwildorix: hmm yeah there i a bunch of tic tac toe stuff out there but I was trying not to look at any of it :x.
+ For what reason? :p.
+ But that is specifying it in every model-admin or inheriting from one where that is specified, correct?.
+ You at least need the mathematical analyses of the game.
+ I was hoping to just drop a file somewhere and it override the html -- why on earth is this hard-coded?.
+ squared: it's hardly hardcoded.
+ Because of ticket   mainly.
+ looks pretty hardcoded.. :<.
+ squared: yes, but you can __easily__ change the widget.
+ Not without having to go through all of my models and specifying a formfield_override, which is a pain..
+ Its fine, though...
+ why models?.
+ My modelsadmin*.
+ Im just wondering, when Im iterating through the available empty spots on the board to determine computers next move, should I make a copy of the board and then test if changing the empty mark to a player mark would create win condition/.
+ ?.
+ around L75.
+ er that's where I need to add the logic.
+ how has that anything to do with django?.
+ I guess bc Im writing it in django :x.
+ where is a better place to ask that?.
+ dunno, everywhere but here I guess^^.
+ honestly: what is a cacert.
+ it's a non-profit CA.
+ very cool.
+ apollo13: that's not what makes it "not cool".
+ it's an interesting idea, but a horrible choice as a CA for virtually all sites.
+ yeah, get a free cert from startcom, totally free unless you need to revoke it, because that needs so much processing they have to charge a 25 dollar processing fee.
+ benwilber: okay, just unusable then^^.
+ as most users can simply not distinguish a cacert signed certificate from an actual MITM.
+ unless all your users have installed the cacert root certificate in their browser.
+ firefox trusts around 400 root CAs.
+ Sorry -- so assuming I want to override the RelatedFieldWidgetWrapper widget, how and where? I'm a little confused the best way to get at this..
+ erik`: there's so much wrong with the CA chain already that can allow MITM.
+ I think it's over 600 for MSIE.
+ honestly: Doesn't it go by your OS?.
+ clearly those are all totally fine, especially CNNIC.
+ benwilber, substantially less trivial than training your users to always click "yes".
+ and none of them will be selling mitm devices because only trustwave did that.
+ yeah right.
+ I have a bridge to sell you.
+ "the whole CA system is a scam, so let's keep using it and do nothing about it".
+ by training users to click yes on any certificate, you open them to MITM from absolutely anyone with an openssl installation, versus the much smaller group of people who get improper certificates from those 400 CAs.
+ continuing to use the CA system is not a useful alternative either.
+ How is it a scam?.
+ i like some of the ideas of cacert, but i would be putting my users in danger.
+ CAs are a scam for sure.
+ it comes back to web-of-trust.
+ phishing and scamming on the internet is perfectly well and alive.
+ honestly: no one said that -- but training endusers into ignoring certification warnings is the worst way to go imo -- and that's exactly what usage of cacert means imo.
+ I do not trust Verisign, therefore, I don't trust 80% of the certs on the web.
+ (this is why it is such a good step that setting HSTS will *remove* the "do you accept this dodgy certificate" warning, and the implied answer is no).
+ (hooray, let's entrench the CA system even more!).
+ there is no workable alternative at this time.
+ browser vendors are supporting the CA system because they get to plat gatekeepers.
+ certificate pinning works perfectly well for ssh.
+ lol.
+ in theory.
+ in practice >90% don't even validate the fingerprints.
+ any system where users get a "do you trust this" question is broken by design.
+ This is a bigger issue than even spoofing legit certs.
+ erik`: any system that doesn't come back to user trust is not a trust system at all though.
+ "do you trust this?".
+ can be injected at any layer between client and server.
+ now, i'm not denying that there are issues with the existing CA system, and i am not opposed to something better, but there is no such alternative in sufficiently wide deployment today.
+ to deter the client from visiting the page.
+ I was suggested that I should try managing some db fields with postgresql views instead of django's signals re-caching calculated values every time a model is updated - is it a viable option in Django?.
+ no, never put code in your database.
+ Hi, do I need to issue a command after changing Debug to "False" in settings.py ?.
+ Biganon: ?.
+ it keeps telling me "You're seeing this error because you have DEBUG = True in your Django settings file.".
+ Biganon: you need to restart your server.
+ Aleksander: no, never put code in your database.
+ benwilber, can you give me any reasons against calculating field values on db's level?.
+ apollo13: restart my server ? The uwsgi ? The webserver ?.
+ Biganon: setting debug to false doesn't make the error go away..
+ honestly: ha.
+ Biganon: uwsgi shouild do.
+ Aleksander: debugging, portability.
+ Aleksander: SQL views work just fine with Django, you can point unmanaged models at them..
+ But when it comes to calculated values, you're usually better off storing the result of the calculation..
+ Views are like tables, not fields..
+ mattmcc, I need to store information about the status of every copy of a book in a library inside a table containing titles as indexes.
+ mattmcc, so each time a copy is borrowed I need to update the title.
+ mattmcc, should I do it with signals?.
+ no.
+ but why would you update the title when a book is borrowed?.
+ apollo13, because the title has information about how many books are borrowed, in library, waiting to be borrowed....
+ why would you store that in the title attribute?.
+ Aleksander: that sounds like a bad db design.
+ erik`, maybe I wasn't clear enough, but we have three models in our db: author, title and book [copy].
+ so each time a book changes its status I need to update title and author, which have fields showing how many books are borrowed, booked, free....
+ ah that makes a bit more sense.
+ still I wouldn't use signals.
+ apollo13, what to use then? I could generate info on each query, but looking at titles with pagination... that'd be quite A LOT OF calculating on each query.
+ Aleksander: I think you are mixing a few things up.
+ and from book to title is a simple join which is usually no issue.
+ apollo13, what kind of join?.
+ inner join most likely.
+ Aleksander: Sorry but I'm not clear what you're trying to do. Why would you change the Title model based on whether it's borrowed, free, etc.? Should be a `status` field.
+ apollo13, can you point me to any examples? do you mean select_related() ? I'm sorry, I'm pretty new to Django and databases.
+ benwilber, 'title' is a different model, with 'status' as one of the fields.
+ I'm sorry for not being clear..
+ Aleksander: ah ok, so given a Book, you want all the info about it?.
+ benwilber, I want just some information, like how many books of each status are available for that specific title..
+ Book.objects.filter(titles__status=Status.AVAILABLE).
+ so denormalize that data and store it on the title.
+ Where Status is a separate model that has a ForeignKey from Title, and constants for each status type.
+ benwilber, and can I put 'Book.objects.filter...' as a type of field in a model?.
+ that's the part I didn't understand previously.
+ No, I think you want a custom manager.
+ Book.available().
+ er, Book.objects.available().
+ benwilber, so these data won't be cached in the db?.
+ I read about the managers, but I was afraid that non-cached data will lead to slow queries..
+ I think you two are talking about different things :).
+ Aleksander: the queries will be cached, but it does not create a custom view.
+ benwilber, so they will be cached by django, not by the database itself?.
+ so boto storages and s3 cache are two seperate things?.
+ boto wont cache? only store correct?.
+ Aleksander: the queries themselves will be cached if the database supports query caching. Like MySQL has a query cache. If you make the same query 10k times in a row without doing any UPDATE or INSERT in the database, it will return the cached result. Once ANY update or INSERT happens at all in the database the entire query cache is flushed.
+ benwilber, thank you.
+ Aleksander: Django also has it's own query cache, but don't worry about that :-).
+ benwilber, I owe you / Django itself a beer, where do I donate, then?.
+ If I have a class with a 1:1 field relationship with User, is there an easy way to do get_object_or_404 based on the username and get the related model?.
+ nevermind..
+ ah, the nginx/gunicorn stack now makes sense to me..
+ I always assume nginx was ran as a webserver. Reading through the documentation, I see that it's a reverse proxy first..
+ which explains why gunicorn is out there, and my conf file (that I didn't do myself) is using localhost.
+ tjsimmons: don't forget that people typically use nginx to serve /static.
+ yeah i need to see how mine is set up.
+ it's entirely possible i'm serving it via gunicorn.
+ okay nope, doesn't look like it..
+ insofaras my /static/ block in nginx.conf has the root directory, and my / block has all the proxy info.
+ gooood.
+ Aleksander: haha I have no idea. Just come back here sometime and help someone else :-).
+ then you can see /static/ hits in nginx accesslogs.
+ yeah, i've been using Webfaction for all my hosting, but I've decided I want to use a VPS, which means learning nginx..
+ to see that they're indeed not rproxied to gunicorn. would be damn inefficient :-).
+ I have a FileField and give my visitors the possibility to upload files. I need to add the following checks: 1) The file needs to have a "txt" extension. 2) The file content needs to start with the string "Hello world!". // I am overriding the FileField but I am not sure where to put those checks. Any advise?.
+ what is the most popular django-based CMS these days?.
+ shambat,  .
+ django-cms and mezzanine probably.
+ Danic: clean_myfieldname in the form probably.
+ thanks ... thats a nice comparison site.
+ Danic: or validate method in your custom field.
+ Danic:  .
+ tjsimmons: I really like the way you code.
+ organized.
+ frege: that's not mine. ;).
+ frege that's the aforementioned Mezzanine. It's a really nice project..
+ thanks.
+ ahh.
+ I wish it was restful.
+ tjsimmons: do you know a project that has a restful user management?.
+ what is meant by "South Support"?.
+ shambat: south is a migration module.
+ it helps you to recreate your tables and move your data to the new one.
+ so you don't need to keep nuking your db.
+ frege: I see thanks.
+ frege: not of the top of my head, no..
+ frege: maybe this?  .
+ yeah but then I have to build the entire registration part.
+ Trying to read and see if it has built-in API, or is just a framework for APIs.
+ I wanna cheat.
+ I looking to make a community site with news, forums, personal pages ... nothing too complicated, which one should I go for if I start from scratch?.
+ that's a framework for rest.
+ I'm using it in my project.
+ Ahh. ;).
+ I saw an auth section, thought they might have some pre-built.
+ shambat: south will make your life easier if you asking about that.
+ frege: oops sorry, was asking about mezzanine vs django-cms.
+ ahh.
+ I'm guessing I'll get different answers from different people :).
+ yeah, just depends.
+ mezzanine has a demo you can look at.
+ is there a way for django to tell me when it cannot find a css/html/other static file?.
+ ACTION is a bit of a newb.
+ I'm trying to bring an old django app to 1.5, some pages look like they're missing something.
+ Hi, I have a model UserProfile and TimeEntry (which has 'billable' and 'hours', and points to UserProfile). How can I get the counts of billable and non-billable hours for each UserProfile? UserProfile.objects.annotate(total_hours=Sum('timeentry__hours')), but I am not sure how I can add the billable and non-billable components to the results..
+ weird, there is a   but it takes me to this thing called   ... not sure what Aldryn is.
+ I am thinking about adding a pastebin feature to my small personal site (probably will only be used by me), to learn a little bit and use. I was wondering what Field I should use to store the raw pastes, or if anyone had a good idea about storage methods for random text blobs (possibly largish, though I may have a limit)..
+ shambat: on the page: Every Aldryn website comes with a preinstalled and easy-to-use django CMS..
+ maybe that is their demo, I don't know..
+ A demo, but also a fully working project?.
+ couldn't tell you, I've never used django-cms.
+ heh, seems like a service that lets you host django-cms sites.
+ I'm gonna look at dpaste (open-source right?), and see how they store their pastes. I am thinking TextField but I don't know..
+ Anyone? :).
+ n/m dpaste uses a plain TextField, and that was my first idea anyway..
