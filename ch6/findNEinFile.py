@@ -8,12 +8,12 @@ Created on Sat Apr 16 13:58:50 2016
 import nltk
 import pprint
 
-# choose any of the different test sample files that we use in this chapter
-#filename = 'apacheMeetingMinutes.txt'
+# sample files that we use in this chapter
+filename = 'apacheMeetingMinutes.txt'
 #filename = 'djangoIRCchat.txt'
 #filename = 'gnueIRCsummary.txt'
 #filename = 'lkmlEmails.txt'
-filename = 'lkmlEmailsReduced.txt'
+#filename = 'lkmlEmailsReduced.txt'
 
 with open(filename, 'r', encoding='utf8') as sampleFile:
     text=sampleFile.read()
