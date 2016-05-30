@@ -9,11 +9,10 @@ import nltk
 import pprint
 
 # sample files that we use in this chapter
-filename = 'apacheMeetingMinutes.txt'
+#filename = 'apacheMeetingMinutes.txt'
 #filename = 'djangoIRCchat.txt'
 #filename = 'gnueIRCsummary.txt'
-#filename = 'lkmlEmails.txt'
-#filename = 'lkmlEmailsReduced.txt'
+filename = 'lkmlEmailsReduced.txt'
 
 with open(filename, 'r', encoding='utf8') as sampleFile:
     text=sampleFile.read()
