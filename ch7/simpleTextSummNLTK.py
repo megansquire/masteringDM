@@ -9,6 +9,7 @@ from nltk.tokenize import sent_tokenize
 from nltk.probability import FreqDist
 from nltk.corpus import stopwords
 from collections import OrderedDict
+import pprint
 
 # this is a sample of text from the chapter
 text = '''
@@ -77,8 +78,10 @@ lowercase_words = [word.lower() for word in words
                    if word not in stopwords.words() and word.isalpha()]
 word_frequencies = FreqDist(lowercase_words)
 most_frequent_words = FreqDist(lowercase_words).most_common(20)
-print(most_frequent_words)
+pp = pprint.PrettyPrinter(indent=4)
+pp.pprint(most_frequent_words)
 
+# which sentences are these important words found in?
 for long, short in candidate_sentences.items():
     count = 0
     for freq_word, frequency_score in most_frequent_words:
@@ -91,7 +94,5 @@ for long, short in candidate_sentences.items():
 sorted_sentences = OrderedDict(sorted(candidate_sentence_counts.items(),
                                       key=lambda x: x[1],
                                       reverse=True)[:5])
-i = 1
-for s, c in sorted_sentences.items():
-    print(i, ':', s, "(score:", c, ")")
-    i += 1
+
+pp.pprint(sorted_sentences)
