@@ -19,23 +19,23 @@ SENTENCES_COUNT = 4
 parser = PlaintextParser.from_file("sampleText.txt", Tokenizer(LANGUAGE))
 stemmer = Stemmer(LANGUAGE)
 
-print("====== Luhn ======")
+print("\n====== Luhn ======")
 summarizerLuhn = LuhnSummarizer(stemmer)
 summarizerLuhn.stop_words = get_stop_words(LANGUAGE)
 for sentenceLuhn in summarizerLuhn(parser.document, SENTENCES_COUNT):
-    print(sentenceLuhn)
+    print(sentenceLuhn, "\n")
 
 print("====== TextRank ======")
 summarizerTR = TextRankSummarizer(stemmer)
 summarizerTR.stop_words = get_stop_words(LANGUAGE)
 for sentenceTR in summarizerTR(parser.document, SENTENCES_COUNT):
-    print(sentenceTR)
+    print(sentenceTR, "\n")
 
 print("====== LSA ======")
 summarizerLSA = LsaSummarizer(stemmer)
 summarizerLSA.stop_words = get_stop_words(LANGUAGE)
 for sentenceLSA in summarizerLSA(parser.document, SENTENCES_COUNT):
-    print(sentenceLSA)
+    print(sentenceLSA, "\n")
 
 print("====== Edmonson ======")
 summarizerEd = EdmundsonSummarizer(stemmer)
@@ -43,4 +43,4 @@ summarizerEd.bonus_words = ('foo')
 summarizerEd.stigma_words = ('foo')
 summarizerEd.null_words = ('foo')
 for sentenceEd in summarizerEd(parser.document, SENTENCES_COUNT):
-    print(sentenceEd)
+    print(sentenceEd, "\n")
