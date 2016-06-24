@@ -13,7 +13,7 @@ import pprint
 
 # this is a sample of text from the chapter
 text = '''
-In the academic literature, text summarization is often positioned as a
+In the academic literature, text summarization is often proposed as a
 solution to information overload, and we in the 21st century like to
 think that we are uniquely positioned in history in having to deal with
 this problem. However, even in the 1950s when automatic text

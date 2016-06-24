@@ -39,8 +39,8 @@ for sentenceLSA in summarizerLSA(parser.document, SENTENCES_COUNT):
 
 print("====== Edmonson ======")
 summarizerEd = EdmundsonSummarizer(stemmer)
-summarizerEd.bonus_words = ('foo')
-summarizerEd.stigma_words = ('foo')
-summarizerEd.null_words = ('foo')
+summarizerEd.bonus_words = ('focus', 'proposed', 'method', 'describes')
+summarizerEd.stigma_words = ('example')
+summarizerEd.null_words = ('literature', 'however')
 for sentenceEd in summarizerEd(parser.document, SENTENCES_COUNT):
     print(sentenceEd, "\n")
