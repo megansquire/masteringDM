@@ -92,5 +92,5 @@ for long, short in candidate_sentences.items():
 # print out results
 sorted_sentences = OrderedDict(sorted(candidate_sentence_counts.items(),
                                       key=lambda x: x[1],
-                                      reverse=True)[:5])
+                                      reverse=True)[:4])
 pp.pprint(sorted_sentences)
