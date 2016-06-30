@@ -1,0 +1,33 @@
+Made good progress on planning for the loss of VP Infra. See discussion item for details.
+Most non-routine activity this month has been around TAC and ApacheCon, with a special focus on raising awareness of the CFP close.
+There was a reasonable amount of trademark follow ups this month.
+Quite a busy month. A number of event requests and a few trademark infringements to deal with. Nothing too significant and good progress being made in all cases.
+Some process improvements now in place. 
+All invoices are up-to-date, although it turns out that Virtual were still under the impression that one of our previous sponsors who have indicated they are unable to renew was still invoiced. 
+I'm not sure how this happened or at what point in the process the sponsor was invoiced. Hopefully the process improvements will minimize such errors in the future.
+We are currently $64k behind sponsorship income projections for 2016 (though our overall budget remains in good shape since we have spent less than projected as well as received less than projected - current worst case puts us at -$138k by financial year end against a budgeted $161k).
+It's time for the November 2015-January 2016 quarterly report. All those officers who have not yet submitted their report for Sally
+should do so in the next couple of days (it's quick and simple, just review your board reports for this period, select the key pieces and send to Sally who can add any necessary colour).
+New visual identity is live - I am still shocked at how easy this was from my perspective, and that of our members. 
+A testament to the sensitive handling of a potentially sensitive topic. 
+I believe our Membership felt fully involved and as a result is almost unanimous in their approval of the new design. 
+Well done Sally (and thanks to LucidWorks and HotWax Systems for donating creative services).
+Sally has confirmed a return of her media/analyst trainings at ApacheCon. 
+I've already signed up for my much needed update and I recommend everyone who is at all interest in such things to sign up when Sally announces them within the community (two beginner sessions, one for podlings one for TLPs and an advanced session will be offered).
+During the last month I've met 1:1 with all but one of the infra team as well as spending time with most of the team as a group. My goal was to listen to their recommendations on how to address the replacement of David as VP Infra. 
+I've also spoken with a number of potential outsource organizations to understand what they can offer. 
+Finally, I've reviewed a reasonably complete proposal secured by David.
+The output of all these activities is covered in a discussion item, with a more complete proposal to be presented to the board and discussed between now and the next board meeting on board@.
+In the interim, David has agreed to stay on for at least another month as VP Infra. I have offered to help out where I can (see discussion item) and the Infra contractors have all shown willing to continue in a (mostly) self-managing way.
+There has been good progress on a number of infra items. 
+Most notably projects may now publish apps in the iTunes store. 
+Huge thanks to Mark Thomas who has been working on this for multiple years and seen it to conclusion. 
+In addition Appveyor CI is now available for projects using the GitHub mirror.
+There are a few issues with uptime for core services (critical services remain close to 100%). 
+Issues vary from technical debt to abuse. 
+Remediation is being planned in all relevant cases.
+Not report submitted at the time of writing. 
+Melissa has been updating me on status. 
+We are at low levels of applications at present, though it is still early in the process. 
+Melissa is working with the TAC team to ensure we conduct more outreach.
+Additionally, please see Attachments 1 through 6.
