@@ -20,9 +20,9 @@ selectCursor = db.cursor()
 updateCursor = db.cursor()
 
 selectEmailQuery = "SELECT url, body \
-                    FROM lkml_stripped_torvalds_2016_01"
+                    FROM lkml_ch5"
                     
-updateScoreQuery = "UPDATE lkml_stripped_torvalds_2016_01 \
+updateScoreQuery = "UPDATE lkml_ch5 \
                     SET sentiment_score = %s, \
                     max_pos_score = %s, \
                     max_neg_score = %s \
