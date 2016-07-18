@@ -13,11 +13,12 @@ from nltk.metrics import *
 password = sys.argv[1]
 
 def soundex(name, len=4):
-    """ soundex module conforming to Knuth's algorithm
-        implementation 2000-12-24 by Gregory Jorgensen
-        public domain
-        available at: 
-        http://code.activestate.com/recipes/52213-soundex-algorithm/
+    """ 
+    soundex module conforming to Knuth's algorithm
+    implementation 2000-12-24 by Gregory Jorgensen
+    public domain
+    available at: 
+    http://code.activestate.com/recipes/52213-soundex-algorithm/
     """
 
     # digits holds the soundex values for the alphabet
@@ -52,7 +53,6 @@ db = pymysql.connect(host='localhost',
                      port=3306,
                      charset='utf8mb4')
 cursor = db.cursor()
-cursor1 = db.cursor()
 
 # get all projects with matching URLs
 cursor.execute("INSERT INTO book_entity_matches (rf_project_name, \
@@ -117,7 +117,7 @@ for(projectPair) in projectPairs:
         rf_in_rgurl = 0 
 
     # is any dev on the RF candidate in the dev list for the RG candidate?
-    cursor1.execute("SELECT rf.dev_username, rf.dev_realname \
+    cursor.execute("SELECT rf.dev_username, rf.dev_realname \
                     FROM book_rf_entity_people rf \
                     WHERE rf.project_name =  %s \
                     AND (rf.dev_username IN ( \
@@ -130,13 +130,13 @@ for(projectPair) in projectPairs:
                         FROM book_rg_entity_people rg \
                         WHERE rg.project_name = %s))",
                         (RFname, RGname, RGname))
-    result = cursor1.fetchone()
+    result = cursor.fetchone()
     if result is not None:
         rfdev_in_rgdev = 1
     else:
         rfdev_in_rgdev = 0
     
-    cursor1.execute("UPDATE book_entity_matches \
+    cursor.execute("UPDATE book_entity_matches \
                         SET rf_name_soundex    = %s,\
                             rg_name_soundex    = %s, \
                             url_levenshtein    = %s, \
