@@ -26,6 +26,9 @@ with open(filename, encoding='utf-8') as f:
 
 # each document is turned into a list of words
 # the words are lowercased, then stopwords and contractions removed
+# this bit is close to the structure used in the Gensim tutorial, where
+# you can also get more info on Gensim & how it works: 
+# https://radimrehurek.com/gensim/tut1.html
 texts = [[word for word in document.lower().split()
          if word not in STOPWORDS and word.isalnum() and word is not 'linus']
          for document in documents]
