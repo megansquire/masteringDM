@@ -52,7 +52,7 @@ db = pymysql.connect(host='localhost',
                      passwd=password,
                      port=3306,
                      charset='utf8mb4',
-                     AutoCommit=True)
+                     autocommit=True)
 cursor = db.cursor()
 
 # get all projects with matching URLs
