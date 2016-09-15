@@ -49,9 +49,10 @@ def soundex(name, len=4):
 db = pymysql.connect(host='localhost',
                      db='rfrg',
                      user='',
-                     passwd='',
+                     passwd=password,
                      port=3306,
-                     charset='utf8mb4')
+                     charset='utf8mb4',
+                     AutoCommit=True)
 cursor = db.cursor()
 
 # get all projects with matching URLs
