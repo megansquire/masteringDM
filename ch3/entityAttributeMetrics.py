@@ -12,12 +12,13 @@ from nltk.metrics import *
 
 password = sys.argv[1]
 
+
 def soundex(name, len=4):
-    """ 
+    """
     soundex module conforming to Knuth's algorithm
     implementation 2000-12-24 by Gregory Jorgensen
     public domain
-    available at: 
+    available at:
     http://code.activestate.com/recipes/52213-soundex-algorithm/
     """
 
@@ -39,16 +40,16 @@ def soundex(name, len=4):
     sndx = fc + sndx[1:]
 
     # remove all 0s from the soundex code
-    sndx = sndx.replace('0','')
+    sndx = sndx.replace('0', '')
 
     # return soundex code padded to len characters
     return (sndx + (len * '0'))[:len]
 
 
 # Open local database connection
-db = pymysql.connect(host='localhost',
+db = pymysql.connect(host='cs.elon.edu',
                      db='rfrg',
-                     user='',
+                     user='msquire',
                      passwd=password,
                      port=3306,
                      charset='utf8mb4',
@@ -92,19 +93,19 @@ for(projectPair) in projectPairs:
     RGname = projectPair[1]
     RFurl  = projectPair[2]
     RGurl  = projectPair[3]
-    
+
     # lowercase everything
     RFnameLC = RFname.lower()
     RGnameLC = RGname.lower()
     RFurlLC  = RFurl.lower()
     RGurlLC  = RGurl.lower()
-    
-    # calculate string metrics 
+
+    # calculate string metrics
     levNames = edit_distance(RFnameLC, RGnameLC)
     levURLs  = edit_distance(RFurlLC, RGurlLC)
     soundexRFname = soundex(RFnameLC)
     soundexRGname = soundex(RGnameLC)
-    
+
     # is the RF project name inside the RG project name?
     if RFnameLC in RGnameLC:
         rf_in_rg = 1
@@ -115,7 +116,7 @@ for(projectPair) in projectPairs:
     if RFnameLC in RGurl:
         rf_in_rgurl = 1
     else:
-        rf_in_rgurl = 0 
+        rf_in_rgurl = 0
 
     # is any dev on the RF candidate in the dev list for the RG candidate?
     cursor.execute("SELECT rf.dev_username, rf.dev_realname \
@@ -130,13 +131,13 @@ for(projectPair) in projectPairs:
                         SELECT rg.person_name \
                         FROM book_rg_entity_people rg \
                         WHERE rg.project_name = %s))",
-                        (RFname, RGname, RGname))
+                   (RFname, RGname, RGname))
     result = cursor.fetchone()
     if result is not None:
         rfdev_in_rgdev = 1
     else:
         rfdev_in_rgdev = 0
-    
+
     cursor.execute("UPDATE book_entity_matches \
                         SET rf_name_soundex    = %s,\
                             rg_name_soundex    = %s, \
@@ -146,15 +147,15 @@ for(projectPair) in projectPairs:
                             rf_name_in_rg_url  = %s, \
                             rf_dev_in_rg_dev   = %s \
                         WHERE rf_project_name = %s \
-                        AND rg_project_name = %s", 
-                        (soundexRFname,
-                         soundexRGname,
-                         levURLs,
-                         levNames,                         
-                         rf_in_rg, 
-                         rf_in_rgurl, 
-                         rfdev_in_rgdev, 
-                         RFname, 
-                         RGname))
+                        AND rg_project_name = %s",
+                   (soundexRFname,
+                    soundexRGname,
+                    levURLs,
+                    levNames,
+                    rf_in_rg,
+                    rf_in_rgurl,
+                    rfdev_in_rgdev,
+                    RFname,
+                    RGname))
 
 db.close()
