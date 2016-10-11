@@ -151,7 +151,8 @@ db = pymysql.connect(host='localhost',
                      user='megan',
                      passwd='',
                      port=3306,
-                     charset='utf8mb4')
+                     charset='utf8mb4',
+                     autocommit=True)
 cursor = db.cursor()
 
 # calculate number of baskets
