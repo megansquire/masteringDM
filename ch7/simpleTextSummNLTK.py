@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 """
+Created on Thu Oct 20 12:43:57 2016
+
+@author: msquire
+"""
+
+# -*- coding: utf-8 -*-
+"""
 Created on Sun Jun 19 17:23:58 2016
 
 @author: megan squire
@@ -67,9 +74,10 @@ striptext = striptext.replace('\n', ' ')
 
 # get list of sentences
 sentences = sent_tokenize(striptext)
+i = 0
 for sentence in sentences:
-    candidate_sentences[sentence] = sentence.lower()
-
+    candidate_sentences[sentence] = [sentence.lower(), i]
+    i += 1
 # get list of top 20 most frequent words
 words = word_tokenize(striptext)
 lowercase_words = [word.lower() for word in words
@@ -82,18 +90,24 @@ for pair in most_frequent_words:
     print(pair[0],":",pair[1])
 
 # which sentences are these important words found in?
-for long, short in candidate_sentences.items():
-    count = 0
+for long, value in candidate_sentences.items():
+    score = 0
     for freq_word, frequency_score in most_frequent_words:
-        if freq_word in short:
+        if freq_word in value[0]:
             # score the sentence according its count of important words
-            count += frequency_score
-            candidate_sentence_counts[long] = count
+            score += frequency_score
+            candidate_sentence_counts[long] = [score, value[1]]
 
-# print out first 4 results, sorted by score
+# get first 4 results, sorted by score
 sorted_sentences = OrderedDict(sorted(candidate_sentence_counts.items(),
-                                      key=lambda x: x[1],
+                                     key=lambda x: x[1],
                                       reverse=True)[:4])
 
+# now sort the sentences back into 
+# the order in which they appeared in the article
+finalList = []
 for sentence in sorted_sentences:
-    print(sentence)
+    ordered = [candidate_sentence_counts.get(sentence)[1],sentence]
+    finalList.append(ordered)
+for finalSentence in sorted(finalList):
+    print(finalSentence)
