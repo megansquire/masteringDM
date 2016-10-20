@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Jun 20 13:12:43 2016
+Created on Sun Jun 19 17:23:58 2016
 
-@author: megan
+@author: megan squire
 """
-import gensim.summarization
+from nltk.tokenize import word_tokenize
+from nltk.tokenize import sent_tokenize
+from nltk.probability import FreqDist
+from nltk.corpus import stopwords
+from collections import OrderedDict
 
 # this is a sample of text from the chapter
 text = '''
@@ -55,10 +59,41 @@ summary is free of duplicates and is human-readable.
 In the next section we will review some of the currently available text
 summarization libraries and applications.
 '''
+summary_sentences = []
+candidate_sentences = {}
+candidate_sentence_counts = {}
 striptext = text.replace('\n\n', ' ')
 striptext = striptext.replace('\n', ' ')
 
-summary = gensim.summarization.summarize(striptext, word_count=50)
-print(summary)
-keywords = gensim.summarization.keywords(striptext)
-print(keywords)
+# get list of sentences
+sentences = sent_tokenize(striptext)
+for sentence in sentences:
+    candidate_sentences[sentence] = sentence.lower()
+
+# get list of top 20 most frequent words
+words = word_tokenize(striptext)
+lowercase_words = [word.lower() for word in words
+                   if word not in stopwords.words() and word.isalpha()]
+word_frequencies = FreqDist(lowercase_words)
+most_frequent_words = FreqDist(lowercase_words).most_common(20)
+
+# print out the keywords more nicely
+for pair in most_frequent_words:
+    print(pair[0],":",pair[1])
+
+# which sentences are these important words found in?
+for long, short in candidate_sentences.items():
+    count = 0
+    for freq_word, frequency_score in most_frequent_words:
+        if freq_word in short:
+            # score the sentence according its count of important words
+            count += frequency_score
+            candidate_sentence_counts[long] = count
+
+# print out first 4 results, sorted by score
+sorted_sentences = OrderedDict(sorted(candidate_sentence_counts.items(),
+                                      key=lambda x: x[1],
+                                      reverse=True)[:4])
+
+for sentence in sorted_sentences:
+    print(sentence)
