@@ -1,14 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Oct 20 12:43:57 2016
-
-@author: msquire
-"""
-
-# -*- coding: utf-8 -*-
-"""
 Created on Sun Jun 19 17:23:58 2016
-
 @author: megan squire
 """
 from nltk.tokenize import word_tokenize
