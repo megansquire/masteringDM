@@ -7,7 +7,7 @@ Created on Thu Jun 23 10:38:13 2016
 from gensim import corpora
 from gensim.models.ldamodel import LdaModel
 from gensim.parsing.preprocessing import STOPWORDS
-import pprint
+
 num_topics = 4
 num_words = 5
 passes = 20
@@ -47,5 +47,11 @@ lda = LdaModel(corpus,
                num_topics=num_topics,
                passes=passes)
 
-pp = pprint.PrettyPrinter(indent=4)
-pp.pprint(lda.print_topics(num_words=num_words))
+# improved printing from what was originally in Ch 8
+for topic in lda.print_topics(num_words = num_words):
+    termNumber = topic[0]
+    print(topic[0], ':', sep='')
+    listOfTerms = topic[1].split('+')
+    for term in listOfTerms:
+        listItems = term.split('*')
+        print('  ', listItems[1], '(', listItems[0], ')', sep='')
