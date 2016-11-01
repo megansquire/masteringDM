@@ -24,9 +24,10 @@ filename = 'data/introSectionsToChapters.txt'
 with open(filename, encoding='utf-8') as f:
     documents = f.readlines()
 
-# each document is turned into a list of words
-# the words are lowercased, then stopwords and contractions removed
-# this bit is close to the structure used in the Gensim tutorial, where
+# Each document is turned into a list of words.
+# The words are lowercased, then stopwords and contractions removed.
+# Finally, texts[] is created as a list of these lists.
+# This bit is close to the structure used in the Gensim tutorial, where
 # you can also get more info on Gensim & how it works: 
 # https://radimrehurek.com/gensim/tut1.html
 texts = [[word for word in document.lower().split()
