@@ -31,7 +31,6 @@ with open(filename, encoding='utf-8') as f:
 # you can also get more info on Gensim & how it works: 
 # https://radimrehurek.com/gensim/tut1.html
 texts = [[word for word in document.lower().split()
-#         if word not in STOPWORDS and word.isalnum() and word is not 'linus']
          if word not in STOPWORDS and word.isalnum()]
          for document in documents]
 
