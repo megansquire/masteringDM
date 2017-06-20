@@ -23,6 +23,9 @@ g2numEdges = nx.number_of_edges(g2)
 print('g2numNodes:', g2numNodes)
 print('g2numEdges:', g2numEdges)
 
+# get degrees for the new g2 (with the pendants removed)
+d3 = nx.degree(g2)
+
 # (2) add some parameters to the draw() function
 # --scale the size of the node to its degree (high-degree nodes will be bigger)
-nx.draw(g2, node_size=[v * 10 for v in d2.values()])
+nx.draw(g2, nodelist=d3.keys(), node_size=[v * 10 for v in d3.values()])
