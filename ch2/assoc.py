@@ -11,9 +11,17 @@ Notes:
 """
 import itertools
 import pymysql
+import getpass
 
 # set threshold as a percent (example, 5% of Freecode baskets is about 2325)
 MINSUPPORTPCT = 5
+# database connection parameters
+dbhost = 'cs.elon.edu'
+dbschema = 'test'
+dbuser = 'msquire'
+dbpasswd = getpass.getpass()
+dbport = 3306
+dbcharset = 'utf8mb4'
 
 allSingletonTags = []
 allDoubletonTags = set()
@@ -30,21 +38,24 @@ def findDoubletons():
         # figure out if this doubleton candidate is frequent
         tag1 = candidate[0]
         tag2 = candidate[1]
-        cursor.execute("SELECT count(fpt1.project_id) \
-                        FROM fc_project_tags fpt1 \
-                        INNER JOIN fc_project_tags fpt2 \
-                        ON fpt1.project_id = fpt2.project_id \
-                        WHERE fpt1.tag_name = %s \
-                        AND fpt2.tag_name = %s", (tag1, tag2))
+        getDoubletonFrequencyQuery = "SELECT count(fpt1.project_id) \
+                                     FROM fc_project_tags fpt1 \
+                                     INNER JOIN fc_project_tags fpt2 \
+                                     ON fpt1.project_id = fpt2.project_id \
+                                     WHERE fpt1.tag_name = %s \
+                                     AND fpt2.tag_name = %s"
+        insertPairQuery = "INSERT INTO msquire.fc_project_tag_pairs \
+                                (tag1, tag2, num_projs) \
+                                VALUES (%s,%s,%s)"
+        cursor.execute(getDoubletonFrequencyQuery, (tag1, tag2))
         count = cursor.fetchone()[0]
 
         # add frequent doubleton to database                
         if count > minsupport:
             print (tag1,tag2,"[",count,"]")
             
-            cursor.execute("INSERT INTO fc_project_tag_pairs \
-                            (tag1, tag2, num_projs) \
-                            VALUES (%s,%s,%s)",(tag1, tag2, count))
+            
+            cursor.execute(insertPairQuery,(tag1, tag2, count))
             
             # save the frequent doubleton to our final list
             doubletonSet.add(candidate)         
@@ -74,28 +85,31 @@ def findTripletons():
             if doubleton not in doubletonSet:
                 tripletonCandidateRejected = 1
                 break
-        # add frequent tripleton to database
+        # set up queries
+        getTripletonFrequencyQuery = "SELECT count(fpt1.project_id) \
+                                        FROM fc_project_tags fpt1 \
+                                        INNER JOIN fc_project_tags fpt2 \
+                                        ON fpt1.project_id = fpt2.project_id \
+                                        INNER JOIN fc_project_tags fpt3 \
+                                        ON fpt2.project_id = fpt3.project_id \
+                                        WHERE (fpt1.tag_name = %s \
+                                        AND fpt2.tag_name = %s \
+                                        AND fpt3.tag_name = %s)"
+        insertTripletonQuery = "INSERT INTO msquire.fc_project_tag_triples \
+                                (tag1, tag2, tag3, num_projs) \
+                                VALUES (%s,%s,%s,%s)"
+        # insert frequent tripleton into database
         if tripletonCandidateRejected == 0:
-            cursor.execute("SELECT count(fpt1.project_id) \
-                FROM fc_project_tags fpt1 \
-                INNER JOIN fc_project_tags fpt2 \
-                ON fpt1.project_id = fpt2.project_id \
-                INNER JOIN fc_project_tags fpt3 \
-                ON fpt2.project_id = fpt3.project_id \
-                WHERE (fpt1.tag_name = %s \
-                AND fpt2.tag_name = %s \
-                AND fpt3.tag_name = %s)", (candidate[0],
-                                          candidate[1],
-                                          candidate[2]))
+            cursor.execute(getTripletonFrequencyQuery, (candidate[0],
+                                                        candidate[1],
+                                                        candidate[2]))
             count = cursor.fetchone()[0]
             if count > minsupport:
                 print (candidate[0],",",
                        candidate[1],",",
                        candidate[2],
                        "[",count,"]")
-                cursor.execute("INSERT INTO fc_project_tag_triples \
-                                (tag1, tag2, tag3, num_projs) \
-                                VALUES (%s,%s,%s,%s)",
+                cursor.execute(insertTripletonQuery,
                                 (candidate[0],
                                  candidate[1],
                                  candidate[2],
@@ -107,7 +121,9 @@ def generateRules():
     print("======")
 
     # pull final list of tripletons to make the rules
-    cursor.execute("SELECT tag1, tag2, tag3, num_projs FROM fc_project_tag_triples")
+    getFinalListQuery = "SELECT tag1, tag2, tag3, num_projs \
+                   FROM msquire.fc_project_tag_triples"
+    cursor.execute(getFinalListQuery)
     triples = cursor.fetchall()
     for(triple) in triples:
         tag1 = triple[0]
@@ -125,15 +141,19 @@ def calcSCAV(tagA, tagB, tagC, ruleSupport):
     ruleSupportPct = round((ruleSupport/baskets),2)
 
     # Confidence    
-    query1 = "SELECT num_projs FROM fc_project_tag_pairs \
-            WHERE (tag1 = %s AND tag2 = %s) or (tag2 = %s AND tag1 = %s)"
-    cursor.execute(query1, (tagA, tagB, tagB, tagA))
+    queryConf = "SELECT num_projs \
+              FROM msquire.fc_project_tag_pairs \
+              WHERE (tag1 = %s AND tag2 = %s) \
+              OR    (tag2 = %s AND tag1 = %s)"
+    cursor.execute(queryConf, (tagA, tagB, tagB, tagA))
     pairSupport = cursor.fetchone()[0]
     confidence = round((ruleSupport / pairSupport),2)
     
     # Added Value
-    query2 = "SELECT count(*) FROM fc_project_tags WHERE tag_name= %s"
-    cursor.execute(query2, tagC)
+    queryAV = "SELECT count(*) \
+              FROM test.fc_project_tags \
+              WHERE tag_name= %s"
+    cursor.execute(queryAV, tagC)
     supportTagC = cursor.fetchone()[0]
     supportTagCPct = supportTagC/baskets
     addedValue = round((confidence - supportTagCPct),2)
@@ -146,17 +166,18 @@ def calcSCAV(tagA, tagB, tagC, ruleSupport):
           "]")
           
 # Open local database connection
-db = pymysql.connect(host='localhost',
-                     db='test',
-                     user='megan',
-                     passwd='',
-                     port=3306,
-                     charset='utf8mb4',
+db = pymysql.connect(host=dbhost,
+                     db=dbschema,
+                     user=dbuser,
+                     passwd=dbpasswd,
+                     port=dbport,
+                     charset=dbcharset,
                      autocommit=True)
 cursor = db.cursor()
 
 # calculate number of baskets
-queryBaskets = "SELECT count(DISTINCT project_id) FROM fc_project_tags;"
+queryBaskets = "SELECT count(DISTINCT project_id) \
+                FROM fc_project_tags;"
 cursor.execute(queryBaskets)
 baskets = cursor.fetchone()[0]
 
@@ -165,10 +186,12 @@ minsupport = baskets*(MINSUPPORTPCT/100)
 print("Minimum support count:",minsupport,"(",MINSUPPORTPCT,"% of",baskets,")")
 
 # get tags that meet our minimum support threshold
-cursor.execute("SELECT DISTINCT tag_name \
-            FROM fc_project_tags \
-            GROUP BY 1 \
-            HAVING COUNT(project_id) >= %s ORDER BY tag_name",(minsupport))
+tagNameQuery = "SELECT DISTINCT tag_name \
+                FROM fc_project_tags \
+                GROUP BY 1 \
+                HAVING COUNT(project_id) >= %s \
+                ORDER BY tag_name"
+cursor.execute(tagNameQuery,(minsupport))
 singletons = cursor.fetchall()
 
 for(singleton) in singletons:
