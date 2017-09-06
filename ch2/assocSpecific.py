@@ -33,16 +33,15 @@ numBasketsQuery = "SELECT count(DISTINCT project_id) FROM fc_project_tags"
 cursor.execute(numBasketsQuery)
 numBaskets = cursor.fetchone()[0]
 
-supportForXQuery = "SELECT count(*) FROM fc_project_tags WHERE tag_name=%s" 
-cursor.execute(supportForXQuery, (X))
+supportForXYQuery = "SELECT count(*) FROM fc_project_tags WHERE tag_name=%s" 
+cursor.execute(supportForXYQuery, (X))
 supportForX = cursor.fetchone()[0]
 
-supportForYQuery = "SELECT count(*) FROM fc_project_tags WHERE tag_name=%s"
-cursor.execute(supportForYQuery, (Y))
+cursor.execute(supportForXYQuery, (Y))
 supportForY = cursor.fetchone()[0]
 
-pairSupportQuery = "SELECT num_projs FROM fc_project_tag_pairs WHERE tag1=%s AND tag2=%s"
-cursor.execute(pairSupportQuery,(X,Y))
+pairSupportQuery = "SELECT num_projs FROM fc_project_tag_pairs WHERE tag1 = %s AND tag2 = %s"
+cursor.execute(pairSupportQuery, (X, Y))
 pairSupport = cursor.fetchone()[0]
  
 # calculate support : support of pair, divided by num baskets
