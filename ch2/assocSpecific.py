@@ -1,30 +1,34 @@
 # -*- coding: utf-8 -*-
 """
-File: assoc.py
+File: assocSpecific.py
 @author: Megan Squire
-Purpose: Finds frequent itemsets for tags used to describe Freecode projects.
-
-Notes: 
-1. Uses a MySQL database to store the tags, doubletons, tripletons. Code for
-  SQL setup is in attached file.
-2. Minimum support for itemsets is set in the MINSUPPORT constant.
+Purpose: calculate some metrics for a specific tag pair
 """
 import pymysql
-
+import getpass
+# here are the two tags we want to compare
 X = 'Internet'
 Y = 'Web'
 
+# database connection params
+dbhost = 'cs.elon.edu'
+dbschema = 'test'
+dbuser = 'msquire'
+dbpasswd = getpass.getpass()
+dbport = 3306
+dbcharset = 'utf8mb4'
+
 # Open local database connection
-db = pymysql.connect(host='',
-                     db='',
-                     user='',
-                     passwd='',
-                     port=3306,
-                     charset='utf8mb4')
+db = pymysql.connect(host=dbhost,
+                     db=dbschema,
+                     user=dbuser,
+                     passwd=dbpasswd,
+                     port=dbport,
+                     charset=dbcharset,
+                     autocommit=True)
 cursor = db.cursor()
 
-# grab basic counts from the database that we need
-
+# grab basic counts from the database 
 numBasketsQuery = "SELECT count(DISTINCT project_id) FROM fc_project_tags"
 cursor.execute(numBasketsQuery)
 numBaskets = cursor.fetchone()[0]
@@ -56,10 +60,10 @@ confidenceYX = pairSupportAsPct/ supportForYAsPct
 AVXY = confidenceXY - supportForYAsPct
 AVYX = confidenceYX - supportForXAsPct
 
-print("Support for ",X,"U",Y,":", round(pairSupportAsPct, 2))
-print("Conf.",X,"->",Y,":", round(confidenceXY, 2))
-print("Conf.",Y,"->",X,":", round(confidenceYX, 2))
-print("AV",X,"->",Y,":", round(AVXY, 2))
-print("AV",Y,"->",X,":", round(AVYX, 2))
+print("Support for ",X,"U",Y,":", round(pairSupportAsPct, 4))
+print("Conf.",X,"->",Y,":", round(confidenceXY, 4))
+print("Conf.",Y,"->",X,":", round(confidenceYX, 4))
+print("AV",X,"->",Y,":", round(AVXY, 4))
+print("AV",Y,"->",X,":", round(AVYX, 4))
 
 db.close()
