@@ -13,7 +13,7 @@ import itertools
 import pymysql
 
 # set threshold as a percent
-MINSUPPORTPCT = .25
+MINSUPPORTPCT = 10
 
 # database connection parameters
 dbhost = 'cs.elon.edu'
