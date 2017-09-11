@@ -137,3 +137,5 @@ for(projectPair) in projectPairs:
                     RGname))
 
 db.close()
+
+
