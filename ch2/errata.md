@@ -1,5 +1,5 @@
 # Some errors I noticed in the book
-## Page 7 - calculating 
+## Page 7 - showing a rule 
 bananas -> vanilla wafers, whipped cream
 [support = .001%, confidence=10%]
 
