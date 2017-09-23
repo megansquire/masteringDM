@@ -145,7 +145,7 @@ def calcSCAV(tagA, tagB, tagC, ruleSupport):
               FROM msquire.fc_project_tag_pairs \
               WHERE (tag1 = %s AND tag2 = %s) \
               OR    (tag2 = %s AND tag1 = %s)"
-    cursor.execute(queryConf, (tagA, tagB, tagB, tagA))
+    cursor.execute(queryConf, (tagA, tagB, tagA, tagB))
     pairSupport = cursor.fetchone()[0]
     confidence = round((ruleSupport / pairSupport),2)
     
