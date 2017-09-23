@@ -15,3 +15,15 @@ support of right-hand side (bananas) = .8
 added value = .6 - .8 = -0.2
 
 The rule is still true, that bananas do better on their own. 
+
+## Page 40-41 - calculating confidence
+The Python code needs a change in the order the parameters are passed into the SQL query:
+```python
+    queryConf = "SELECT num_projs \
+              FROM msquire.fc_project_tag_pairs \
+              WHERE (tag1 = %s AND tag2 = %s) \
+              OR    (tag2 = %s AND tag1 = %s)"
+    cursor.execute(queryConf, (tagA, tagB, tagA, tagB))
+    pairSupport = cursor.fetchone()[0]
+    confidence = round((ruleSupport / pairSupport),2)
+```
