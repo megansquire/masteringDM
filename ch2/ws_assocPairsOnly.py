@@ -70,7 +70,7 @@ def generateRules():
     # pull final list of pairs to make the rules
     cursor.execute("SELECT e1, e2, num_people FROM ws_entity_pairs")
     pairs = cursor.fetchall()
-    for(pair) in pairs:
+    for pair in pairs:
         tag1 = pair[0]
         tag2 = pair[1]
         ruleSupport = pair[2]
