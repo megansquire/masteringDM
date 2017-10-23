@@ -143,7 +143,7 @@ cursor.execute("SELECT DISTINCT entityType \
 singletons = cursor.fetchall()
 
 for singleton in singletons:
-    allSingletonTags.append(singleton)
+    allSingletonTags.append(singleton[0])
 
 findDoubletons()
 generateRules()
