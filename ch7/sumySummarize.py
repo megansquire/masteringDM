@@ -37,7 +37,7 @@ summarizerLSA.stop_words = get_stop_words(LANGUAGE)
 for sentenceLSA in summarizerLSA(parser.document, SENTENCES_COUNT):
     print(sentenceLSA, "\n")
 
-print("====== Edmonson ======")
+print("====== Edmundson ======")
 summarizerEd = EdmundsonSummarizer(stemmer)
 summarizerEd.bonus_words = ('focus', 'proposed', 'method', 'describes')
 summarizerEd.stigma_words = ('example')
